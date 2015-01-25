@@ -1,0 +1,21 @@
+{
+  "framework": [
+    "/node_modules/mocha/mocha.js"
+  ],
+  "before_tests": "gulp pretest",
+  "on_exit": "rm -rf ./temp",
+  "src_files": [
+    "src/**/*.js",
+    "test/**/*.js"
+  ],
+  "serve_files": [
+    "dist/*.js",
+    "temp/**/*.js"
+  ],
+  "serve_files_ignore": [
+    "dist/*.min.js"
+  ],
+  "test_page": "test/runner.mustache",
+  "launch_in_dev": ["Chrome"],
+  "launch_in_ci": ["Chrome"]
+}

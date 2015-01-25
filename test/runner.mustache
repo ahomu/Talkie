@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<title>Test'em</title>
+<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+{{#framework}}
+<script src="{{.}}"></script>
+{{/framework}}
+<script src="/testem.js"></script>
+<script>mocha.setup('bdd')</script>
+</head>
+<body>
+<div id="mocha"></div>
+{{#serve_files}}
+<script src="/{{src}}"></script>
+{{/serve_files}}
+<script>mocha.run();</script>
+</body>
+</html>

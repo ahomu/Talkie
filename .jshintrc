@@ -1,0 +1,29 @@
+{
+  "globals": {
+  },
+
+  "maxlen": 100,
+  "maxparams": 5,
+  "maxdepth": 3,
+
+  "bitwise": true,
+  "curly": true,
+  "eqeqeq": true,
+  "forin": true,
+  "newcap": true,
+  "noarg": true,
+  "noempty": true,
+  "nonew": true,
+  "undef": true,
+  "strict": true,
+  "trailing": true,
+
+  "browser": true,
+  "devel": true,
+  "esnext": true,
+  "node": true,
+
+  "globalstrict": true,
+  "eqnull": true,
+  "expr"  : true
+}

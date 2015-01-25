@@ -1,0 +1,22 @@
+@import url(./resets.css);
+@import url(./layouts.css);
+
+#scaler {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transform-origin: left top;
+}
+
+#scaler[style] {
+  display: block;
+}
+
+#control {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}
