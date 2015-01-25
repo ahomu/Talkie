@@ -17,6 +17,7 @@
   "undef": true,
   "strict": true,
   "trailing": true,
+  "newcap": false,
 
   "browser": true,
   "devel": true,

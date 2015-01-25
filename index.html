@@ -12,54 +12,57 @@
   <button id="next">next</button>
 </div>
 
-<section layout="bullets">
-  <h2 title>はろーはろー</h2>
-  <ul bullets>
-    <li>Foo</li>
-    <li>Bar</li>
-    <li>Baz</li>
-  </ul>
-</section>
+<div id="scaler">
+  <section layout="bullets">
+    <h2 title>はろーはろー</h2>
+    <ul bullets>
+      <li>Foo</li>
+      <li>Bar</li>
+      <li>Baz</li>
+    </ul>
+  </section>
 
-<section layout="bullets">
-  <h2 title>こんにちは！こんにちは！</h2>
-  <ul bullets>
-    <li>hoge</li>
-    <li>fuga</li>
-    <li>piyo</li>
-  </ul>
-</section>
+  <section layout="bullets">
+    <h2 title>こんにちは！こんにちは！</h2>
+    <ul bullets>
+      <li>hoge</li>
+      <li>fuga</li>
+      <li>piyo</li>
+    </ul>
+  </section>
 
-<script layout="bullets" type="text/x-markdown">
-# hello
+  <script layout="bullets" type="text/x-markdown">
+  # hello
 
-## .bold[World]
+  ## .bold[World]
 
 
 
-- foo
-- bar
-- baz
+  - foo
+  - bar
+  - baz
 
-```javascript
-function $initHighlight(block, flags) {
-  try {
-    if (block.className.search(/\bno\-highlight\b/) != -1)
-      return processBlock(block.function, true, 0x0F) + ' class=""';
-  } catch (e) {
-    /* handle exception */
-    var e4x =
-        <div>Example
-            <p>1234</p></div>;
+  ```javascript
+  function $initHighlight(block, flags) {
+    try {
+      if (block.className.search(/\bno\-highlight\b/) != -1)
+        return processBlock(block.function, true, 0x0F) + ' class=""';
+    } catch (e) {
+      /* handle exception */
+      var e4x =
+          <div>Example
+              <p>1234</p></div>;
+    }
+    for (var i = 0 / 2; i < classes.length; i++) { // "0 / 2" should not be parsed as regexp
+      if (checkCondition(classes[i]) === undefined)
+        return /\d+[\s/]/g;
+    }
+    console.log(Array.every(classes, Boolean));
   }
-  for (var i = 0 / 2; i < classes.length; i++) { // "0 / 2" should not be parsed as regexp
-    if (checkCondition(classes[i]) === undefined)
-      return /\d+[\s/]/g;
-  }
-  console.log(Array.every(classes, Boolean));
-}
-```
-</script>
+  ```
+  </script>
+</div>
+
 <script src="./dist/talkie.js"></script>
 </body>
 </html>
