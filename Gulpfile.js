@@ -86,12 +86,12 @@ gulp.task('build', function() {
     .pipe(header(banner, {name: fileName, version: package.version}))
     .pipe(rename(fileName + '.js'))
     .pipe(gulp.dest(DIR_DIST))
-    //.pipe(plumber())
-    //.pipe(uglify({
-    //  preserveComments: 'some'
-    //}))
-    //.pipe(rename(fileName + '.min.js'))
-    //.pipe(gulp.dest(DIR_DIST))
+    .pipe(plumber())
+    .pipe(uglify({
+      preserveComments: 'some'
+    }))
+    .pipe(rename(fileName + '.min.js'))
+    .pipe(gulp.dest(DIR_DIST))
 });
 
 gulp.task('build-css', function () {

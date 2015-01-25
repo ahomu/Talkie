@@ -1,7 +1,6 @@
 'use strict';
 
 import Bacon  from 'baconjs';
-import hljs   from 'highlight.js';
 import marked from 'marked';
 import util   from './util';
 
@@ -21,7 +20,11 @@ export default function() {
   marked.setOptions({
     langPrefix: 'hljs ',
     highlight: function (code) {
-      return hljs.highlightAuto(code).value;
+      if (window.hljs == null) {
+        console.log('highlight.js (`window.hljs`) is missng');
+        return code;
+      }
+      return window.hljs.highlightAuto(code).value;
     }
   });
 
