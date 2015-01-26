@@ -1,22 +1,47 @@
-@import url(./resets.css);
-@import url(./layouts.css);
+@import url(./reset.css);
+@import url(./layout.css);
 
-#scaler {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-transform-origin: left top;
+html, body {
+  color: #222;
+  background-color: #111;
+  font-family: "Open Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
 }
 
-#scaler[style] {
-  display: block;
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+#progress {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0.1em;
+  background-color: hotpink;
 }
 
 #control {
   position: fixed;
   z-index: 2;
-  top: 0;
+  bottom: 0;
   right: 0;
   padding: 20px;
+  color: #fff;
+}
+
+#scaler {
+  /* width & height automatically set by ratio module */
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  transform-origin: left top;
+  transform-style: preserve-3d;
+}
+
+#scaler[style] {
+  display: block;
 }

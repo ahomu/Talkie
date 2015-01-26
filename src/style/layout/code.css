@@ -1,0 +1,34 @@
+[layout=code] {
+  background-color: #23241f;
+}
+
+[layout=code] h1 {
+}
+
+[layout=code] h2 {
+}
+
+[layout=code] h3 {
+}
+
+[layout=code] p {
+}
+
+[layout=code] ul,
+[layout=code] ol {
+}
+
+[layout=code] ul > li
+[layout=code] ol > li {
+}
+
+[layout=code] [hero-image] {
+
+}
+
+[layout=code] [bg-image] {
+}
+
+[layout=code] pre {
+  background-color: transparent;
+}

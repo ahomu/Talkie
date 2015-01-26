@@ -1,0 +1,139 @@
+/**
+ * Common
+ */
+[layout] {
+  /* width & height automatically set by ratio module */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  overflow: hidden;
+
+  line-height: 1.5;
+
+  background-color: #fafafa;
+  box-shadow: 0 0 10px transparent;
+
+  opacity: 0;
+  transition: opacity .4s ease;
+
+  display: flex;
+  box-pack: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+[layout][visible] {
+  opacity: 1;
+  z-index: 1;
+}
+
+[layout] > * {
+  margin: 30px 60px;
+}
+
+/**
+ * Default
+ */
+[layout] h1 {
+  text-transform: uppercase;
+  letter-spacing: .25em;
+  font-weight: 500;
+  font-family: Futura, Helvetica, Arial,"Hiragino Kaku Gothic ProN", "Meiryo",sans-serif;
+  font-size: 4em;
+}
+
+[layout] h2 {
+  font-size: 2.5em;
+}
+
+[layout] h3 {
+  font-size: 1.5em;
+}
+
+[layout] p {
+  font-size: 1.5em;
+}
+
+[layout] ul,
+[layout] ol {
+  font-size: 1.5em;
+}
+
+[layout] ul > li
+[layout] ol > li {
+  font-size: 1.5em;
+}
+
+[layout] [hero-image] {
+
+}
+
+[layout] [bg-image] {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+[layout] pre {
+  font-size: 1.5em;
+  font-family: Consolas,Monaco,'Andale Mono',monospace;
+}
+
+/**
+ * Util
+ */
+[v-center] {
+  justify-content: center !important;
+}
+
+[v-start] {
+  justify-content: flex-start !important;
+}
+
+[v-end] {
+  justify-content: flex-end !important;
+}
+
+[h-center] {
+  align-items: center !important;
+}
+
+[h-start] {
+  align-items: flex-start !important;
+}
+
+[h-end] {
+  align-items: flex-end !important;
+}
+
+[s-center] {
+  align-self: center !important;
+}
+
+[s-start] {
+  align-self: flex-start !important;
+}
+
+[s-end] {
+  align-self: flex-end !important;
+}
+
+[horizontal] {
+  flex-direction: row !important;
+}
+
+[vertical] {
+  flex-direction: column !important;
+}
+
+[is-hidden] {
+  display: none !important;
+}
+
+/**
+ * Master layouts
+ */
+@import url(layout/bullets.css);
+@import url(layout/code.css);

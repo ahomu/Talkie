@@ -1,0 +1,32 @@
+[layout=bullets] {
+}
+
+[layout=bullets] h1 {
+}
+
+[layout=bullets] h2 {
+}
+
+[layout=bullets] h3 {
+}
+
+[layout=bullets] p {
+}
+
+[layout=bullets] ul,
+[layout=bullets] ol {
+}
+
+[layout=bullets] ul > li
+[layout=bullets] ol > li {
+}
+
+[layout=bullets] [hero-image] {
+
+}
+
+[layout=bullets] [bg-image] {
+}
+
+[layout=bullets] pre {
+}

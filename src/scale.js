@@ -9,7 +9,7 @@ export default function() {
 
   function scalingOf(el) {
     return function(ratio) {
-      el.style.webkitTransform = `scale(${ratio})`;
+      el.style.webkitTransform = `scale(${Math.abs(ratio)})`;
     };
   }
 

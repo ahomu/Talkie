@@ -26,7 +26,7 @@ import Control from './control';
 import Ratio   from './ratio';
 import Scale   from './scale';
 
-document.addEventListener('DOMContentLoaded', function() {
+export default function(options = {}) {
 
   function rangeIs(min, max) {
     return function(z) {
@@ -42,6 +42,24 @@ document.addEventListener('DOMContentLoaded', function() {
     el.setAttribute('visible', 1);
   }
 
+  function textAssignOf(el) {
+    return function(text) {
+      el.textContent = text;
+    };
+  }
+
+  function styleAssignOf(el, property) {
+    return function(value) {
+      el.style[property] = value;
+    };
+  }
+
+  function percentOf(max) {
+    return function(current) {
+      return ((100 / max) * current) + '%';
+    };
+  }
+
   /**
    * Init slide sections
    */
@@ -55,9 +73,19 @@ document.addEventListener('DOMContentLoaded', function() {
   let initialPage = params.page || 1;
   let correctPage = util.compose(rangeIs(1, slides.length), util.add);
 
-  let both = control.next.merge(control.prev);
-  let current = both.scan(initialPage, correctPage);
+  let both    = control.next.merge(control.prev);
+  let current = both.scan(initialPage, correctPage).skipDuplicates();
 
+  // current page
+  current.onValue(textAssignOf(util.getById('page')));
+
+  // total of page
+  Bacon.once(slides.length).onValue(textAssignOf(util.getById('total')));
+
+  // progress bar
+  current.map(percentOf(slides.length)).onValue(styleAssignOf(util.getById('progress'), 'width'));
+
+  // slide visibility
   Bacon.combineAsArray(current, slides)
     .onValue(function(data) {
       let [current, all] = data;
@@ -68,9 +96,9 @@ document.addEventListener('DOMContentLoaded', function() {
   /**
    * Scaling
    */
-  let ratio = Ratio();
+  let ratio = Ratio(options);
   let scale = Scale();
 
   ratio.onValue(scale);
   Bacon.once(ratio).onValue(scale);
-});
+}
