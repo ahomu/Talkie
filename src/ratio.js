@@ -8,22 +8,23 @@ const NORMAL_HEIGHT = 768;
 const WIDE_WIDTH    = 1366;
 const WIDE_HEIGHT   = 768;
 
-export default function(options) {
+/**
+ * @typedef {Object} RatioOptions
+ * @property {Boolean} [wide]
+ * @property {Number} [width]
+ * @property {Number} [height]
+ */
+
+/**
+ * compute ratio
+ *
+ * @param {RatioOptions} options
+ * @returns {EventStream}
+ */
+export default function(options = {}) {
 
   let width  = options.width  || (options.wide ? WIDE_WIDTH  : NORMAL_WIDTH);
   let height = options.height || (options.wide ? WIDE_HEIGHT : NORMAL_HEIGHT);
-
-  function getHorizontalRatio() {
-    return window.innerWidth / width;
-  }
-
-  function getVerticalRatio() {
-    return window.innerHeight / height;
-  }
-
-  function resizeEventStream() {
-    return Bacon.fromEventTarget(window, 'resize').debounce(250);
-  }
 
   /**
    * Init slide sizes
@@ -38,9 +39,38 @@ export default function(options) {
   `;
   document.querySelector('head').appendChild(style);
 
-  let resize = resizeEventStream();
-  let hRatio = resize.map(getHorizontalRatio).toProperty(getHorizontalRatio());
-  let vRatio = resize.map(getVerticalRatio).toProperty(getVerticalRatio());
+  let hRatio   = horizontalRatioOf(width);
+  let vRatio   = verticalRatioOf(height);
+  let resize   = resizeEventStream();
+  let hRatioSt = resize.map(hRatio).toProperty(hRatio());
+  let vRatioSt = resize.map(vRatio).toProperty(vRatio());
 
-  return Bacon.combineWith(Math.min, hRatio, vRatio);
+  return Bacon.combineWith(Math.min, hRatioSt, vRatioSt);
+}
+
+/**
+ * @param {Number} width
+ * @returns {Function}
+ */
+function horizontalRatioOf(width) {
+  return function() {
+    return window.innerWidth / width;
+  };
+}
+
+/**
+ * @param {Number} height
+ * @returns {Function}
+ */
+function verticalRatioOf(height) {
+  return function() {
+    return window.innerHeight / height;
+  };
+}
+
+/**
+ * @returns {EventStream}
+ */
+function resizeEventStream() {
+  return Bacon.fromEventTarget(window, 'resize').debounce(250);
 }

@@ -31,13 +31,5 @@ export default {
    */
   getById(ident) {
     return document.getElementById(ident);
-  },
-  /**
-   * @param {number} x
-   * @param {number} y
-   * @returns {number}
-   */
-  add(x, y) {
-    return x + y;
   }
 };

@@ -30,6 +30,7 @@
   "homepage": "https://github.com/ahomu/Talkie",
   "dependencies": {
     "baconjs": "^0.7.42",
+    "keycode": "^1.0.1",
     "lodash": "^2.4.1",
     "marked": "^0.3.2"
   },

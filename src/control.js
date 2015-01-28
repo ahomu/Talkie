@@ -1,39 +1,43 @@
 'use strict';
 
-import Bacon  from 'baconjs';
-import util   from './util';
-import params from './params';
+import Bacon   from 'baconjs';
+import keycode from 'keycode';
 
-const IDENT_NEXT    = 'next';
-const IDENT_PREV    = 'prev';
+const EVENT_KEYUP = Bacon.fromEventTarget(document, 'keyup');
 
-export default function() {
+/**
+ * create EventStream from user input
+ */
+export default {
+  /**
+   * @param {String|Number} charKey
+   * @returns {EventStream}
+   */
+  key(charKey) {
+    let keyCode;
 
-  function keyCodeIs(keyCode) {
-    return function(event) {
-      return event.keyCode === keyCode;
-    };
-  }
+    if (typeof(charKey) === 'string') {
+      keyCode = keycode(charKey);
+    }
 
-  function clickEventStream(el) {
+    return EVENT_KEYUP.filter(keyCodeIs(keyCode));
+  },
+
+  /**
+   * @param {Element} el
+   * @returns {EventStream}
+   */
+  click(el) {
     return Bacon.fromEventTarget(el, 'click');
   }
+};
 
-  function keyUpEventStream() {
-    return Bacon.fromEventTarget(document, 'keyup');
-  }
-
-  let keyUp  = keyUpEventStream();
-  let right  = keyUp.filter(keyCodeIs(39));
-  let left   = keyUp.filter(keyCodeIs(37));
-  let f      = keyUp.filter(keyCodeIs(70));
-
-  let next = right.merge(clickEventStream(util.getById(IDENT_NEXT))).map(1);
-  let prev = left.merge(clickEventStream(util.getById(IDENT_PREV))).map(-1);
-
-  return {
-    next: next,
-    prev: prev,
-    f   : f
+/**
+ * @param {Number} keyCode
+ * @returns {Function}
+ */
+function keyCodeIs(keyCode) {
+  return function(event) {
+    return event.keyCode === keyCode;
   };
 }

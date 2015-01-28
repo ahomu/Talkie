@@ -1,7 +1,14 @@
 'use strict';
 
+/**
+ * query parameters
+ */
 export default parseQuery(location.search);
 
+/**
+ * @param {String} query
+ * @returns {Object}
+ */
 function parseQuery(query) {
   let ret =  {};
   query

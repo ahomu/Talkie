@@ -21,107 +21,48 @@ import Bacon   from 'baconjs';
 import util    from './util';
 import params  from './params';
 
-import Slides  from './slides';
-import Control from './control';
-import Ratio   from './ratio';
-import Scale   from './scale';
+import Markdown   from './markdown';
+import Paging     from './paging';
+import FullScreen from './fullscreen';
+import Ratio      from './ratio';
+import Scale      from './scale';
+
+const IDENT_NEXT    = 'next';
+const IDENT_PREV    = 'prev';
+const IDENT_SCALER  = 'scaler';
+const MIME_MARKDOWN = 'text/x-markdown';
+const ATTR_LAYOUT   = 'layout';
+
 
 export default function(options = {}) {
-
-  function rangeIs(min, max) {
-    return function(z) {
-      return Math.min(max, Math.max(z, min));
-    };
-  }
-
-  function toInvisible(el) {
-    el.removeAttribute('visible');
-  }
-
-  function toVisible(el) {
-    el.setAttribute('visible', 1);
-  }
-
-  function textAssignOf(el) {
-    return function(text) {
-      el.textContent = text;
-    };
-  }
-
-  function styleAssignOf(el, property) {
-    return function(value) {
-      el.style[property] = value;
-    };
-  }
-
-  function percentOf(max) {
-    return function(current) {
-      return ((100 / max) * current) + '%';
-    };
-  }
 
   /**
    * Init slide sections
    */
-  let slides  = Slides();
+  util.toArray(document.querySelectorAll(`[type="${MIME_MARKDOWN}"]`)).forEach(Markdown);
+  let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
 
   /**
    * Paging control
    */
-  let control = Control();
-
-  let initialPage = params.page || 1;
-  let correctPage = util.compose(rangeIs(1, slides.length), util.add);
-
-  let both    = control.next.merge(control.prev);
-  let current = both.scan(initialPage, correctPage).skipDuplicates();
+  let paging = Paging({
+    startPage  : params.startPage || 1,
+    endPage    : slides.length,
+    nextButton : util.getById(IDENT_NEXT),
+    prevButton : util.getById(IDENT_PREV)
+  });
 
   // current page
-  current.onValue(textAssignOf(util.getById('page')));
+  paging.current.onValue(textAssignOf(util.getById('page')));
 
   // total of page
   Bacon.once(slides.length).onValue(textAssignOf(util.getById('total')));
 
   // progress bar
-  current.map(percentOf(slides.length)).onValue(styleAssignOf(util.getById('progress'), 'width'));
-
-  function toggleScreenOf(el) {
-    let request, exit;
-    if(el.requestFullscreen) {
-      request = 'requestFullscreen';
-    } else if(el.webkitRequestFullscreen) {
-      request = 'webkitRequestFullscreen';
-    } else if(el.mozRequestFullScreen) {
-      request = 'mozRequestFullScreen';
-    } else if(el.msRequestFullscreen) {
-      request = 'msRequestFullscreen';
-    }
-    if(document.exitFullscreen) {
-      exit = 'exitFullscreen';
-    } else if(document.webkitExitFullscreen) {
-      exit = 'webkitExitFullscreen';
-    } else if(document.mozCancelFullScreen) {
-      exit = 'mozCancelFullScreen';
-    } else if(document.msExitFullscreen) {
-      exit = 'msExitFullscreen';
-    }
-    return function() {
-      if (!document.fullscreenElement &&    // alternative standard method
-          !document.mozFullScreenElement &&
-          !document.webkitFullscreenElement &&
-          !document.msFullscreenElement) {
-        el[request]();
-      } else {
-        document[exit]();
-      }
-    };
-  }
-
-  // full screen
-  control.f.onValue(toggleScreenOf(document.body));
+  paging.percent.onValue(styleAssignOf(util.getById('progress'), 'width'));
 
   // slide visibility
-  Bacon.combineAsArray(current, slides)
+  Bacon.combineAsArray(paging.current, slides)
     .onValue(function(data) {
       let [current, all] = data;
       all.forEach(toInvisible);
@@ -131,9 +72,51 @@ export default function(options = {}) {
   /**
    * Scaling
    */
-  let ratio = Ratio(options);
-  let scale = Scale();
+  let ratio = Ratio({
+    wide: options.wide
+  });
+  let scale = Scale({
+    target: util.getById(IDENT_SCALER)
+  });
 
   ratio.onValue(scale);
   Bacon.once(ratio).onValue(scale);
+
+  /**
+   * Fullscreen
+   */
+  FullScreen(document.body);
+}
+
+/**
+ * @param {Element} el
+ */
+function toInvisible(el) {
+  el.removeAttribute('visible');
+}
+
+/**
+ * @param {Element} el
+ */
+function toVisible(el) {
+  el.setAttribute('visible', 1);
+}
+
+/**
+ * @param {Element} el
+ */
+function textAssignOf(el) {
+  return function(text) {
+    el.textContent = text;
+  };
+}
+
+/**
+ * @param {Element} el
+ * @param {String} property
+ */
+function styleAssignOf(el, property) {
+  return function(value) {
+    el.style[property] = value;
+  };
 }
