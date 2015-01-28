@@ -85,6 +85,41 @@ export default function(options = {}) {
   // progress bar
   current.map(percentOf(slides.length)).onValue(styleAssignOf(util.getById('progress'), 'width'));
 
+  function toggleScreenOf(el) {
+    let request, exit;
+    if(el.requestFullscreen) {
+      request = 'requestFullscreen';
+    } else if(el.webkitRequestFullscreen) {
+      request = 'webkitRequestFullscreen';
+    } else if(el.mozRequestFullScreen) {
+      request = 'mozRequestFullScreen';
+    } else if(el.msRequestFullscreen) {
+      request = 'msRequestFullscreen';
+    }
+    if(document.exitFullscreen) {
+      exit = 'exitFullscreen';
+    } else if(document.webkitExitFullscreen) {
+      exit = 'webkitExitFullscreen';
+    } else if(document.mozCancelFullScreen) {
+      exit = 'mozCancelFullScreen';
+    } else if(document.msExitFullscreen) {
+      exit = 'msExitFullscreen';
+    }
+    return function() {
+      if (!document.fullscreenElement &&    // alternative standard method
+          !document.mozFullScreenElement &&
+          !document.webkitFullscreenElement &&
+          !document.msFullscreenElement) {
+        el[request]();
+      } else {
+        document[exit]();
+      }
+    };
+  }
+
+  // full screen
+  control.f.onValue(toggleScreenOf(document.body));
+
   // slide visibility
   Bacon.combineAsArray(current, slides)
     .onValue(function(data) {

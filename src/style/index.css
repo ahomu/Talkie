@@ -7,7 +7,7 @@ html, body {
   font-family: "Open Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
 }
 
-* {
+body > * {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
@@ -38,8 +38,9 @@ html, body {
   z-index: 1;
   top: 0;
   left: 0;
+  transform: scale(1);
   transform-origin: left top;
-  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
 }
 
 #scaler[style] {

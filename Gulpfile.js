@@ -3,7 +3,7 @@ var plumber  = require('gulp-plumber');
 var rename     = require('gulp-rename');
 var sequence = require('run-sequence').use(gulp);
 var package  = require('./package.json');
-var banner   = '/*! <%= name %> - v<%= version %> */'
+var banner   = '/*! <%= name %> - v<%= version %> */';
 
 var FILE_BROWSERIFY_INDEX = './src/index.js';
 var FILE_PLEEEASE_INDEX   = './src/style/index.css';

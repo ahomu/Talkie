@@ -13,5 +13,6 @@ Talkie.js - HTML/CSS/JavaScript Slide library
 - [x] keyboard ready
 - [ ] touch control ready
 - [x] Responsive scaling (4:3, 16:9)
+- [x] Fullscreen mode
 - [ ] Presenter mode (for rehearsal)
-- [ ] Progress indicator
+- [x] Progress indicator

@@ -59,6 +59,7 @@
 [layout] ul,
 [layout] ol {
   font-size: 1.5em;
+  text-align: center;
 }
 
 [layout] ul > li

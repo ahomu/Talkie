@@ -12,7 +12,7 @@ export default function() {
   function copyAttributeTo(el) {
     return function(attr) {
       el.setAttribute(attr.name, attr.value);
-    }
+    };
   }
 
   function notTypeAttribute(attr) {
@@ -33,7 +33,7 @@ export default function() {
     langPrefix: 'hljs ',
     highlight: function (code) {
       if (window.hljs == null) {
-        console.log('highlight.js (`window.hljs`) is missng');
+        console.log('highlight.js (`window.hljs`) is missing');
         return code;
       }
       return window.hljs.highlightAuto(code).value;

@@ -26,12 +26,14 @@ export default function() {
   let keyUp  = keyUpEventStream();
   let right  = keyUp.filter(keyCodeIs(39));
   let left   = keyUp.filter(keyCodeIs(37));
+  let f      = keyUp.filter(keyCodeIs(70));
 
   let next = right.merge(clickEventStream(util.getById(IDENT_NEXT))).map(1);
   let prev = left.merge(clickEventStream(util.getById(IDENT_PREV))).map(-1);
 
   return {
     next: next,
-    prev: prev
+    prev: prev,
+    f   : f
   };
 }
