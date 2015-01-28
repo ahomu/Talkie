@@ -81,6 +81,9 @@ gulp.task('build', function() {
   var exportName = package.name.replace('-', '');
   var fileName   = package.name.toLocaleLowerCase();
 
+  // foo -> Foo
+  exportName = exportName.slice(0, 1).toUpperCase() + exportName.slice(1);
+
   return gulp.src(FILE_BROWSERIFY_INDEX)
     .pipe(bufferedBrowserify(exportName))
     .pipe(header(banner, {name: fileName, version: package.version}))
