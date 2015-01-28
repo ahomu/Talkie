@@ -33,7 +33,7 @@ export default function(options) {
 
   let both    = next.merge(prev);
   let current = both.scan(initialPage, correctPage).skipDuplicates();
-  let percent = current.map(percentOf(options.endPage));
+  let percent = current.map(percentOf(options.endPage)).skipDuplicates();
 
   return {
     current : current,

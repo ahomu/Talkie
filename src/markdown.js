@@ -4,6 +4,8 @@ import Bacon  from 'baconjs';
 import marked from 'marked';
 import util   from './util';
 
+const MIME_MARKDOWN  = 'text/x-markdown';
+
 marked.setOptions({
   langPrefix: 'hljs ',
   highlight: function (code) {
@@ -24,16 +26,14 @@ export default compileMarkdown;
 
 /**
  * @param {Element} el
- * @returns void
+ * @returns {Element}
  */
 function compileMarkdown(el) {
   let section = document.createElement('section');
-
   section.innerHTML = marked(el.innerHTML);
-
   util.toArray(el.attributes).filter(notTypeAttribute).forEach(copyAttributeTo(section));
-
   el.parentNode.replaceChild(section, el);
+  return section;
 }
 
 /**

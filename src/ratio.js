@@ -28,6 +28,7 @@ export default function(options = {}) {
 
   /**
    * Init slide sizes
+   * @sideeffects
    */
   let style = document.createElement('style');
   style.innerHTML = `

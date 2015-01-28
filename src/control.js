@@ -14,12 +14,8 @@ export default {
    * @returns {EventStream}
    */
   key(charKey) {
-    let keyCode;
-
-    if (typeof(charKey) === 'string') {
-      keyCode = keycode(charKey);
-    }
-
+    let keyCode = typeof(charKey) === 'string' ? keycode(charKey)
+                                               : charKey;
     return EVENT_KEYUP.filter(keyCodeIs(keyCode));
   },
 

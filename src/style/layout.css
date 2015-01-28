@@ -59,12 +59,12 @@
 [layout] ul,
 [layout] ol {
   font-size: 1.5em;
-  text-align: center;
+  text-align: left;
+  list-style-type: disc;
 }
 
-[layout] ul > li
-[layout] ol > li {
-  font-size: 1.5em;
+[layout] li {
+  margin-bottom: 0.5em;
 }
 
 [layout] [hero-image] {

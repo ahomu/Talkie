@@ -19,7 +19,8 @@ import polyfill from '6to5/browser-polyfill';
 import Bacon   from 'baconjs';
 
 import util    from './util';
-import params  from './params';
+import control from './control';
+import query   from './query';
 
 import Markdown   from './markdown';
 import Paging     from './paging';
@@ -27,14 +28,47 @@ import FullScreen from './fullscreen';
 import Ratio      from './ratio';
 import Scale      from './scale';
 
-const IDENT_NEXT    = 'next';
-const IDENT_PREV    = 'prev';
-const IDENT_SCALER  = 'scaler';
-const MIME_MARKDOWN = 'text/x-markdown';
-const ATTR_LAYOUT   = 'layout';
+const IDENT_NEXT     = 'next';
+const IDENT_PREV     = 'prev';
+const IDENT_SCALER   = 'scaler';
+const IDENT_PAGE     = 'page';
+const IDENT_TOTAL    = 'total';
+const IDENT_PROGRESS = 'progress';
+const MIME_MARKDOWN  = 'text/x-markdown';
+const ATTR_LAYOUT    = 'layout';
 
+/**
+ * @typedef {Object} TalkieOptions
+ * @property {Boolean} [api]
+ * @property {Boolean} [wide]
+ */
 
+/**
+ * @param {TalkieOptions} options
+ */
 export default function(options = {}) {
+  if (options.api) {
+    return {
+      main       : main,
+      util       : util,
+      control    : control,
+      query      : query,
+      markdown   : Markdown,
+      paging     : Paging,
+      fullScreen : FullScreen,
+      ratio      : Ratio,
+      scale      : Scale,
+      Bacon      : Bacon
+    };
+  } else {
+    return main(options);
+  }
+}
+
+/**
+ * @param {TalkieOptions} options
+ */
+function main(options = {}) {
 
   /**
    * Init slide sections
@@ -45,6 +79,7 @@ export default function(options = {}) {
   /**
    * Paging control
    */
+  let params = query(location.search);
   let paging = Paging({
     startPage  : params.startPage || 1,
     endPage    : slides.length,
@@ -53,13 +88,13 @@ export default function(options = {}) {
   });
 
   // current page
-  paging.current.onValue(textAssignOf(util.getById('page')));
+  paging.current.onValue(textAssignOf(util.getById(IDENT_PAGE)));
 
   // total of page
-  Bacon.once(slides.length).onValue(textAssignOf(util.getById('total')));
+  Bacon.once(slides.length).onValue(textAssignOf(util.getById(IDENT_TOTAL)));
 
   // progress bar
-  paging.percent.onValue(styleAssignOf(util.getById('progress'), 'width'));
+  paging.percent.onValue(styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
 
   // slide visibility
   Bacon.combineAsArray(paging.current, slides)

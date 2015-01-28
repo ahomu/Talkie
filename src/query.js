@@ -3,7 +3,7 @@
 /**
  * query parameters
  */
-export default parseQuery(location.search);
+export default parseQuery;
 
 /**
  * @param {String} query

@@ -9,8 +9,10 @@
     "test/**/*.js"
   ],
   "serve_files": [
+    "/cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js",
     "dist/*.js",
-    "temp/**/*.js"
+    "temp/**/*.js",
+    "!temp/runner.js"
   ],
   "serve_files_ignore": [
     "dist/*.min.js"
