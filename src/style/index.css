@@ -12,6 +12,10 @@ body > * {
   -webkit-font-smoothing: antialiased;
 }
 
+#next, #prev {
+  cursor: pointer;
+}
+
 #progress {
   position: absolute;
   z-index: 3;
@@ -20,6 +24,7 @@ body > * {
   width: 0;
   height: 0.1em;
   background-color: hotpink;
+  transition: width .3s ease;
 }
 
 #control {
@@ -28,7 +33,8 @@ body > * {
   bottom: 0;
   right: 0;
   padding: 20px;
-  color: #fff;
+  color: hotpink;
+  font-family: Consolas,Monaco,'Andale Mono',monospace;
 }
 
 #scaler {

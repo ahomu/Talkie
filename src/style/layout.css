@@ -41,24 +41,24 @@
   letter-spacing: .25em;
   font-weight: 500;
   font-family: Futura, Helvetica, Arial,"Hiragino Kaku Gothic ProN", "Meiryo",sans-serif;
-  font-size: 4em;
+  font-size: 4.8em;
 }
 
 [layout] h2 {
-  font-size: 2.5em;
+  font-size: 3.6em;
 }
 
 [layout] h3 {
-  font-size: 1.5em;
+  font-size: 2.4em;
 }
 
 [layout] p {
-  font-size: 1.5em;
+  font-size: 2.0em;
 }
 
 [layout] ul,
 [layout] ol {
-  font-size: 1.5em;
+  font-size: 1.8em;
   text-align: left;
   list-style-type: disc;
 }
@@ -78,7 +78,7 @@
 }
 
 [layout] pre {
-  font-size: 1.5em;
+  font-size: 1.6em;
   font-family: Consolas,Monaco,'Andale Mono',monospace;
 }
 
