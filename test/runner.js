@@ -2,7 +2,7 @@
 
 (function() {
 
-  // for browser (polyfill & global utilities)
+  // for browser (global utilities)
   window.assert = require('power-assert');
   window.sinon = require('sinon');
 
