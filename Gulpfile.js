@@ -26,13 +26,11 @@ function bufferedBrowserify(standaloneName) {
         standalone : standaloneName,
         debug      : true,
         noParse    : [
-          require.resolve('6to5/runtime'),
           require.resolve('6to5/browser-polyfill')
         ]
       })
       .transform(to5ify.configure({
-        experimental : false,
-        runtime      : true
+        experimental : false
       }))
       .bundle()
       .on('error', function(err){
