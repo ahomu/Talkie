@@ -50,18 +50,12 @@ gulp.task('jshint', function() {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('bump', function(){
-  return gulp.src('./package.json')
-    .pipe(bump({type:'patch'}))
-    .pipe(gulp.dest('./'));
-});
-
 gulp.task('pretest', function() {
   gulp.start('build', 'build-test');
 });
 
 gulp.task('release', function() {
-  sequence('jshint', 'bump', 'build', 'build-test');
+  sequence('jshint', 'build', 'build-test', 'build-css');
 });
 
 gulp.task('watch', function() {
@@ -98,6 +92,7 @@ gulp.task('build', function() {
 gulp.task('build-css', function () {
   var please = require('gulp-pleeease');
   var path     = require('path');
+  var fileName   = package.name.toLocaleLowerCase();
 
   return gulp.src(FILE_PLEEEASE_INDEX)
     .pipe(plumber())
@@ -109,10 +104,7 @@ gulp.task('build-css', function () {
         browsers: ["last 2 versions", "Android 4.0"]
       }
     }))
-    .pipe(rename({
-      suffix: '.min',
-      extname: '.css'
-    }))
+    .pipe(rename(fileName + '.min.css'))
     .pipe(gulp.dest(DIR_DIST));
 });
 

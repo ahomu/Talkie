@@ -71,6 +71,18 @@ function main(options = {}) {
   let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
 
   /**
+   * Insert control Parts
+   */
+  document.body.insertAdjacentHTML('beforeend', `
+<div id="control">
+  <p><span id="prev">◀</span>
+  Page <span id="page">0</span> of <span id="total">0</span>
+  <span id="next">▶</span></p>
+</div>
+<div id="progress"></div>
+  `);
+
+  /**
    * Paging control
    */
   let params = query(location.search);
@@ -83,6 +95,7 @@ function main(options = {}) {
 
   // current page
   paging.current.onValue(textAssignOf(util.getById(IDENT_PAGE)));
+
 
   // total of page
   Bacon.once(slides.length).onValue(textAssignOf(util.getById(IDENT_TOTAL)));
