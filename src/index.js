@@ -85,17 +85,25 @@ function main(options = {}) {
   /**
    * Paging control
    */
+  let nextEl = util.getById(IDENT_NEXT);
+  let prevEl = util.getById(IDENT_PREV);
   let params = query(location.search);
   let paging = Paging({
     startPage  : params.startPage || 1,
     endPage    : slides.length,
-    nextButton : util.getById(IDENT_NEXT),
-    prevButton : util.getById(IDENT_PREV)
+    nextButton : nextEl,
+    prevButton : prevEl
   });
 
   // current page
   paging.current.onValue(textAssignOf(util.getById(IDENT_PAGE)));
 
+  // FIXME
+  // paging arrows
+  paging.current.map(1).onValue(styleAssignOf(prevEl, 'opacity'));
+  paging.current.map(1).onValue(styleAssignOf(nextEl, 'opacity'));
+  paging.start.map(0.3).onValue(styleAssignOf(prevEl, 'opacity'));
+  paging.end.map(0.3).onValue(styleAssignOf(nextEl, 'opacity'));
 
   // total of page
   Bacon.once(slides.length).onValue(textAssignOf(util.getById(IDENT_TOTAL)));

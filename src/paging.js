@@ -29,7 +29,7 @@ export default function(options) {
   let prev = left.map(-1);
 
   let initialPage = options.startPage || 1;
-  let correctPage = util.compose(rangeIs(1, options.endPage), add);
+  let correctPage = util.compose(inRangeOf(1, options.endPage), add);
 
   let both    = next.merge(prev);
   let current = both.scan(initialPage, correctPage).skipDuplicates();
@@ -37,6 +37,8 @@ export default function(options) {
 
   return {
     current : current,
+    start   : current.filter((v) => v === 1),
+    end     : current.filter((v) => v === options.endPage),
     percent : percent,
     onNext  : next,
     onPrev  : prev
@@ -48,7 +50,7 @@ export default function(options) {
  * @param {Number} max
  * @returns {Function}
  */
-function rangeIs(min, max) {
+function inRangeOf(min, max) {
   return function(z) {
     return Math.min(max, Math.max(z, min));
   };

@@ -56,6 +56,32 @@ describe('paging', function() {
     rightKey(); // 75% > 100%
   });
 
+  it('start & end', function() {
+    let pageSt = paging({
+      startPage : 1,
+      endPage   : 3
+    });
+
+    let start = pageSt.start;
+    let end   = pageSt.end;
+
+    rightKey(); // 1 > 2
+
+    start.onValue(function(v) {
+      assert(1 === v);
+      return Bacon.noMore;
+    });
+    leftKey(); // 2 > 1
+
+    end.onValue(function(v) {
+      assert(3 === v);
+      return Bacon.noMore;
+    });
+    rightKey(); // 1 > 2
+    rightKey(); // 2 > 3
+
+  });
+
   it('onNext & onPrev', function() {
     let {onNext: next, onPrev: prev} = paging({
       startPage : 1,
