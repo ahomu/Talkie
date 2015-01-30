@@ -8,8 +8,7 @@ import util    from './util';
  * @typedef {Object} PagingOptions
  * @property {Number} startPage
  * @property {Number} endPage
- * @property {Element} [nextButton]
- * @property {Element} [prevButton]
+ * @property {Array<Element>} slideElements
  */
 
 /**
@@ -19,30 +18,52 @@ import util    from './util';
  */
 export default function(options) {
 
-  let right = control.key('right');
-  let left  = control.key('left');
+  let nextBus    = new Bacon.Bus();
+  let prevBus    = new Bacon.Bus();
+  let changedBus = new Bacon.Bus();
 
-  options.nextButton && (right = right.merge(control.click(options.nextButton)));
-  options.prevButton && (left  = left.merge(control.click(options.prevButton)));
-
-  let next = right.map(1);
-  let prev = left.map(-1);
+  let nextEs = nextBus.map(1);
+  let prevEs = prevBus.map(-1);
 
   let initialPage = options.startPage || 1;
   let correctPage = util.compose(inRangeOf(1, options.endPage), add);
 
-  let both    = next.merge(prev);
-  let current = both.scan(initialPage, correctPage).skipDuplicates();
+  let bothEs  = nextEs.merge(prevEs);
+  let current = bothEs.scan(initialPage, correctPage).skipDuplicates();
   let percent = current.map(percentOf(options.endPage)).skipDuplicates();
 
+  changedBus.plug(current.changes());
+
+  Bacon.combineAsArray(current, options.slideElements).onValue(function(data) {
+    let [current, all] = data;
+    all.forEach(toInvisible);
+
+    let index = current - 1 /* fix page to index */;
+    all[index] && toVisible(all[index]);
+  });
+
   return {
-    current : current,
-    start   : current.filter((v) => v === 1),
-    end     : current.filter((v) => v === options.endPage),
-    percent : percent,
-    onNext  : next,
-    onPrev  : prev
+    percentEs : percent,
+    currentEs : current,
+    startEs   : current.filter((v) => v === 1),
+    endEs     : current.filter((v) => v === options.endPage),
+    nextBus   : nextBus,
+    prevBus   : prevBus
   };
+}
+
+/**
+ * @param {Element} el
+ */
+function toInvisible(el) {
+  el.removeAttribute('visible');
+}
+
+/**
+ * @param {Element} el
+ */
+function toVisible(el) {
+  el.setAttribute('visible', 1);
 }
 
 /**

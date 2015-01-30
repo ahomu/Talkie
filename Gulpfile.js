@@ -30,7 +30,8 @@ function bufferedBrowserify(standaloneName) {
         ]
       })
       .transform(to5ify.configure({
-        experimental : false
+        experimental : false,
+        playground   : false
       }))
       .bundle()
       .on('error', function(err){

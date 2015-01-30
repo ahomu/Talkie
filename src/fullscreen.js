@@ -10,7 +10,9 @@ import control from './control';
  * @returns void
  */
 export default function(target) {
-  control.key('f').onValue(toggleScreenOf(target));
+  let bus = new Bacon.Bus();
+  bus.onValue(toggleScreenOf(target));
+  return bus;
 }
 
 function toggleScreenOf(el) {

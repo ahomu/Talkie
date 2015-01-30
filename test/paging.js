@@ -1,7 +1,7 @@
 'use strict';
 
 describe('paging', function() {
-  let {paging: paging, Bacon: Bacon} = Talkie({api:true});
+  let {paging: Paging, control: control, Bacon: Bacon} = Talkie({api:true});
 
   function rightKey() {
     KeyEvent.simulate(39, 39); // →
@@ -11,12 +11,14 @@ describe('paging', function() {
     KeyEvent.simulate(37, 37); // →
   }
 
-  it('current', function() {
-    let current = paging({
+  it('currentEs', function() {
+    let paging = Paging({
       startPage : 1,
-      endPage   : 3
-    }).current;
+      endPage   : 3,
+      slideElements: []
+    });
 
+    let current = paging.currentEs;
     let expects = [1, 2, 3, 2, 1];
     current.onValue(function(v) {
       assert(expects.shift() === v);
@@ -24,6 +26,10 @@ describe('paging', function() {
         return Bacon.noMore;
       }
     });
+
+    paging.nextBus.plug(control.key(39));
+    paging.prevBus.plug(control.key(37));
+
                 // 1
     rightKey(); // 1 > 2
     rightKey(); // 2 > 3
@@ -36,12 +42,16 @@ describe('paging', function() {
     // TODO startPage test
   });
 
-  it('percent', function() {
-    let percent = paging({
+  it('percentEs', function() {
+    let paging = Paging({
       startPage : 1,
-      endPage   : 4
-    }).percent;
+      endPage   : 4,
+      slideElements: []
+    });
+    paging.nextBus.plug(control.key(39));
+    paging.prevBus.plug(control.key(37));
 
+    let percent = paging.percentEs;
     let expects = ['25%', '50%', '75%', '100%'];
     percent.onValue(function(v) {
       assert(expects.shift() === v);
@@ -57,13 +67,16 @@ describe('paging', function() {
   });
 
   it('start & end', function() {
-    let pageSt = paging({
+    let paging = Paging({
       startPage : 1,
-      endPage   : 3
+      endPage   : 3,
+      slideElements: []
     });
+    paging.nextBus.plug(control.key(39));
+    paging.prevBus.plug(control.key(37));
 
-    let start = pageSt.start;
-    let end   = pageSt.end;
+    let start = paging.startEs;
+    let end   = paging.endEs;
 
     rightKey(); // 1 > 2
 
@@ -80,23 +93,6 @@ describe('paging', function() {
     rightKey(); // 1 > 2
     rightKey(); // 2 > 3
 
-  });
-
-  it('onNext & onPrev', function() {
-    let {onNext: next, onPrev: prev} = paging({
-      startPage : 1,
-      endPage   : 5
-    });
-
-    next.onValue(function(v) {
-      assert(v === 1);
-    });
-    leftKey();
-
-    prev.onValue(function(v) {
-      assert(v === -1);
-    });
-    rightKey();
   });
 
 });

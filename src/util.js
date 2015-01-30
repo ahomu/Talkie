@@ -9,6 +9,32 @@ export default {
     return Array.prototype.slice.call(list);
   },
   /**
+   * TODO test
+   * @param {Object} orig
+   * @param {Object} defaults
+   * @returns {Object}
+   */
+  defaults(orig, defaults) {
+    let ret = this.clone(orig);
+    Object.keys(defaults).forEach((k)=> {
+      if (k in ret) {
+        return;
+      }
+      ret[k] = defaults[k];
+    });
+    return ret;
+  },
+  /**
+   * TODO test
+   * @param {Object} orig
+   * @returns {Object}
+   */
+  clone(orig) {
+    let ret = {};
+    Object.keys(orig).forEach((k)=> ret[k] = orig[k]);
+    return ret;
+  },
+  /**
    * @param {function} fn...
    * @returns {Function}
    */
@@ -31,5 +57,24 @@ export default {
    */
   getById(ident) {
     return document.getElementById(ident);
+  },
+
+  /**
+   * @param {Element} el
+   */
+  textAssignOf(el) {
+    return function(text) {
+      el.textContent = text;
+    };
+  },
+
+/**
+ * @param {Element} el
+ * @param {String} property
+ */
+  styleAssignOf(el, property) {
+    return function(value) {
+      el.style[property] = value;
+    };
   }
 };

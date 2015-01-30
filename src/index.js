@@ -35,6 +35,8 @@ const ATTR_LAYOUT    = 'layout';
  * @typedef {Object} TalkieOptions
  * @property {Boolean} [api]
  * @property {Boolean} [wide]
+ * @property {Boolean} [control]
+ * @property {Boolean} [progress]
  */
 
 /**
@@ -60,9 +62,23 @@ export default function(options = {}) {
 }
 
 /**
- * @param {TalkieOptions} options
+ * @param {TalkieOptions} _options
  */
-function main(options = {}) {
+function main(_options = {}) {
+
+  /**
+   * apply default options
+   * @type {*|Object}
+   */
+  let options = util.defaults(_options, {
+    control  : true,
+    progress : true
+  });
+
+  /**
+   * Get params from query strings
+   */
+  let params = query(location.search);
 
   /**
    * Init slide sections
@@ -71,53 +87,56 @@ function main(options = {}) {
   let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
 
   /**
-   * Insert control Parts
+   * FullScreen
    */
-  document.body.insertAdjacentHTML('beforeend', `
-<div id="control">
-  <p><span id="prev">◀</span>
-  Page <span id="page">0</span> of <span id="total">0</span>
-  <span id="next">▶</span></p>
-</div>
-<div id="progress"></div>
-  `);
+  FullScreen(document.body).plug(control.key('f'));
 
   /**
    * Paging control
    */
-  let nextEl = util.getById(IDENT_NEXT);
-  let prevEl = util.getById(IDENT_PREV);
-  let params = query(location.search);
   let paging = Paging({
-    startPage  : params.startPage || 1,
-    endPage    : slides.length,
-    nextButton : nextEl,
-    prevButton : prevEl
+    startPage     : params.startPage || 1,
+    endPage       : slides.length,
+    slideElements : slides
   });
 
-  // current page
-  paging.current.onValue(textAssignOf(util.getById(IDENT_PAGE)));
+  paging.nextBus.plug(control.key('right'));
+  paging.prevBus.plug(control.key('left'));
 
-  // FIXME
-  // paging arrows
-  paging.current.map(1).onValue(styleAssignOf(prevEl, 'opacity'));
-  paging.current.map(1).onValue(styleAssignOf(nextEl, 'opacity'));
-  paging.start.map(0.3).onValue(styleAssignOf(prevEl, 'opacity'));
-  paging.end.map(0.3).onValue(styleAssignOf(nextEl, 'opacity'));
+  /**
+   * Insert Ui Elements
+   */
+  if (options.control) {
+    document.body.insertAdjacentHTML('beforeend', `
+      <div id="control">
+        <p><span id="prev">◀</span>
+        Page <span id="page">0</span> of <span id="total">0</span>
+        <span id="next">▶</span></p>
+      </div>
+    `);
 
-  // total of page
-  Bacon.once(slides.length).onValue(textAssignOf(util.getById(IDENT_TOTAL)));
+    let nextEl = util.getById(IDENT_NEXT);
+    let prevEl = util.getById(IDENT_PREV);
 
-  // progress bar
-  paging.percent.onValue(styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
+    // next button
+    paging.nextBus.plug(control.click(nextEl));
 
-  // slide visibility
-  Bacon.combineAsArray(paging.current, slides)
-    .onValue(function(data) {
-      let [current, all] = data;
-      all.forEach(toInvisible);
-      toVisible(all[current - 1 /* fix page to index */]);
-    });
+    // prev button
+    paging.prevBus.plug(control.click(prevEl));
+
+    // current page
+    paging.currentEs.onValue(util.textAssignOf(util.getById(IDENT_PAGE)));
+
+    // total of page
+    Bacon.once(slides.length).onValue(util.textAssignOf(util.getById(IDENT_TOTAL)));
+  }
+
+  if (options.progress) {
+    document.body.insertAdjacentHTML('beforeend', `<div id="progress"></div>`);
+
+    // progress bar
+    paging.percentEs.onValue(util.styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
+  }
 
   /**
    * Scaling
@@ -131,42 +150,5 @@ function main(options = {}) {
 
   ratio.onValue(scale);
   Bacon.once(ratio).onValue(scale);
-
-  /**
-   * Fullscreen
-   */
-  FullScreen(document.body);
 }
 
-/**
- * @param {Element} el
- */
-function toInvisible(el) {
-  el.removeAttribute('visible');
-}
-
-/**
- * @param {Element} el
- */
-function toVisible(el) {
-  el.setAttribute('visible', 1);
-}
-
-/**
- * @param {Element} el
- */
-function textAssignOf(el) {
-  return function(text) {
-    el.textContent = text;
-  };
-}
-
-/**
- * @param {Element} el
- * @param {String} property
- */
-function styleAssignOf(el, property) {
-  return function(value) {
-    el.style[property] = value;
-  };
-}
