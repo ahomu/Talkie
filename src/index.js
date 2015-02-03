@@ -141,12 +141,8 @@ function main(_options = {}) {
   /**
    * Scaling
    */
-  let ratio = Ratio({
-    wide: options.wide
-  });
-  let scale = Scale({
-    target: util.getById(IDENT_SCALER)
-  });
+  let ratio = Ratio({wide: options.wide});
+  let scale = Scale({target: util.getById(IDENT_SCALER)});
 
   ratio.onValue(scale);
   Bacon.once(ratio).onValue(scale);

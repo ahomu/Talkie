@@ -4,6 +4,8 @@ Talkie.js - HTML/CSS/JavaScript Slide library
 [![Licence](http://img.shields.io/badge/license-MIT-000000.svg?style=flat-square)](https://npmjs.org/package/Talkie)
 [![Version](http://img.shields.io/npm/v/Talkie.svg?style=flat-square)](https://npmjs.org/package/Talkie)
 
+This library written in es6 JavaScript & [baconjs/bacon.js](https://github.com/baconjs/bacon.js). For more information about dependency Please look at the package.json.
+
 ## Feature
 
 - [x] Markdown support
