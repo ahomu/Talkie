@@ -4,7 +4,7 @@ Talkie.js - HTML/CSS/JavaScript Slide library
 [![Licence](http://img.shields.io/badge/license-MIT-000000.svg?style=flat-square)](https://npmjs.org/package/Talkie)
 [![Version](http://img.shields.io/npm/v/Talkie.svg?style=flat-square)](https://npmjs.org/package/Talkie)
 
-This library written in es6 JavaScript & [baconjs/bacon.js](https://github.com/baconjs/bacon.js).
+This library written in es6 JavaScript & [baconjs/bacon.js](https://github.com/baconjs/bacon.js). Also serve as a practice of es6 and functional reactive programming.
 
 For more information about dependency Please look at the [package.json](package.json).
 
@@ -72,21 +72,34 @@ If you use the code highlighting, you must load these files.
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 ```
 
-The default slide size 4:3 (width 1024px, height 768px) ratio. In the following code 16:9 (width: 1366px, height 768px) you will.
+The default slide 16:9 (width: 1366px, height 768px). In the following code ratio 4:3 (width 1024px, height 768px) you will.
 
 ```javascript
-Talkie({wide: true});
+Talkie({wide: false});
 ```
 
-## Using API
+## Internal API
 
 If you want to using Talkie internal api. Like this and will get Talkie api object.
 
-```
+```javascript
 let Talkie = Talkie({api: true});
 ```
 
-TODO api documents...
+Look at the [index.js](src/index.js) you will see how to use the internal API. You referring to [index.js](src/index.js), can build a slide in its own UI.
+
+### example
+
+You can add key bindings for move to next slide & prev slide.
+
+```javascript
+let talkie = Talkie({api: true}); // get internal api
+talkie.main(); // default ui initialization process
+
+// add key bindings next slide & prev slide
+talkie.paging.nextBus.plug(talkie.control.key('s'));
+talkie.paging.prevBus.plug(talkie.control.key('a'));
+```
 
 ## License
 
