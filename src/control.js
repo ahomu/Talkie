@@ -25,6 +25,13 @@ export default {
    */
   click(el) {
     return Bacon.fromEventTarget(el, 'click');
+  },
+
+  /**
+   * @returns {EventStream}
+   */
+  resize() {
+    return Bacon.fromEventTarget(window, 'resize');
   }
 };
 

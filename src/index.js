@@ -19,8 +19,7 @@ import query   from './query';
 import Markdown   from './markdown';
 import Paging     from './paging';
 import FullScreen from './fullscreen';
-import Ratio      from './ratio';
-import Scale      from './scale';
+import Responsive from './responsive';
 
 const IDENT_NEXT     = 'next';
 const IDENT_PREV     = 'prev';
@@ -30,6 +29,11 @@ const IDENT_TOTAL    = 'total';
 const IDENT_PROGRESS = 'progress';
 const MIME_MARKDOWN  = 'text/x-markdown';
 const ATTR_LAYOUT    = 'layout';
+
+const NORMAL_WIDTH  = 1024;
+const NORMAL_HEIGHT = 768;
+const WIDE_WIDTH    = 1366;
+const WIDE_HEIGHT   = 768;
 
 /**
  * @typedef {Object} TalkieOptions
@@ -52,8 +56,7 @@ export default function(options = {}) {
       markdown   : Markdown,
       paging     : Paging,
       fullScreen : FullScreen,
-      ratio      : Ratio,
-      scale      : Scale,
+      responsive : Responsive,
       Bacon      : Bacon
     };
   } else {
@@ -83,31 +86,41 @@ function main(_options = {}) {
   let params = query(location.search);
 
   /**
+   * Init slide sizes
+   */
+  let width  = options.wide ? WIDE_WIDTH  : NORMAL_WIDTH;
+  let height = options.wide ? WIDE_HEIGHT : NORMAL_HEIGHT;
+  document.querySelector('head').insertAdjacentHTML('beforeend', `
+    <style>
+      #${IDENT_SCALER},
+      [layout] {
+        width: ${width}px !important;
+        height: ${height}px !important;
+      }
+    </style>`
+  );
+
+  /**
    * Init slide sections
    */
   util.toArray(document.querySelectorAll(`[type="${MIME_MARKDOWN}"]`)).forEach(Markdown);
   let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
 
   /**
-   * FullScreen
-   */
-  FullScreen(document.body).plug(control.key('f'));
-
-  /**
-   * Scaling
-   * FIXME refactor I/F
+   * Responsive scaling
    */
   document.body.insertAdjacentHTML('beforeend', `
-    <div id="scaler"></div>
+    <div id="${IDENT_SCALER}"></div>
   `);
-
   let scalerEl = util.getById(IDENT_SCALER);
-  let ratio = Ratio({wide: options.wide});
-  let scale = Scale({target: scalerEl});
+  slides.forEach((el) => scalerEl.appendChild(el));
 
-  slides.forEach((e) => scalerEl.appendChild(e));
-  ratio.onValue(scale);
-  Bacon.once(ratio).onValue(scale);
+  let ratio = Responsive({
+    width  : width,
+    height : height,
+    target : scalerEl
+  });
+  ratio.plug(control.resize());
 
   /**
    * Paging control
@@ -155,5 +168,10 @@ function main(_options = {}) {
     // progress bar
     paging.percentEs.onValue(util.styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
   }
+
+  /**
+   * FullScreen
+   */
+  FullScreen(document.body).plug(control.key('f'));
 }
 
