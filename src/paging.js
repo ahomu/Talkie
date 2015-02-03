@@ -20,7 +20,6 @@ export default function(options) {
 
   let nextBus    = new Bacon.Bus();
   let prevBus    = new Bacon.Bus();
-  let changedBus = new Bacon.Bus();
 
   let nextEs = nextBus.map(1);
   let prevEs = prevBus.map(-1);
@@ -31,8 +30,6 @@ export default function(options) {
   let bothEs  = nextEs.merge(prevEs);
   let current = bothEs.scan(initialPage, correctPage).skipDuplicates();
   let percent = current.map(percentOf(options.endPage)).skipDuplicates();
-
-  changedBus.plug(current.changes());
 
   Bacon.combineAsArray(current, options.slideElements).onValue(function(data) {
     let [current, all] = data;
