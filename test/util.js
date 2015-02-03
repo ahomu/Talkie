@@ -11,6 +11,26 @@ describe('util', function() {
     assert(Array.isArray(nodes));
   });
 
+  it('defaults', function() {
+    let orig = {
+      foo: 1,
+      qux: 'hahaha'
+    };
+
+    let proc = util.defaults(orig, {
+      foo: 0,
+      bar: false,
+      baz: undefined,
+      qux: 'wryyy'
+    });
+
+    assert(orig !== proc);
+    assert(proc.foo === 1);
+    assert(proc.bar === false);
+    assert(proc.baz === undefined);
+    assert(proc.qux === 'hahaha');
+  });
+
   it('compose', function() {
     let fn = util.compose(function(y) {
       return y * 2;
@@ -41,8 +61,6 @@ describe('util', function() {
     let assign = util.textAssignOf(el);
     assign('fuga');
     assert(el.textContent === 'fuga');
-
-    el.parentNode.removeChild(el);
   });
 
   it('styleAssignOf', function() {
@@ -54,8 +72,6 @@ describe('util', function() {
     let assign = util.styleAssignOf(el, 'width');
     assign('50%');
     assert(el.style.width === '50%');
-
-    el.parentNode.removeChild(el);
   });
 
 });

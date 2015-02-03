@@ -95,4 +95,39 @@ describe('paging', function() {
 
   });
 
+  it('visible & invisible', function() {
+    let el1 = document.createElement('section');
+    let el2 = document.createElement('section');
+    let el3 = document.createElement('section');
+
+    let paging = Paging({
+      startPage : 1,
+      endPage   : 3,
+      slideElements: [el1, el2, el3]
+    });
+    paging.nextBus.plug(control.key(39));
+    paging.prevBus.plug(control.key(37));
+
+    assert(el1.getAttribute('visible') === '1');
+    assert(el2.getAttribute('visible') === null);
+    assert(el3.getAttribute('visible') === null);
+
+    rightKey(); // 1 > 2
+
+    assert(el1.getAttribute('visible') === null);
+    assert(el2.getAttribute('visible') === '1');
+    assert(el3.getAttribute('visible') === null);
+
+    rightKey(); // 2 > 3
+
+    assert(el1.getAttribute('visible') === null);
+    assert(el2.getAttribute('visible') === null);
+    assert(el3.getAttribute('visible') === '1');
+
+    leftKey(); // 2 > 1
+
+    assert(el1.getAttribute('visible') === null);
+    assert(el2.getAttribute('visible') === '1');
+    assert(el3.getAttribute('visible') === null);
+  });
 });

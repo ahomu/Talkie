@@ -8,6 +8,7 @@ export default {
   toArray(list) {
     return Array.prototype.slice.call(list);
   },
+
   /**
    * TODO test
    * @param {Object} orig
@@ -24,6 +25,7 @@ export default {
     });
     return ret;
   },
+
   /**
    * TODO test
    * @param {Object} orig
@@ -34,6 +36,7 @@ export default {
     Object.keys(orig).forEach((k)=> ret[k] = orig[k]);
     return ret;
   },
+
   /**
    * @param {function} fn...
    * @returns {Function}
@@ -68,10 +71,10 @@ export default {
     };
   },
 
-/**
- * @param {Element} el
- * @param {String} property
- */
+  /**
+   * @param {Element} el
+   * @param {String} property
+   */
   styleAssignOf(el, property) {
     return function(value) {
       el.style[property] = value;
