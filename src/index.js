@@ -133,6 +133,7 @@ function main(_options = {}) {
   });
 
   paging.nextBus.plug(control.key('right'));
+  paging.nextBus.plug(control.key('space'));
   paging.prevBus.plug(control.key('left'));
 
   /**
