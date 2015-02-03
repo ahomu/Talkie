@@ -24,6 +24,7 @@ import Responsive from './responsive';
 const IDENT_NEXT     = 'next';
 const IDENT_PREV     = 'prev';
 const IDENT_SCALER   = 'scaler';
+const IDENT_CONTROL  = 'control';
 const IDENT_PAGE     = 'page';
 const IDENT_TOTAL    = 'total';
 const IDENT_PROGRESS = 'progress';
@@ -139,10 +140,10 @@ function main(_options = {}) {
    */
   if (options.control) {
     document.body.insertAdjacentHTML('beforeend', `
-      <div id="control">
-        <p><span id="prev">&lt;</span>
-        Page <span id="page">0</span> of <span id="total">0</span>
-        <span id="next">&gt;</span></p>
+      <div id="${IDENT_CONTROL}">
+        <p><span id="${IDENT_PREV}">&lt;</span>
+        Page <span id="${IDENT_PAGE}">0</span> of <span id="${IDENT_TOTAL}">0</span>
+        <span id="${IDENT_NEXT}">&gt;</span></p>
       </div>
     `);
 
@@ -163,7 +164,7 @@ function main(_options = {}) {
   }
 
   if (options.progress) {
-    document.body.insertAdjacentHTML('beforeend', `<div id="progress"></div>`);
+    document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_PROGRESS}"></div>`);
 
     // progress bar
     paging.percentEs.onValue(util.styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
@@ -174,4 +175,3 @@ function main(_options = {}) {
    */
   FullScreen(document.body).plug(control.key('f'));
 }
-
