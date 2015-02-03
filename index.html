@@ -5,62 +5,38 @@
 </head>
 <body>
 
-<div id="scaler">
 <!-- put your slides -->
 
-  <script layout h-start type="text/x-markdown">
-  # Reactive Programming in JavaScript
+<script layout type="text/x-markdown">
+  # Talkie.js
 
-  ### CyberAgent, inc. Ayumu Sato
-  </script>
+  HTML/CSS/JavaScript Presentation Library
+</script>
 
-  <script layout="bullets" type="text/x-markdown">
-  ## こんにちは！こんにちは！
+<script layout="bullets" type="text/x-markdown">
+  ## Feature
 
-  - hoge
-  - fuga
-  - piyo
-  </script>
+- Markdown support
+- Code highlighting
+- Responsive scaling
+- FullScreen mode (F)
+- Layout attributes
+- Progress indicator
+</script>
 
-  <script layout="code" type="text/x-markdown">
-  ```javascript
-function $initHighlight(block, flags) {
-  try {
-    if (block.className.search(/\bno\-highlight\b/) != -1)
-      return processBlock(block.function, true, 0x0F) + ' class=""';
-  } catch (e) {
-    /* handle exception */
-    var e4x =
-        <div>Example
-            <p>1234</p></div>;
-  }
-  // "0 / 2" should not be parsed as regexp
-  for (var i = 0 / 2; i < classes.length; i++) {
-    if (checkCondition(classes[i]) === undefined)
-      return /\d+[\s/]/g;
-  }
-  console.log(Array.every(classes, Boolean));
-}
-  ```
-  </script>
+<script layout="bullets" type="text/x-markdown">
+  ## 機能 (Japanese)
 
-  <script layout="code" type="text/x-markdown">
-  ```javascript
-export default function() {
-  function getHorizontalRatio() {
-  }
-  function getVerticalRatio() {
-  }
-  function resizeEventStream() {
-  }
-}
-  ```
-  </script>
-
-</div>
+- Markdown書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
+- ハイライトばっちり _:(°ω° 」∠):＿
+- レスポンシブだよ (^з^)-☆
+- フルスクリーンOK (｡•̀ᴗ-)✧
+- 属性でレイアウトできるよ (*´▽`)
+- 進行度インジゲータあるよ c⌒っ.ω.)っ
+</script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 <script src="./dist/talkie.js"></script>
-<script>Talkie({wide: true});</script>
+<script>Talkie();</script>
 </body>
 </html>

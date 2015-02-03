@@ -71,6 +71,8 @@ function main(_options = {}) {
    * @type {*|Object}
    */
   let options = util.defaults(_options, {
+    api      : false,
+    wide     : true,
     control  : true,
     progress : true
   });
@@ -92,6 +94,22 @@ function main(_options = {}) {
   FullScreen(document.body).plug(control.key('f'));
 
   /**
+   * Scaling
+   * FIXME refactor I/F
+   */
+  document.body.insertAdjacentHTML('beforeend', `
+    <div id="scaler"></div>
+  `);
+
+  let scalerEl = util.getById(IDENT_SCALER);
+  let ratio = Ratio({wide: options.wide});
+  let scale = Scale({target: scalerEl});
+
+  slides.forEach((e) => scalerEl.appendChild(e));
+  ratio.onValue(scale);
+  Bacon.once(ratio).onValue(scale);
+
+  /**
    * Paging control
    */
   let paging = Paging({
@@ -109,9 +127,9 @@ function main(_options = {}) {
   if (options.control) {
     document.body.insertAdjacentHTML('beforeend', `
       <div id="control">
-        <p><span id="prev">◀</span>
+        <p><span id="prev">&lt;</span>
         Page <span id="page">0</span> of <span id="total">0</span>
-        <span id="next">▶</span></p>
+        <span id="next">&gt;</span></p>
       </div>
     `);
 
@@ -137,14 +155,5 @@ function main(_options = {}) {
     // progress bar
     paging.percentEs.onValue(util.styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
   }
-
-  /**
-   * Scaling
-   */
-  let ratio = Ratio({wide: options.wide});
-  let scale = Scale({target: util.getById(IDENT_SCALER)});
-
-  ratio.onValue(scale);
-  Bacon.once(ratio).onValue(scale);
 }
 

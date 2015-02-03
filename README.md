@@ -4,7 +4,9 @@ Talkie.js - HTML/CSS/JavaScript Slide library
 [![Licence](http://img.shields.io/badge/license-MIT-000000.svg?style=flat-square)](https://npmjs.org/package/Talkie)
 [![Version](http://img.shields.io/npm/v/Talkie.svg?style=flat-square)](https://npmjs.org/package/Talkie)
 
-This library written in es6 JavaScript & [baconjs/bacon.js](https://github.com/baconjs/bacon.js). For more information about dependency Please look at the package.json.
+This library written in es6 JavaScript & [baconjs/bacon.js](https://github.com/baconjs/bacon.js).
+
+For more information about dependency Please look at the [package.json](package.json).
 
 ## Feature
 
@@ -36,8 +38,8 @@ Next code is the simplest sample.
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
 </head>
 <body>
-<div id="scaler">
-<!-- put your slides: start -->
+
+<!-- put your slides -->
 
 <section layout>
   <h1>Slide 1</h1>
@@ -56,8 +58,6 @@ hello('World!')
 \```
 </script>
 
-<!-- put your slides: end -->
-</div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 <script src="./dist/talkie.js"></script>
 <script>Talkie();</script>
