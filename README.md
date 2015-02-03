@@ -83,23 +83,10 @@ Talkie({wide: false});
 If you want to using Talkie internal api. Like this and will get Talkie api object.
 
 ```javascript
-let Talkie = Talkie({api: true});
+let talkie = Talkie({api: true});
 ```
 
 Look at the [index.js](src/index.js) you will see how to use the internal API. You referring to [index.js](src/index.js), can build a slide in its own UI.
-
-### example
-
-You can add key bindings for move to next slide & prev slide.
-
-```javascript
-let talkie = Talkie({api: true}); // get internal api
-talkie.main(); // default ui initialization process
-
-// add key bindings next slide & prev slide
-talkie.paging.nextBus.plug(talkie.control.key('s'));
-talkie.paging.prevBus.plug(talkie.control.key('a'));
-```
 
 ## License
 
