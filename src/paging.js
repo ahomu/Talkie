@@ -38,7 +38,7 @@ export default function(options) {
 
   changed.onValue(function(current) {
     options.slideElements.forEach(toInvisible);
-    toVisible(current);
+    current && toVisible(current);
   });
 
   return {

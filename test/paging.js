@@ -66,7 +66,35 @@ describe('paging', function() {
     rightKey(); // 75% > 100%
   });
 
-  it('start & end', function() {
+  it('changedEs', function() {
+    let el1 = document.createElement('section');
+    let el2 = document.createElement('section');
+    let el3 = document.createElement('section');
+
+    el1.id = 'i1';
+    el2.id = 'i2';
+    el3.id = 'i3';
+    let paging = Paging({
+      startPage : 1,
+      endPage   : 3,
+      slideElements: [el1, el2, el3]
+    });
+    paging.nextBus.plug(control.key(39));
+    paging.prevBus.plug(control.key(37));
+
+    let expects = [el1, el2, el3];
+    paging.changedEs.onValue(function(v) {
+      assert(expects.shift() === v);
+      if (!expects.length) {
+        return Bacon.noMore;
+      }
+    });
+                // 1
+    rightKey(); // 1 > 2
+    rightKey(); // 2 > 3
+  });
+
+  it('startEs & endEs', function() {
     let paging = Paging({
       startPage : 1,
       endPage   : 3,
