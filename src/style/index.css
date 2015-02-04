@@ -2,6 +2,7 @@
 @import url(./layout.css);
 
 html, body {
+  overflow: hidden;
   color: #222;
   background-color: #111;
   font-family: "Open Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
