@@ -31,19 +31,22 @@ export default function(options) {
   let current = bothEs.scan(initialPage, correctPage).skipDuplicates();
   let percent = current.map(percentOf(options.endPage)).skipDuplicates();
 
-  Bacon.combineAsArray(current, options.slideElements).onValue(function(data) {
-    let [current, all] = data;
-    all.forEach(toInvisible);
-
+  let changed = current.map(function(current) {
     let index = current - 1 /* fix page to index */;
-    all[index] && toVisible(all[index]);
+    return options.slideElements[index];
+  });
+
+  changed.onValue(function(current) {
+    options.slideElements.forEach(toInvisible);
+    toVisible(current);
   });
 
   return {
-    percentEs : percent,
     currentEs : current,
     startEs   : current.filter((v) => v === 1),
     endEs     : current.filter((v) => v === options.endPage),
+    changedEs : changed,
+    percentEs : percent,
     nextBus   : nextBus,
     prevBus   : prevBus
   };

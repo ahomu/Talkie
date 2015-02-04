@@ -28,6 +28,7 @@ const IDENT_CONTROL  = 'control';
 const IDENT_PAGE     = 'page';
 const IDENT_TOTAL    = 'total';
 const IDENT_PROGRESS = 'progress';
+const IDENT_BACKFACE = 'backface';
 const MIME_MARKDOWN  = 'text/x-markdown';
 const ATTR_LAYOUT    = 'layout';
 
@@ -42,6 +43,7 @@ const WIDE_HEIGHT   = 768;
  * @property {Boolean} [wide]
  * @property {Boolean} [control]
  * @property {Boolean} [progress]
+ * @property {Boolean} [backface]
  */
 
 /**
@@ -78,7 +80,8 @@ function main(_options = {}) {
     api      : false,
     wide     : true,
     control  : true,
-    progress : true
+    progress : true,
+    backface : true
   });
 
   /**
@@ -139,6 +142,27 @@ function main(_options = {}) {
   /**
    * Insert Ui Elements
    */
+  // TODO split to module
+  if (options.backface) {
+    document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_BACKFACE}"></div>`);
+
+    paging.changedEs.map('.getAttribute', IDENT_BACKFACE).map(function(src) {
+      return src ? `url("${src}")` : '';
+    }).onValue(util.styleAssignOf(util.getById(IDENT_BACKFACE), 'background-image'));
+
+    // preload
+    Bacon.fromArray(slides)
+      .map('.getAttribute', IDENT_BACKFACE)
+      .filter((v) => !!v)
+      .onValue(function(src) {
+        let img = document.createElement('img');
+        img.onload = ()=> img.parentNode.removeChild(img);
+        img.src = src;
+        img.style.display = 'none';
+        document.body.appendChild(img);
+      });
+  }
+
   if (options.control) {
     document.body.insertAdjacentHTML('beforeend', `
       <div id="${IDENT_CONTROL}">

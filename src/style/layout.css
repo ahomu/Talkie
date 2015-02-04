@@ -11,6 +11,7 @@
 
   line-height: 1.5;
 
+  color: #222;
   background-color: #fafafa;
   box-shadow: 0 0 10px transparent;
 
@@ -27,6 +28,15 @@
 [layout][visible] {
   opacity: 1;
   z-index: 1;
+}
+
+[layout][backface] {
+  background-color: transparent;
+}
+
+[layout][invert] {
+  color: #fff;
+  background-color: rgba(0,0,0,0.66);
 }
 
 [layout] > * {
@@ -69,12 +79,6 @@
 
 [layout] [hero-image] {
 
-}
-
-[layout] [bg-image] {
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 [layout] pre {
