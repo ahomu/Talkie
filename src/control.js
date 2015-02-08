@@ -32,6 +32,13 @@ export default {
    */
   resize() {
     return Bacon.fromEventTarget(window, 'resize');
+  },
+
+  /**
+   * @returns {EventStream}
+   */
+  hashchange() {
+    return Bacon.fromEventTarget(window, 'hashchange');
   }
 };
 

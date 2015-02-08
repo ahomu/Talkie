@@ -18,37 +18,41 @@ import util    from './util';
  */
 export default function(options) {
 
-  let nextBus    = new Bacon.Bus();
-  let prevBus    = new Bacon.Bus();
+  let nextBus = new Bacon.Bus();
+  let prevBus = new Bacon.Bus();
+  let moveBus = new Bacon.Bus();
 
-  let nextEs = nextBus.map(1);
-  let prevEs = prevBus.map(-1);
+  let currentBus  = new Bacon.Bus();
+  let currentPage = currentBus
+    .map(inRangeOf(1, options.endPage))
+    .toProperty(options.startPage || 1)
+    .skipDuplicates();
 
-  let initialPage = options.startPage || 1;
-  let correctPage = util.compose(inRangeOf(1, options.endPage), add);
+  let nextEs = currentPage.sampledBy(nextBus).map((v) => v + 1);
+  let prevEs = currentPage.sampledBy(prevBus).map((v) => v - 1);
+  let moveEs = moveBus.map((v) => v /*noop*/);
 
-  let bothEs  = nextEs.merge(prevEs);
-  let current = bothEs.scan(initialPage, correctPage).skipDuplicates();
-  let percent = current.map(percentOf(options.endPage)).skipDuplicates();
+  currentBus.plug(nextEs);
+  currentBus.plug(prevEs);
+  currentBus.plug(moveEs);
 
-  let changed = current.map(function(current) {
-    let index = current - 1 /* fix page to index */;
-    return options.slideElements[index];
-  });
+  let percentString = currentPage.map(percentOf(options.endPage));
+  let currentSlide  = currentPage.map((i) => options.slideElements[i - 1]);
 
-  changed.onValue(function(current) {
+  currentSlide.onValue(function(current) {
     options.slideElements.forEach(toInvisible);
     current && toVisible(current);
   });
 
   return {
-    currentEs : current,
-    startEs   : current.filter((v) => v === 1),
-    endEs     : current.filter((v) => v === options.endPage),
-    changedEs : changed,
-    percentEs : percent,
+    currentEs : currentPage,
+    startEs   : currentPage.filter((v) => v === 1),
+    endEs     : currentPage.filter((v) => v === options.endPage),
+    changedEs : currentSlide,
+    percentEs : percentString,
     nextBus   : nextBus,
-    prevBus   : prevBus
+    prevBus   : prevBus,
+    moveBus   : moveBus
   };
 }
 
@@ -85,13 +89,4 @@ function percentOf(max) {
   return function(current) {
     return ((100 / max) * current) + '%';
   };
-}
-
-/**
- * @param {Number} x
- * @param {Number} y
- * @returns {Number}
- */
-function add(x, y) {
-  return x + y;
 }

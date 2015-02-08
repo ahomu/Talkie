@@ -11,7 +11,11 @@ describe('paging', function() {
     KeyEvent.simulate(37, 37); // →
   }
 
-  it('currentEs', function() {
+  function downKey() {
+    KeyEvent.simulate(40, 40); // ↓
+  }
+
+  it('endPage & nextBus & prevBus', function(done) {
     let paging = Paging({
       startPage : 1,
       endPage   : 3,
@@ -23,6 +27,7 @@ describe('paging', function() {
     current.onValue(function(v) {
       assert(expects.shift() === v);
       if (!expects.length) {
+        done();
         return Bacon.noMore;
       }
     });
@@ -38,11 +43,37 @@ describe('paging', function() {
     leftKey();  // 3 > 2
     leftKey();  // 2 > 1
     leftKey();  // 1 > 1 (skip)
-
-    // TODO startPage test
   });
 
-  it('percentEs', function() {
+  it('startPage & moveBus', function(done) {
+    let paging = Paging({
+      startPage : 2,
+      endPage   : 3,
+      slideElements: []
+    });
+
+    let current = paging.currentEs;
+    let expects = [2, 1, 3, 2];
+    current.onValue(function(v) {
+      assert(expects.shift() === v);
+      if (!expects.length) {
+        done();
+        return Bacon.noMore;
+      }
+    });
+
+    paging.nextBus.plug(control.key(39));
+    paging.prevBus.plug(control.key(37));
+    paging.moveBus.plug(control.key(40).map(3));
+
+                // 2
+    leftKey();  // 2 > 1
+    downKey();  // 1 > 3
+    downKey();  // 3 > 3 (skip)
+    leftKey();  // 3 > 2
+  });
+
+  it('percentEs', function(done) {
     let paging = Paging({
       startPage : 1,
       endPage   : 4,
@@ -56,6 +87,7 @@ describe('paging', function() {
     percent.onValue(function(v) {
       assert(expects.shift() === v);
       if (!expects.length) {
+        done();
         return Bacon.noMore;
       }
     });
@@ -66,7 +98,7 @@ describe('paging', function() {
     rightKey(); // 75% > 100%
   });
 
-  it('changedEs', function() {
+  it('changedEs', function(done) {
     let el1 = document.createElement('section');
     let el2 = document.createElement('section');
     let el3 = document.createElement('section');
@@ -86,6 +118,7 @@ describe('paging', function() {
     paging.changedEs.onValue(function(v) {
       assert(expects.shift() === v);
       if (!expects.length) {
+        done();
         return Bacon.noMore;
       }
     });

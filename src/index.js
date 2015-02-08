@@ -130,14 +130,21 @@ function main(_options = {}) {
    * Paging control
    */
   let paging = Paging({
-    startPage     : params.startPage || 1,
+    startPage     : util.getHashPage() || 1,
     endPage       : slides.length,
     slideElements : slides
   });
 
   paging.nextBus.plug(control.key('right'));
-  paging.nextBus.plug(control.key('space'));
+  paging.nextBus.plug(control.key('s'));
+  paging.nextBus.plug(control.key('n'));
   paging.prevBus.plug(control.key('left'));
+  paging.prevBus.plug(control.key('a'));
+  paging.prevBus.plug(control.key('p'));
+  paging.moveBus.plug(control.hashchange().map(util.getHashPage));
+
+  // sync location.hash
+  paging.currentEs.onValue((page) => location.hash = page);
 
   /**
    * Insert Ui Elements

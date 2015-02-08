@@ -74,4 +74,11 @@ describe('util', function() {
     assert(el.style.width === '50%');
   });
 
+  it('getPageNumberFromHash', function() {
+    location.hash = '123';
+    assert(util.getPageNumberFromHash() === 123);
+
+    location.hash = '';
+    assert(util.getPageNumberFromHash() === 0);
+  });
 });

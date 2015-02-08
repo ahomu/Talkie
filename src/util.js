@@ -79,5 +79,12 @@ export default {
     return function(value) {
       el.style[property] = value;
     };
+  },
+
+  /**
+   * @returns {Number}
+   */
+  getPageNumberFromHash() {
+    return parseInt(location.hash.replace('#', ''), 10) || 0;
   }
 };
