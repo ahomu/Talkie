@@ -18,7 +18,10 @@ For more information about dependency Please look at the [package.json](package.
 - [ ] touch control ready
 - [x] Responsive scaling (4:3, 16:9)
 - [x] FullScreen mode
-- [ ] Presenter mode (for rehearsal)
+- [x] Background image & filter
+- [x] Pointer attention
+- [ ] Rehearsal mode
+- [ ] Presenter note
 - [x] Progress indicator
 - [ ] PDF download
 

@@ -140,7 +140,7 @@ function main(_options = {}) {
   paging.prevBus.plug(control.key('left'));
   paging.prevBus.plug(control.key('a'));
   paging.prevBus.plug(control.key('p'));
-  paging.moveBus.plug(control.hashchange().map(util.getHashPage));
+  paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
 
   // sync location.hash
   paging.currentEs.onValue((page) => location.hash = page);
