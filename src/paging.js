@@ -32,12 +32,10 @@ export default function(options) {
   let prevEs = currentPage.sampledBy(prevBus).map((v) => v - 1);
   let moveEs = moveBus.map((v) => v /*noop*/);
 
-  currentBus.plug(nextEs);
-  currentBus.plug(prevEs);
-  currentBus.plug(moveEs);
-
   let percentString = currentPage.map(percentOf(options.endPage));
   let currentSlide  = currentPage.map((i) => options.slideElements[i - 1]);
+
+  currentBus.plug(nextEs.merge(prevEs).merge(moveEs));
 
   currentSlide.onValue(function(current) {
     options.slideElements.forEach(toInvisible);

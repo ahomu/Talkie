@@ -81,4 +81,15 @@ describe('util', function() {
     location.hash = '';
     assert(util.getPageNumberFromHash() === 0);
   });
+
+  it('stylePrefixDetect', function() {
+    let transform = util.stylePrefixDetect('transform');
+    assert(transform != null);
+
+    let filter = util.stylePrefixDetect('filter');
+    assert(filter != null);
+
+    let unknown = util.stylePrefixDetect('unknown');
+    assert(unknown == null)
+  });
 });

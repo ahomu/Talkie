@@ -97,5 +97,25 @@ export default {
    */
   getPageNumberFromHash() {
     return parseInt(location.hash.replace('#', ''), 10) || 0;
+  },
+
+  stylePrefixDetect(property) {
+    let validProperty;
+    let styles = Array.prototype.slice.call(
+      window.getComputedStyle(document.documentElement, '')
+    );
+    let includes = (needle) => styles.indexOf(needle) !== -1;
+
+    if(includes(`-webkit-${property}`)) {
+      validProperty = `-webkit-${property}`;
+    } else if(includes(`-moz-${property}`)) {
+      validProperty = `-moz-${property}`;
+    } else if(includes(`-ms-${property}`)) {
+      validProperty = `-ms-${property}`;
+    } else if(includes(property)) {
+      validProperty = property;
+    }
+
+    return validProperty;
   }
 };

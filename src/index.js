@@ -143,9 +143,8 @@ function main(_options = {}) {
   paging.prevBus.plug(control.key('a'));
   paging.prevBus.plug(control.key('p'));
 
-  paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
-
   // sync location.hash
+  paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
   paging.currentEs.onValue((page) => location.hash = page);
 
   /**
@@ -193,7 +192,7 @@ function main(_options = {}) {
     // backface image css filter (webkit only)
     bgFilterBus
       .map('.getAttribute', ATTR_FILTER)
-      .onValue(util.styleAssignOf(backfaceEl, '-webkit-filter'));
+      .onValue(util.styleAssignOf(backfaceEl, util.stylePrefixDetect('filter')));
 
     // preload
     Bacon.fromArray(slides)

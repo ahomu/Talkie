@@ -58,8 +58,9 @@ function verticalRatioOf(height) {
  * @returns {Function}
  */
 function scalingOf(el) {
+  let transform = util.stylePrefixDetect('transform');
   return function(ratio) {
-    el.style.webkitTransform = `scale(${Math.abs(ratio)})`;
+    el.style[transform] = `scale(${Math.abs(ratio)})`;
   };
 }
 
