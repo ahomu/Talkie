@@ -1,0 +1,62 @@
+/**
+ * Utility
+ */
+[v-center] {
+  justify-content: center !important;
+}
+
+[v-top],
+[v-start] {
+  justify-content: flex-start !important;
+}
+
+[v-bottom],
+[v-end] {
+  justify-content: flex-end !important;
+}
+
+[h-center] {
+  align-items: center !important;
+}
+
+[h-left],
+[h-start] {
+  align-items: flex-start !important;
+}
+[h-left] > *,
+[h-start] > * {
+  text-align: left !important;
+}
+
+[h-right],
+[h-end] {
+  align-items: flex-end !important;
+}
+[h-right] > *,
+[h-end] > * {
+  text-align: right !important;
+}
+
+[s-center] {
+  align-self: center !important;
+}
+
+[s-start] {
+  align-self: flex-start !important;
+}
+
+[s-end] {
+  align-self: flex-end !important;
+}
+
+[horizontal] {
+  flex-direction: row !important;
+}
+
+[vertical] {
+  flex-direction: column !important;
+}
+
+[is-hidden] {
+  display: none !important;
+}

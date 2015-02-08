@@ -1,0 +1,10 @@
+[layout=cover] {
+
+}
+
+[layout=cover] h1 {
+  text-transform: uppercase;
+  letter-spacing: .25em;
+  font-weight: 500;
+  font-family: Futura, Helvetica, Arial,"Hiragino Kaku Gothic ProN", "Meiryo",sans-serif;
+}

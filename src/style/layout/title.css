@@ -1,0 +1,19 @@
+[layout=title] {
+
+}
+
+[layout=title] h1,
+[layout=title] h2,
+[layout=title] h3,
+[layout=title] h4,
+[layout=title] h5,
+[layout=title] h6 {
+  font-weight: bold;
+}
+
+
+[layout=title] strong {
+  font-size: 200%;
+  font-weight: bold;
+  line-height: 1;
+}

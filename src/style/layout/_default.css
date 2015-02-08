@@ -1,0 +1,81 @@
+/**
+ * Default
+ */
+[layout] {
+  line-height: 1.5;
+
+  color: #222;
+  background-color: #fafafa;
+  box-shadow: 0 0 10px transparent;
+}
+
+[layout][invert] {
+  color: #fff;
+  background-color: transparent;
+}
+
+[layout][backface][invert] {
+  text-shadow: 1px 1px 3px #222;
+}
+
+[layout] > * {
+  margin: 30px 60px;
+}
+
+[layout] h1,
+[layout] h2,
+[layout] h3,
+[layout] h4,
+[layout] h5,
+[layout] h6 {
+  text-align: center;
+  font-family: "Lato", sans-serif;
+}
+
+[layout] h1 {
+  font-size: 4.8em;
+}
+
+[layout] h2 {
+  font-size: 3.6em;
+}
+
+[layout] h3 {
+  font-size: 2.4em;
+}
+
+[layout] p {
+  font-size: 2.0em;
+}
+
+[layout] a {
+  color: blue;
+  text-decoration: none;
+}
+
+[layout] em {
+
+}
+
+[layout] strong {
+  font-weight: bold;
+}
+
+[layout] ul,
+[layout] ol {
+  font-size: 1.8em;
+  text-align: left;
+  list-style-type: disc;
+}
+
+[layout] li {
+  margin-bottom: 0.5em;
+}
+
+[layout] [hero-image] {
+
+}
+
+[layout] pre {
+  font-size: 1.6em;
+}

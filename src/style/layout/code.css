@@ -2,30 +2,16 @@
   background-color: #23241f;
 }
 
-[layout=code] h1 {
-}
-
-[layout=code] h2 {
-}
-
-[layout=code] h3 {
-}
-
-[layout=code] p {
-}
-
-[layout=code] ul,
-[layout=code] ol {
-}
-
-[layout=code] ul > li
-[layout=code] ol > li {
-}
-
-[layout=code] [hero-image] {
-
+[layout=code] h1,
+[layout=code] h2,
+[layout=code] h3,
+[layout=code] h4,
+[layout=code] h5,
+[layout=code] h6 {
+  color: white;
 }
 
 [layout=code] pre {
+  font-family: Consolas,Monaco,'Andale Mono',monospace;
   background-color: transparent;
 }

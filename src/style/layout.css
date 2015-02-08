@@ -1,22 +1,16 @@
 /**
- * Common
+ * Common display controls
  */
 [layout] {
-  /* width & height automatically set by ratio module */
+  /* width & height are set automatically by the script execution */
   position: absolute;
   top: 0;
   left: 0;
   z-index: -1;
   overflow: hidden;
 
-  line-height: 1.5;
-
-  color: #222;
-  background-color: #fafafa;
-  box-shadow: 0 0 10px transparent;
-
   opacity: 0;
-  transition: opacity .4s ease;
+  transition: opacity .3s ease;
 
   display: flex;
   box-pack: center;
@@ -34,111 +28,11 @@
   background-color: transparent;
 }
 
-[layout][invert] {
-  color: #fff;
-  background-color: rgba(0,0,0,0.66);
-}
-
-[layout] > * {
-  margin: 30px 60px;
-}
-
 /**
- * Default
- */
-[layout] h1 {
-  text-transform: uppercase;
-  letter-spacing: .25em;
-  font-weight: 500;
-  font-family: Futura, Helvetica, Arial,"Hiragino Kaku Gothic ProN", "Meiryo",sans-serif;
-  font-size: 4.8em;
-}
-
-[layout] h2 {
-  font-size: 3.6em;
-}
-
-[layout] h3 {
-  font-size: 2.4em;
-}
-
-[layout] p {
-  font-size: 2.0em;
-}
-
-[layout] ul,
-[layout] ol {
-  font-size: 1.8em;
-  text-align: left;
-  list-style-type: disc;
-}
-
-[layout] li {
-  margin-bottom: 0.5em;
-}
-
-[layout] [hero-image] {
-
-}
-
-[layout] pre {
-  font-size: 1.6em;
-  font-family: Consolas,Monaco,'Andale Mono',monospace;
-}
-
-/**
- * Util
- */
-[v-center] {
-  justify-content: center !important;
-}
-
-[v-start] {
-  justify-content: flex-start !important;
-}
-
-[v-end] {
-  justify-content: flex-end !important;
-}
-
-[h-center] {
-  align-items: center !important;
-}
-
-[h-start] {
-  align-items: flex-start !important;
-}
-
-[h-end] {
-  align-items: flex-end !important;
-}
-
-[s-center] {
-  align-self: center !important;
-}
-
-[s-start] {
-  align-self: flex-start !important;
-}
-
-[s-end] {
-  align-self: flex-end !important;
-}
-
-[horizontal] {
-  flex-direction: row !important;
-}
-
-[vertical] {
-  flex-direction: column !important;
-}
-
-[is-hidden] {
-  display: none !important;
-}
-
-/**
- * Master layouts
- */
+ * Layout definitions
+*/
+@import url(layout/_default.css);
 @import url(layout/bullets.css);
 @import url(layout/code.css);
+@import url(layout/cover.css);
+@import url(layout/title.css);
