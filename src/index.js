@@ -129,7 +129,7 @@ function main(_options = {}) {
    * Paging control
    */
   let paging = Paging({
-    startPage     : util.getHashPage() || 1,
+    startPage     : util.getPageNumberFromHash() || 1,
     endPage       : slides.length,
     slideElements : slides
   });
