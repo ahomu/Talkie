@@ -4,6 +4,7 @@ import Bacon   from 'baconjs';
 import keycode from 'keycode';
 
 const EVENT_KEYUP = Bacon.fromEventTarget(document, 'keyup');
+const EVENT_KEYDOWN = Bacon.fromEventTarget(document, 'keydown');
 
 /**
  * create EventStream from user input
@@ -20,11 +21,29 @@ export default {
   },
 
   /**
+   * @param {String|Number} charKey
+   * @returns {EventStream}
+   */
+  keydown(charKey) {
+    let keyCode = typeof(charKey) === 'string' ? keycode(charKey)
+                                               : charKey;
+    return EVENT_KEYDOWN.filter(keyCodeIs(keyCode));
+  },
+
+  /**
    * @param {Element} el
    * @returns {EventStream}
    */
   click(el) {
     return Bacon.fromEventTarget(el, 'click');
+  },
+
+  /**
+   * @param {Element} [el = document.body]
+   * @returns {EventStream}
+   */
+  mousemove(el = document.body) {
+    return Bacon.fromEventTarget(el, 'mousemove');
   },
 
   /**

@@ -28,6 +28,7 @@ const IDENT_CONTROL  = 'control';
 const IDENT_PAGE     = 'page';
 const IDENT_TOTAL    = 'total';
 const IDENT_PROGRESS = 'progress';
+const IDENT_POINTER  = 'pointer';
 const IDENT_BACKFACE = 'backface';
 const MIME_MARKDOWN  = 'text/x-markdown';
 const ATTR_LAYOUT    = 'layout';
@@ -82,14 +83,10 @@ function main(_options = {}) {
     api      : false,
     wide     : true,
     control  : true,
+    pointer  : true,
     progress : true,
     backface : true
   });
-
-  /**
-   * Get params from query strings
-   */
-  let params = query(location.search);
 
   /**
    * Init slide sizes
@@ -151,7 +148,28 @@ function main(_options = {}) {
   /**
    * Insert Ui Elements
    */
-  // TODO split to module
+  // TODO split to module & add tests
+  if (options.pointer) {
+    document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}"></div>`);
+    let x = new Bacon.Bus();
+    let y = new Bacon.Bus();
+    let moveEs = control.mousemove();
+    let pointerEl = util.getById(IDENT_POINTER);
+    x.plug(moveEs);
+    y.plug(moveEs);
+
+    x.map((e) => e.x).onValue(util.styleAssignOf(pointerEl, 'left'));
+    x.map((e) => e.y).onValue(util.styleAssignOf(pointerEl, 'top'));
+
+    let assignPointerVisibility = util.styleAssignOf(pointerEl, 'visibility');
+    control.keydown('space')
+      .map('visible')
+      .onValue(assignPointerVisibility);
+    control.key('space')
+      .map('hidden')
+      .onValue(assignPointerVisibility);
+  }
+
   // TODO split to module & add test
   if (options.backface) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_BACKFACE}"></div>`);
