@@ -4,8 +4,6 @@ import Bacon  from 'baconjs';
 import marked from 'marked';
 import util   from './util';
 
-const MIME_MARKDOWN  = 'text/x-markdown';
-
 marked.setOptions({
   langPrefix: 'hljs ',
   highlight: function (code) {
