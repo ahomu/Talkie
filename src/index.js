@@ -134,12 +134,15 @@ function main(_options = {}) {
     slideElements : slides
   });
 
+  paging.nextBus.plug(control.key('space'));
   paging.nextBus.plug(control.key('right'));
   paging.nextBus.plug(control.key('s'));
   paging.nextBus.plug(control.key('n'));
+
   paging.prevBus.plug(control.key('left'));
   paging.prevBus.plug(control.key('a'));
   paging.prevBus.plug(control.key('p'));
+
   paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
 
   // sync location.hash
@@ -162,10 +165,10 @@ function main(_options = {}) {
     x.map((e) => e.y).onValue(util.styleAssignOf(pointerEl, 'top'));
 
     let assignPointerVisibility = util.styleAssignOf(pointerEl, 'visibility');
-    control.keydown('space')
+    control.keydown('b')
       .map('visible')
       .onValue(assignPointerVisibility);
-    control.key('space')
+    control.key('b')
       .map('hidden')
       .onValue(assignPointerVisibility);
   }
