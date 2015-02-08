@@ -82,6 +82,17 @@ export default {
   },
 
   /**
+   * @param {String} src
+   */
+  preloadImg(src) {
+    let img = document.createElement('img');
+    img.onload = ()=> img.parentNode.removeChild(img);
+    img.src = src;
+    img.style.display = 'none';
+    document.body.appendChild(img);
+  },
+
+  /**
    * @returns {Number}
    */
   getPageNumberFromHash() {

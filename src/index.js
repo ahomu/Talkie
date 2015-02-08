@@ -31,6 +31,8 @@ const IDENT_PROGRESS = 'progress';
 const IDENT_BACKFACE = 'backface';
 const MIME_MARKDOWN  = 'text/x-markdown';
 const ATTR_LAYOUT    = 'layout';
+const ATTR_BACKFACE  = 'backface';
+const ATTR_FILTER    = 'backface-filter';
 
 const NORMAL_WIDTH  = 1024;
 const NORMAL_HEIGHT = 768;
@@ -150,24 +152,33 @@ function main(_options = {}) {
    * Insert Ui Elements
    */
   // TODO split to module
+  // TODO split to module & add test
   if (options.backface) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_BACKFACE}"></div>`);
+    let backfaceEl = util.getById(IDENT_BACKFACE);
 
-    paging.changedEs.map('.getAttribute', IDENT_BACKFACE).map(function(src) {
-      return src ? `url("${src}")` : '';
-    }).onValue(util.styleAssignOf(util.getById(IDENT_BACKFACE), 'background-image'));
+    let bgImageBus = new Bacon.Bus();
+    let bgFilterBus = new Bacon.Bus();
+
+    bgImageBus.plug(paging.changedEs);
+    bgFilterBus.plug(paging.changedEs);
+
+    // backface image
+    bgImageBus
+      .map('.getAttribute', ATTR_BACKFACE)
+      .map((src) => src ? `url("${src}")` : '')
+      .onValue(util.styleAssignOf(backfaceEl, 'background-image'));
+
+    // backface image css filter (webkit only)
+    bgFilterBus
+      .map('.getAttribute', ATTR_FILTER)
+      .onValue(util.styleAssignOf(backfaceEl, '-webkit-filter'));
 
     // preload
     Bacon.fromArray(slides)
-      .map('.getAttribute', IDENT_BACKFACE)
+      .map('.getAttribute', ATTR_BACKFACE)
       .filter((v) => !!v)
-      .onValue(function(src) {
-        let img = document.createElement('img');
-        img.onload = ()=> img.parentNode.removeChild(img);
-        img.src = src;
-        img.style.display = 'none';
-        document.body.appendChild(img);
-      });
+      .onValue(util.preloadImg);
   }
 
   if (options.control) {
