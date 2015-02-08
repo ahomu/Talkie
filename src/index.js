@@ -45,6 +45,7 @@ const WIDE_HEIGHT   = 768;
  * @property {Boolean} [api]
  * @property {Boolean} [wide]
  * @property {Boolean} [control]
+ * @property {Boolean} [pointer]
  * @property {Boolean} [progress]
  * @property {Boolean} [backface]
  */
@@ -134,14 +135,8 @@ function main(_options = {}) {
     slideElements : slides
   });
 
-  paging.nextBus.plug(control.key('space'));
   paging.nextBus.plug(control.key('right'));
-  paging.nextBus.plug(control.key('s'));
-  paging.nextBus.plug(control.key('n'));
-
   paging.prevBus.plug(control.key('left'));
-  paging.prevBus.plug(control.key('a'));
-  paging.prevBus.plug(control.key('p'));
 
   // sync location.hash
   paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
@@ -237,4 +232,22 @@ function main(_options = {}) {
    * FullScreen
    */
   FullScreen(document.body).plug(control.key('f'));
+
+  /**
+   * export some of control
+   *
+   * @typedef {Object} TalkieExport
+   * @param {Object.<Function>} control
+   * @param {Bacon.EventStream} changed
+   * @param {Bacon.Bus} next
+   * @param {Bacon.Bus} prev
+   * @param {Bacon.Bus} jump
+   */
+  return {
+    control : control,
+    changed : paging.changedEs,
+    next    : paging.nextBus,
+    prev    : paging.prevBus,
+    jump    : paging.moveBus
+  };
 }
