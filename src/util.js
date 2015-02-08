@@ -15,13 +15,13 @@ export default {
    * @param {Object} defaults
    * @returns {Object}
    */
-  defaults(orig, defaults) {
+  defaults(orig, defs) {
     let ret = this.clone(orig);
-    Object.keys(defaults).forEach((k)=> {
+    Object.keys(defs).forEach((k)=> {
       if (k in ret) {
         return;
       }
-      ret[k] = defaults[k];
+      ret[k] = defs[k];
     });
     return ret;
   },
@@ -101,9 +101,7 @@ export default {
 
   stylePrefixDetect(property) {
     let validProperty;
-    let styles = Array.prototype.slice.call(
-      window.getComputedStyle(document.documentElement, '')
-    );
+    let styles = this.toArray(window.getComputedStyle(document.documentElement, ''));
     let includes = (needle) => styles.indexOf(needle) !== -1;
 
     if(includes(`-webkit-${property}`)) {
