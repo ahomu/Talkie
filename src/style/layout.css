@@ -1,6 +1,10 @@
 /**
  * Common display controls
  */
+[body-bg] {
+  /*transition: background .3s ease;*/
+}
+
 [layout] {
   /* width & height are set automatically by the script execution */
   position: absolute;
@@ -11,12 +15,6 @@
 
   opacity: 0;
   transition: opacity .3s ease;
-
-  display: flex;
-  box-pack: center;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 [layout][visible] {

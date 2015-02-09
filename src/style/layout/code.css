@@ -1,5 +1,8 @@
+[body-bg=code] {
+  background: #23241f;
+}
+
 [layout=code] {
-  background-color: #23241f;
 }
 
 [layout=code] h1,
@@ -11,7 +14,7 @@
   color: white;
 }
 
-[layout=code] pre {
+[layout=code] .hljs {
   font-family: Consolas,Monaco,'Andale Mono',monospace;
   background-color: transparent;
 }

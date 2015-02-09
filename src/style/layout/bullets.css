@@ -1,4 +1,5 @@
 [layout=bullets] {
+
 }
 
 [layout=bullets] h1 {
@@ -15,6 +16,7 @@
 
 [layout=bullets] ul,
 [layout=bullets] ol {
+  list-style-type: disc;
 }
 
 [layout=bullets] ul > li

@@ -77,7 +77,21 @@ export default {
    */
   styleAssignOf(el, property) {
     return function(value) {
-      el.style[property] = value;
+      el.style[property] = value === '' ? null : value;
+    };
+  },
+
+  /**
+   * @param {Element} el
+   * @param {String} attribute
+   */
+  attributeAssignOf(el, attribute) {
+    return function(value) {
+      if (value != null) {
+        el.setAttribute(attribute, value);
+      } else {
+        el.removeAttribute(attribute);
+      }
     };
   },
 
@@ -99,6 +113,10 @@ export default {
     return parseInt(location.hash.replace('#', ''), 10) || 0;
   },
 
+  /**
+   * @param {String} property
+   * @returns {String}
+   */
   stylePrefixDetect(property) {
     let validProperty;
     let styles = this.toArray(window.getComputedStyle(document.documentElement, ''));

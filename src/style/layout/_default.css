@@ -1,17 +1,23 @@
 /**
  * Default
  */
+[body-bg] {
+  background: radial-gradient(center, circle cover, #f8f8f8 0%, #e6e6e6 100%);
+}
 [layout] {
   line-height: 1.5;
 
   color: #222;
-  background-color: #fafafa;
   box-shadow: 0 0 10px transparent;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 [layout][invert] {
   color: #fff;
-  background-color: transparent;
 }
 
 [layout][backface][invert] {
@@ -19,7 +25,7 @@
 }
 
 [layout] > * {
-  margin: 30px 60px;
+  margin: 30px 100px;
 }
 
 [layout] h1,
@@ -49,7 +55,7 @@
 }
 
 [layout] a {
-  color: blue;
+  color: dodgerblue;
   text-decoration: none;
 }
 
@@ -65,7 +71,7 @@
 [layout] ol {
   font-size: 1.8em;
   text-align: left;
-  list-style-type: disc;
+  list-style-type: none;
 }
 
 [layout] li {

@@ -1,5 +1,12 @@
-[layout=title] {
+[body-bg=title] {
+  background: transparent;
+}
 
+[layout=title] {
+}
+
+[layout=title] > * {
+  margin: 30px 60px;
 }
 
 [layout=title] h1,
@@ -10,7 +17,6 @@
 [layout=title] h6 {
   font-weight: bold;
 }
-
 
 [layout=title] strong {
   font-size: 200%;

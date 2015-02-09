@@ -72,6 +72,12 @@ describe('util', function() {
     let assign = util.styleAssignOf(el, 'width');
     assign('50%');
     assert(el.style.width === '50%');
+
+    assign(null);
+    assert(el.style.width === '');
+
+    assign(null);
+    assert(el.getAttribute('style') === '');
   });
 
   it('getPageNumberFromHash', function() {

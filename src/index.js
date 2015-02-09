@@ -32,6 +32,7 @@ const IDENT_POINTER  = 'pointer';
 const IDENT_BACKFACE = 'backface';
 const MIME_MARKDOWN  = 'text/x-markdown';
 const ATTR_LAYOUT    = 'layout';
+const ATTR_BODY_BG   = 'body-bg';
 const ATTR_BACKFACE  = 'backface';
 const ATTR_FILTER    = 'backface-filter';
 
@@ -135,12 +136,17 @@ function main(_options = {}) {
     slideElements : slides
   });
 
-  paging.nextBus.plug(control.key('right'));
-  paging.prevBus.plug(control.key('left'));
+  paging.nextBus.plug(control.keydown('right').throttle(50));
+  paging.prevBus.plug(control.keydown('left').throttle(50));
 
   // sync location.hash
   paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
   paging.currentEs.onValue((page) => location.hash = page);
+
+  // sync body background attribute
+  paging.changedEs
+    .map('.getAttribute', ATTR_LAYOUT)
+    .onValue(util.attributeAssignOf(document.body, ATTR_BODY_BG));
 
   /**
    * Insert Ui Elements
@@ -184,7 +190,7 @@ function main(_options = {}) {
       .map((src) => src ? `url("${src}")` : '')
       .onValue(util.styleAssignOf(backfaceEl, 'background-image'));
 
-    // backface image css filter (webkit only)
+    // backface image css filter
     bgFilterBus
       .map('.getAttribute', ATTR_FILTER)
       .onValue(util.styleAssignOf(backfaceEl, util.stylePrefixDetect('filter')));
@@ -244,6 +250,7 @@ function main(_options = {}) {
    * @param {Bacon.Bus} jump
    */
   return {
+    Bacon   : Bacon,
     control : control,
     changed : paging.changedEs,
     next    : paging.nextBus,
