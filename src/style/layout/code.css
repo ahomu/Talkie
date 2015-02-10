@@ -1,5 +1,5 @@
 [body-bg=code] {
-  background: #23241f;
+  background: radial-gradient(center, circle cover, #262626 0%, #080808 100%);
 }
 
 [layout=code] {
@@ -10,11 +10,17 @@
 [layout=code] h3,
 [layout=code] h4,
 [layout=code] h5,
-[layout=code] h6 {
+[layout=code] h6,
+[layout=code] p {
   color: white;
 }
 
 [layout=code] .hljs {
-  font-family: Consolas,Monaco,'Andale Mono',monospace;
+  font-family: Consolas, Monaco,'Andale Mono',monospace;
   background-color: transparent;
+}
+
+[layout=code] .hljs-comment {
+  color: orange;
+  line-height: 1;
 }

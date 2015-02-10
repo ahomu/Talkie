@@ -3,8 +3,9 @@
 @import url(./layout-util.css);
 
 html, body {
+  min-width: 100%;
+  min-height: 100%;
   overflow: hidden;
-  font-family: "Open Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
 }
 
 body > * {
@@ -36,8 +37,8 @@ body > * {
   bottom: 0;
   left: 0;
   width: 0;
-  height: 0.1em;
-  background-color: hotpink;
+  height: 0.2em;
+  background-color: darkgray;
   transition: width .3s ease;
 }
 
@@ -48,7 +49,7 @@ body > * {
   right: 0;
   padding: 20px;
   color: hotpink;
-  font-family: Consolas,Monaco,'Andale Mono',monospace;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
 }
 
 #scaler {

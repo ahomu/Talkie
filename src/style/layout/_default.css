@@ -4,11 +4,14 @@
 [body-bg] {
   background: radial-gradient(center, circle cover, #f8f8f8 0%, #e6e6e6 100%);
 }
+
 [layout] {
   line-height: 1.5;
 
   color: #222;
   box-shadow: 0 0 10px transparent;
+
+  font-family: "NotoSansCJKjp-Light", "Open Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
 
   display: flex;
   flex-direction: column;
@@ -20,8 +23,11 @@
   color: #fff;
 }
 
-[layout][backface][invert] {
-  text-shadow: 1px 1px 3px #222;
+[layout][invert] a:link,
+[layout][invert] a:visited,
+[layout][invert] a:hover,
+[layout][invert] a:active {
+  color: #fff;
 }
 
 [layout] > * {
@@ -35,7 +41,7 @@
 [layout] h5,
 [layout] h6 {
   text-align: center;
-  font-family: "Lato", sans-serif;
+  font-family: "Aozora Mincho", "Lato", "Hiragino Mincho ProN", serif;
 }
 
 [layout] h1 {
@@ -54,13 +60,17 @@
   font-size: 2.0em;
 }
 
-[layout] a {
+[layout] a:link,
+[layout] a:visited,
+[layout] a:hover,
+[layout] a:active {
   color: dodgerblue;
   text-decoration: none;
 }
 
 [layout] em {
-
+  font-size: 0.5em;
+  font-style: normal;
 }
 
 [layout] strong {
@@ -78,9 +88,24 @@
   margin-bottom: 0.5em;
 }
 
-[layout] [hero-image] {
-
+[layout] img {
+  max-width: 100%;
 }
+
+[layout] blockquote {
+  position: relative;
+  font-style: italic;
+  opacity: .6
+}
+
+[layout] blockquote::before {
+  position: absolute;
+  top: -0.6em;
+  left: -0.6em;
+  font-size: 5em;
+  content: "\"";
+}
+
 
 [layout] pre {
   font-size: 1.6em;

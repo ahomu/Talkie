@@ -2,7 +2,7 @@
  * Common display controls
  */
 [body-bg] {
-  /*transition: background .3s ease;*/
+
 }
 
 [layout] {
@@ -14,7 +14,7 @@
   overflow: hidden;
 
   opacity: 0;
-  transition: opacity .3s ease;
+  transition: opacity .5s ease;
 }
 
 [layout][visible] {
@@ -31,6 +31,7 @@
 */
 @import url(layout/_default.css);
 @import url(layout/bullets.css);
+@import url(layout/bullets-invert.css);
 @import url(layout/code.css);
 @import url(layout/cover.css);
 @import url(layout/title.css);

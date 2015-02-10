@@ -1,5 +1,5 @@
 [body-bg=title] {
-  background: transparent;
+
 }
 
 [layout=title] {
@@ -16,6 +16,7 @@
 [layout=title] h5,
 [layout=title] h6 {
   font-weight: bold;
+  text-shadow: 1px 1px 3px #111;
 }
 
 [layout=title] strong {

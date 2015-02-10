@@ -1,31 +1,17 @@
 [layout=bullets] {
-
 }
 
-[layout=bullets] h1 {
-}
-
-[layout=bullets] h2 {
-}
-
-[layout=bullets] h3 {
-}
-
-[layout=bullets] p {
+[layout=bullets] h1,
+[layout=bullets] h2,
+[layout=bullets] h3,
+[layout=bullets] h4,
+[layout=bullets] h5,
+[layout=bullets] h6 {
+  line-height: 1.3;
+  margin-top: -30px;
 }
 
 [layout=bullets] ul,
 [layout=bullets] ol {
   list-style-type: disc;
-}
-
-[layout=bullets] ul > li
-[layout=bullets] ol > li {
-}
-
-[layout=bullets] [hero-image] {
-
-}
-
-[layout=bullets] pre {
 }
