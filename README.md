@@ -14,8 +14,8 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Code highlighting
 - [ ] CSS transitions
 - [ ] Layout attributes (WIP)
-- [x] keyboard ready
-- [ ] touch control ready
+- [x] keyboard control
+- [x] touch control
 - [x] Responsive scaling (4:3, 16:9)
 - [x] FullScreen mode
 - [x] Background image & filter

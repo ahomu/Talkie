@@ -47,6 +47,80 @@ export default {
   },
 
   /**
+   * @param {Element} el
+   * @returns {EventStream}
+   */
+  touchstart(el) {
+    return Bacon.fromEventTarget(el, 'touchstart');
+  },
+
+  /**
+   * @param {Element} el
+   * @returns {EventStream}
+   */
+  touchend(el) {
+    return Bacon.fromEventTarget(el, 'touchend');
+  },
+
+  /**
+   * @param {Element} el
+   * @returns {EventStream}
+   */
+  touchmove(el) {
+    return Bacon.fromEventTarget(el, 'touchmove');
+  },
+
+  /**
+   * @param {Element} el
+   * @param {Bacon.Bus} [stopBus = new Bacon.Bus()]
+   * @returns {EventStream}
+   */
+  swipe(el, stopBus = new Bacon.Bus()) {
+    let start   = this.touchstart(el).doAction('.preventDefault');
+    let move    = this.touchmove(el).doAction('.preventDefault');
+    let end     = this.touchend(el).doAction('.preventDefault');
+
+    stopBus.plug(end);
+
+    return start.flatMap(function(start) {
+      return move.takeUntil(stopBus).scan({}, function(acc, move) {
+        return {
+          init : acc.init || start.changedTouches[0],
+          curt : move.changedTouches[0]
+        };
+      }).skip(1);
+    });
+  },
+
+  /**
+   * @param {Element} [el = document.body]
+   * @returns {EventStream}
+   */
+  swipeLeft(el = document.body) {
+    let stopBus = new Bacon.Bus();
+
+    return this.swipe(el, stopBus).filter((moves) => {
+      let {init, curt} = moves;
+      let delta = init.clientX - curt.clientX;
+      return delta > 50 && stopBus.push(true);
+    });
+  },
+
+  /**
+   * @param {Element} [el = document.body]
+   * @returns {EventStream}
+   */
+  swipeRight(el = document.body) {
+    let stopBus = new Bacon.Bus();
+
+    return this.swipe(el, stopBus).filter((moves) => {
+      let {init, curt} = moves;
+      let delta = init.clientX - curt.clientX;
+      return delta < -50 && stopBus.push(true);
+    });
+  },
+
+  /**
    * @returns {EventStream}
    */
   resize() {

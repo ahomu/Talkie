@@ -139,6 +139,9 @@ function main(_options = {}) {
   paging.nextBus.plug(control.keydown('right').throttle(100));
   paging.prevBus.plug(control.keydown('left').throttle(100));
 
+  paging.nextBus.plug(control.swipeLeft());
+  paging.prevBus.plug(control.swipeRight());
+
   // sync location.hash
   paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
   paging.currentEs.onValue((page) => location.hash = page);
