@@ -9,25 +9,28 @@
 
 <!-- put your slides -->
 
-<script layout type="text/x-markdown">
-  # Talkie.js
+<template layout="cover" type="text/x-markdown">
+# Talkie.js
 
-  HTML/CSS/JavaScript Presentation Library
-</script>
+HTML/CSS/JavaScript Presentation Library
 
-<script layout="bullets" type="text/x-markdown">
-  ## Feature
+Go to [repository](https://github.com/ahomu/Talkie)
+</template>
+
+<template layout="bullets" type="text/x-markdown">
+## Feature
 
 - Markdown support
 - Code highlighting
 - Responsive scaling
-- FullScreen mode (F)
-- Layout attributes
+- FullScreen mode (press `F`)
+- Pointer mode (press `B`)
+- Layout attributes (WIP)
 - Progress indicator
-</script>
+</template>
 
-<script layout="bullets" type="text/x-markdown">
-  ## 機能 (Japanese)
+<template layout="bullets" type="text/x-markdown">
+## 機能 (Japanese)
 
 - Markdown書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
 - ハイライトばっちり _:(°ω° 」∠):＿
@@ -35,10 +38,135 @@
 - フルスクリーンOK (｡•̀ᴗ-)✧
 - 属性でレイアウトできるよ (*´▽`)
 - 進行度インジゲータあるよ c⌒っ.ω.)っ
+</template>
+
+<template layout="code" type="text/x-markdown">
+## in HTML
+
+```html
+<section layout="title">
+  <h1>Section Title</h1>
+  <p>Lorem ipsum dolor sit amet, consect...</p>
+</section>
+
+<section layout="bullets">
+  <h2>The bullets</h2>
+  <ul>
+    <li>Foo</li>
+    <li>Bar</li>
+    <li>Baz</li>
+  </ul>
+</section>
+```
+</template>
+
+<template layout="code" type="text/x-markdown">
+## in Markdown
+
+```html
+<script layout="title" type="text/x-markdown">
+# Section Title
+Lorem ipsum dolor sit amet, consect...
 </script>
+
+<script layout="bullets" type="text/x-markdown">
+## The bullets
+- Foo
+- Bar
+- Baz
+</script>
+```
+</template>
+
+<template layout="code" type="text/x-markdown">
+## Backface image & filter
+
+```html
+<section layout
+         backface="background-image.jpg"
+         backface-filter="blur(1px) brightness(.8)">
+
+  <h1>Title</h1>
+  <p>foo, bar, baz, qux...</p>
+
+</section>
+```
+</template>
+
+<template layout="title" invert type="text/x-markdown"
+          backface="https://farm8.staticflickr.com/7469/16209884502_211d01ac0d_z_d.jpg"
+          backface-filter="blur(3px) brightness(.9)">
+# Backface DEMO (北極)
+
+`backface-filter="blur(3px) brightness(.9)"`
+</template>
+
+<template layout="bullets" type="text/x-markdown">
+## FullScreen mode
+
+When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Press and then exit.
+</template>
+
+<template layout="bullets" type="text/x-markdown">
+## Pointer mode
+
+When you press the **"b"** key pointer appears, disappears when you release.
+</template>
+
+<template layout="code" type="text/x-markdown">
+## Custom key binding & control (1/2)
+
+```javascript
+var talkie  = Talkie({wide:false});
+
+talkie.next.plug(talkie.control.key('space'));
+talkie.next.plug(talkie.control.key('s'));
+talkie.next.plug(talkie.control.key('n'));
+talkie.prev.plug(talkie.control.key('a'));
+talkie.prev.plug(talkie.control.key('p'));
+```
+</template>
+
+<template layout="code" type="text/x-markdown">
+## Custom key binding & control (2/2)
+
+```javascript
+window.next = function() {
+talkie.next.push();
+};
+window.prev = function() {
+talkie.prev.push();
+};
+window.jump = function(num) {
+talkie.jump.push(num);
+};
+```
+</template>
+
+<template layout="code" type="text/x-markdown">
+## All Options
+
+```javascript
+/**
+* @typedef {Object} TalkieOptions
+* @property {Boolean} [api=false]
+* @property {Boolean} [wide=false]
+* @property {Boolean} [control=true]
+* @property {Boolean} [pointer=true]
+* @property {Boolean} [progress=true]
+* @property {Boolean} [backface=true]
+*/
+```
+</template>
+
+<template layout="title" type="text/x-markdown">
+## Enjoy!
+
+[ahomu/Talkie - GitHub.com](https://github.com/ahomu/Talkie)
+</template>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 <script src="./dist/talkie.js"></script>
-<script>Talkie();</script>
+<script>Talkie({wide: false});</script>
 </body>
 </html>

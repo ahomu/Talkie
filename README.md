@@ -13,7 +13,7 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Markdown support
 - [x] Code highlighting
 - [ ] CSS transitions
-- [x] Layout attributes
+- [ ] Layout attributes (WIP)
 - [x] keyboard ready
 - [ ] touch control ready
 - [x] Responsive scaling (4:3, 16:9)
