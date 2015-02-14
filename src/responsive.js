@@ -28,9 +28,14 @@ export default function(options = {}) {
 
   let scale = util.compose(centeringOf(options.target), scalingOf(options.target));
 
-  Bacon.combineWith(Math.min, hRatio, vRatio).onValue(scale);
+  let currentRatio = Bacon.combineWith(Math.min, hRatio, vRatio).toProperty();
 
-  return bus;
+  currentRatio.onValue(scale);
+
+  return {
+    scaleBus     : bus,
+    currentRatio : currentRatio
+  };
 }
 
 /**

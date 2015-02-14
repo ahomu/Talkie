@@ -120,12 +120,12 @@ function main(_options = {}) {
   let scalerEl = util.getById(IDENT_SCALER);
   slides.forEach((el) => scalerEl.appendChild(el));
 
-  let ratio = Responsive({
+  let responsive = Responsive({
     width  : width,
     height : height,
     target : scalerEl
   });
-  ratio.plug(control.resize());
+  responsive.scaleBus.plug(control.resize());
 
   /**
    * Paging control
@@ -136,8 +136,8 @@ function main(_options = {}) {
     slideElements : slides
   });
 
-  paging.nextBus.plug(control.keydown('right').throttle(50));
-  paging.prevBus.plug(control.keydown('left').throttle(50));
+  paging.nextBus.plug(control.keydown('right').throttle(100));
+  paging.prevBus.plug(control.keydown('left').throttle(100));
 
   // sync location.hash
   paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
@@ -255,6 +255,7 @@ function main(_options = {}) {
     changed : paging.changedEs,
     next    : paging.nextBus,
     prev    : paging.prevBus,
-    jump    : paging.moveBus
+    jump    : paging.moveBus,
+    ratio   : responsive.currentRatio
   };
 }
