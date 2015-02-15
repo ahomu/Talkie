@@ -20,3 +20,12 @@
 [layout=bullets-invert] ol {
   list-style-type: disc;
 }
+
+[layout=bullets-invert] ul ul,
+[layout=bullets-invert] ul ol,
+[layout=bullets-invert] ol ul,
+[layout=bullets-invert] ol ol {
+  list-style-type: none;
+  font-size: 0.9em;
+  margin: 0.5em 0 0.5em 2em;
+}

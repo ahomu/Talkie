@@ -76,9 +76,9 @@ export default {
    * @returns {EventStream}
    */
   swipe(el, stopBus = new Bacon.Bus()) {
-    let start   = this.touchstart(el).doAction('.preventDefault');
-    let move    = this.touchmove(el).doAction('.preventDefault');
-    let end     = this.touchend(el).doAction('.preventDefault');
+    let start = this.touchstart(el).doAction('.preventDefault');
+    let move  = this.touchmove(el).doAction('.preventDefault');
+    let end   = this.touchend(el).doAction('.preventDefault');
 
     stopBus.plug(end);
 
