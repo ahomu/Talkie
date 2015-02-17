@@ -19,17 +19,18 @@ var GLOB_CSS_FILES  = ['./src/**/*.css'];
 function bufferedBrowserify(standaloneName) {
   var transform  = require('vinyl-transform');
   var browserify = require('browserify');
-  var to5ify     = require('6to5ify');
+  var babelify   = require('babelify');
 
   return transform(function(filename) {
     return browserify(filename, {
         standalone : standaloneName,
         debug      : true,
         noParse    : [
-          require.resolve('6to5/browser-polyfill')
+          require.resolve('baconjs'),
+          require.resolve('babel/browser-polyfill')
         ]
       })
-      .transform(to5ify.configure({
+      .transform(babelify.configure({
         experimental : false,
         playground   : false
       }))

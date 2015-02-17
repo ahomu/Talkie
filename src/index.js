@@ -2,11 +2,9 @@
 
 /**
  * if using a feature that requires a browser-polyfill
- *
- * @see https://6to5.org/polyfill.html
+ * @see https://babeljs.io/docs/usage/polyfill/
  */
-import polyfill from '6to5/browser-polyfill';
-
+require('babel/browser-polyfill');
 /**
  * Talkie.js
  */
