@@ -26,6 +26,10 @@
   background-color: transparent;
 }
 
+[layout][scroll] {
+  overflow-y: auto;
+}
+
 /**
  * Layout definitions
 */
