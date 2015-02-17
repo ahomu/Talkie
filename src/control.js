@@ -77,17 +77,19 @@ export default {
    */
   swipe(el, stopBus = new Bacon.Bus()) {
     let start = this.touchstart(el).doAction('.preventDefault');
-    let move  = this.touchmove(el).doAction('.preventDefault');
+    let move  = this.touchmove(el).doAction('.preventDefault').throttle(100);
     let end   = this.touchend(el).doAction('.preventDefault');
 
     stopBus.plug(end);
 
     return start.flatMap(function(start) {
-      return move.takeUntil(stopBus).scan({}, function(acc, move) {
-        return {
-          init : acc.init || start.changedTouches[0],
-          curt : move.changedTouches[0]
-        };
+      let initialValue = {
+        init : start.changedTouches[0].clientX,
+        curt : 0
+      };
+      return move.takeUntil(stopBus).scan(initialValue, function(acc, move) {
+        acc.curt = move.changedTouches[0].clientX;
+        return acc;
       }).skip(1);
     });
   },
@@ -101,8 +103,8 @@ export default {
 
     return this.swipe(el, stopBus).filter((moves) => {
       let {init, curt} = moves;
-      let delta = init.clientX - curt.clientX;
-      return delta > 50 && stopBus.push(true);
+      let delta = curt - init;
+      return delta < -10 && stopBus.push(true);
     });
   },
 
@@ -115,8 +117,8 @@ export default {
 
     return this.swipe(el, stopBus).filter((moves) => {
       let {init, curt} = moves;
-      let delta = init.clientX - curt.clientX;
-      return delta < -50 && stopBus.push(true);
+      let delta = curt - init;
+      return delta > 10 && stopBus.push(true);
     });
   },
 
