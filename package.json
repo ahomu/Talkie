@@ -1,6 +1,6 @@
 {
   "name": "talkie",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "Simple slide presentation library. Responsive scaling & markdown ready.",
   "main": "index.js",
   "directories": {
