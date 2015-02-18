@@ -21,6 +21,10 @@
   list-style-type: disc;
 }
 
+[layout=bullets-invert] li {
+  margin-right: -1em;
+}
+
 [layout=bullets-invert] ul ul,
 [layout=bullets-invert] ul ol,
 [layout=bullets-invert] ol ul,

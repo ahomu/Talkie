@@ -89,9 +89,9 @@ gulp.task('build', function() {
 });
 
 gulp.task('build-css', function () {
-  var please = require('gulp-pleeease');
+  var please   = require('gulp-pleeease');
   var path     = require('path');
-  var fileName   = package.name.toLocaleLowerCase();
+  var fileName = 'talkie';
 
   return gulp.src(FILE_PLEEEASE_INDEX)
     .pipe(plumber())

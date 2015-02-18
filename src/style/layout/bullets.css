@@ -16,6 +16,10 @@
   list-style-type: disc;
 }
 
+[layout=bullets] li {
+  margin-right: -1em;
+}
+
 [layout=bullets] ul ul,
 [layout=bullets] ul ol,
 [layout=bullets] ol ul,
