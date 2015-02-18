@@ -1,8 +1,8 @@
 {
   "name": "talkiejs",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Simple slide presentation library. Responsive scaling & markdown ready.",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "test": "test"
   },
@@ -14,6 +14,7 @@
     "watch": "gulp watch"
   },
   "files": [
+    "src",
     "dist",
     "README.md",
     "package.json"

@@ -173,8 +173,8 @@ If you want to using Talkie internal api. Like this and will get Talkie api obje
 
 or you can use `require` by [browserify](http://browserify.org/).
 
-```
-// npm install --save talkie
+```javascript
+// npm install --save talkiejs
 var talkie = require('talkiejs')({api:true});
 ```
 
