@@ -72,11 +72,8 @@ gulp.task('watch', function() {
 gulp.task('build', function() {
   var uglify     = require('gulp-uglify');
   var header     = require('gulp-header');
-  var exportName = package.name.replace('-', '');
-  var fileName   = package.name.toLocaleLowerCase();
-
-  // foo -> Foo
-  exportName = exportName.slice(0, 1).toUpperCase() + exportName.slice(1);
+  var fileName   = 'talkie';
+  var exportName = fileName.slice(0, 1).toUpperCase() + fileName.slice(1);
 
   return gulp.src(FILE_BROWSERIFY_INDEX)
     .pipe(bufferedBrowserify(exportName))

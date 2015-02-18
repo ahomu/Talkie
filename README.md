@@ -124,7 +124,7 @@ When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Pres
 
 ### Pointer mode
 
-When you press the **"b"** key pointer appears, disappears when you release.
+When you press the **"b"** key, the pointer `visibility` is toggled
 
 ### Custom key binding & control
 

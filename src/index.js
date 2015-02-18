@@ -165,13 +165,10 @@ function main(_options = {}) {
     x.map((e) => e.x).onValue(util.styleAssignOf(pointerEl, 'left'));
     x.map((e) => e.y).onValue(util.styleAssignOf(pointerEl, 'top'));
 
-    let assignPointerVisibility = util.styleAssignOf(pointerEl, 'visibility');
-    control.keydown('b')
-      .map('visible')
-      .onValue(assignPointerVisibility);
     control.key('b')
-      .map('hidden')
-      .onValue(assignPointerVisibility);
+      .scan(false, (acc) => !acc)
+      .map((bool) => bool ? 'visible' : 'hidden')
+      .onValue(util.styleAssignOf(pointerEl, 'visibility'));
   }
 
   // TODO split to module & add test
