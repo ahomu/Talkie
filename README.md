@@ -25,6 +25,10 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Progress indicator
 - [ ] PDF download
 
+## Real presentation sample
+
+- [Bacon.js & Talkie.js](http://ahomu.github.io/presentation-slides/150217-lt/index.html#1)
+
 ## Getting started
 
 Talkie.js contains one of the CSS and one of JavaScript.
