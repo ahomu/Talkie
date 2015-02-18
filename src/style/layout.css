@@ -26,8 +26,8 @@
   background-color: transparent;
 }
 
-[layout][scroll] {
-  overflow-y: auto;
+[layout][scroll] pre {
+  overflow-y: scroll;
 }
 
 /**
