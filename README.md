@@ -166,8 +166,16 @@ window.jump = function(num) {
 
 If you want to using Talkie internal api. Like this and will get Talkie api object.
 
-```javascript
-var talkie = Talkie({api: true});
+```html
+<script src="./talkie.js"></script>
+<script>var talkie = Talkie({api: true});</script>
+```
+
+or you can use `require` by [browserify](http://browserify.org/).
+
+```
+// npm install --save talkie
+var talkie = require('talkiejs')({api:true});
 ```
 
 Look at the [index.js](src/index.js) you will see how to use the internal API. You referring to [index.js](src/index.js), can build a slide in its own UI.
