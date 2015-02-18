@@ -77,10 +77,10 @@ If you use the code highlighting, you must load these files.
 
 ### Slide ratio
 
-The default slide 16:9 (width: 1366px, height 768px). In the following code ratio 4:3 (width 1024px, height 768px) you will.
+The default slide 4:3 (width 1024px, height 768px). In the following code ratio 16:9 (width: 1366px, height 768px) you will.
 
 ```javascript
-Talkie({wide: false});
+Talkie({wide: true});
 ```
 
 ### Backface image & filter
@@ -105,12 +105,12 @@ You can add `backface` attribute into each slides. Image path that you specify i
 ```javascript
 /**
  * @typedef {Object} TalkieOptions
- * @property {Boolean} [api]
- * @property {Boolean} [wide]
- * @property {Boolean} [control]
- * @property {Boolean} [pointer]
- * @property {Boolean} [progress]
- * @property {Boolean} [backface]
+ * @property {Boolean} [api=false]
+ * @property {Boolean} [wide=false]
+ * @property {Boolean} [control=true]
+ * @property {Boolean} [pointer=true]
+ * @property {Boolean} [progress=true]
+ * @property {Boolean} [backface=true]
  */
 ```
 

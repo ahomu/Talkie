@@ -81,7 +81,7 @@ function main(_options = {}) {
    */
   let options = util.defaults(_options, {
     api      : false,
-    wide     : true,
+    wide     : false,
     control  : true,
     pointer  : true,
     progress : true,
