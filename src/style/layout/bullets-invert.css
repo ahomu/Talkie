@@ -16,9 +16,12 @@
   margin-top: -30px;
 }
 
-[layout=bullets-invert] ul,
-[layout=bullets-invert] ol {
+[layout=bullets-invert] ul {
   list-style-type: disc;
+}
+
+[layout=bullets-invert] ol {
+  list-style-type: decimal;
 }
 
 [layout=bullets-invert] li {
