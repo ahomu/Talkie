@@ -27,7 +27,8 @@ For more information about dependency Please look at the [package.json](package.
 
 ## Real presentation sample
 
-- [Bacon.js & Talkie.js](http://ahomu.github.io/presentation-slides/150217-lt/index.html#1)
+- [Reactive Programming in JavaScript](http://ahomu.github.io/s/150221-frontrend_conference/index.html)
+- [Bacon.js & Talkie.js](http://ahomu.github.io/s/150217-lt/index.html)
 
 ## Getting started
 
