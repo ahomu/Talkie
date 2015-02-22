@@ -1,5 +1,5 @@
 [body-bg=code] {
-  background: radial-gradient(center, circle cover, #262626 0%, #080808 100%);
+  background: radial-gradient(#262626 0%, #080808 100%);
 }
 
 [layout=code] {

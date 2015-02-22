@@ -2,7 +2,7 @@
  * Default
  */
 [body-bg] {
-  background: radial-gradient(center, circle cover, #f8f8f8 0%, #e6e6e6 100%);
+  background: radial-gradient(#f8f8f8 0%, #e6e6e6 100%);
 }
 
 [layout] {
