@@ -203,9 +203,9 @@ function main(_options = {}) {
   if (options.control) {
     document.body.insertAdjacentHTML('beforeend', `
       <div id="${IDENT_CONTROL}">
-        <p><span id="${IDENT_PREV}">&lt;</span>
+        <p><span id="${IDENT_PREV}">◀</span>
         Page <span id="${IDENT_PAGE}">0</span> of <span id="${IDENT_TOTAL}">0</span>
-        <span id="${IDENT_NEXT}">&gt;</span></p>
+        <span id="${IDENT_NEXT}">▶</span></p>
       </div>
     `);
 

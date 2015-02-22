@@ -6,6 +6,13 @@
   color: #fff;
 }
 
+[layout=bullets-invert] a:link,
+[layout=bullets-invert] a:visited,
+[layout=bullets-invert] a:hover,
+[layout=bullets-invert] a:active {
+  color: #33ffff;
+}
+
 [layout=bullets-invert] h1,
 [layout=bullets-invert] h2,
 [layout=bullets-invert] h3,

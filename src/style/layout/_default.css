@@ -93,6 +93,7 @@
   opacity: 0.5;
 }
 
+[layout] video,
 [layout] img {
   max-width: 100%;
 }
