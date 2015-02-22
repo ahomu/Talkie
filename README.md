@@ -2,7 +2,7 @@ Talkie.js - HTML/CSS/JavaScript Slide library
 ====================
 
 [![Licence](http://img.shields.io/badge/license-MIT-000000.svg?style=flat-square)](https://npmjs.org/package/talkiejs)
-[![Version](http://img.shields.io/npm/v/Talkie.svg?style=flat-square)](https://npmjs.org/package/talkiejs)
+[![Version](http://img.shields.io/npm/v/talkiejs.svg?style=flat-square)](https://npmjs.org/package/talkiejs)
 
 This library written in es6 JavaScript & [baconjs/bacon.js](https://github.com/baconjs/bacon.js). Also serve as a practice of es6 and functional reactive programming.
 
@@ -24,6 +24,7 @@ For more information about dependency Please look at the [package.json](package.
 - [ ] Presenter note
 - [x] Progress indicator
 - [ ] PDF download
+- [ ] Thumbnail previews
 
 ## Real presentation sample
 
