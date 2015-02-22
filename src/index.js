@@ -142,7 +142,9 @@ function main(_options = {}) {
 
   // sync location.hash
   paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
-  paging.currentEs.onValue((page) => location.hash = page);
+  paging.currentEs.onValue((page) => {
+    (page === 1 && !location.hash) || (location.hash = page)
+  });
 
   // sync body background attribute
   paging.changedEs
