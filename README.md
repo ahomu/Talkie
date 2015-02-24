@@ -22,7 +22,6 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Pointer attention
 - [x] Progress indicator
 - [ ] Thumbnail previews
-- [ ] Presenter note
 
 ## Real presentation sample
 
@@ -102,7 +101,7 @@ You can add `backface` attribute into each slides. Image path that you specify i
 </section>
 ```
 
-`backface-filter` attribute is applied to the background image as [CSS Filters](http://css-tricks.com/almanac/properties/f/filter/).
+`backface-filter` attribute is applied to the background image as [CSS Filters](http://css-tricks.com/almanac/properties/f/filter/). But using this, will occur side effect significantly to performance on mobile device.
 
 ### All options
 

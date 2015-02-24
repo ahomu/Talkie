@@ -113,6 +113,16 @@ When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Pres
 When you press the **"b"** key, the pointer `visibility` is toggled
 </template>
 
+<template layout="bullets" type="text/x-markdown">
+## Presenter note
+
+Open developer tools, will show presenter notes
+
+-----
+
+Yes! This is your note!
+</template>
+
 <template layout="code" type="text/x-markdown">
 ## Custom key binding & control (1/2)
 
@@ -168,6 +178,20 @@ talkie.jump.push(num);
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 <script src="./dist/talkie.js"></script>
-<script>Talkie({wide: false});</script>
+<script>
+var talkie = Talkie({wide: false});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('[layout]'));
+  talkie.changed.onValue(function(current) {
+    console.clear();
+    // safari's `console#clear` is async...
+    setTimeout(function() {
+      // print presenter notes
+      console.info(talkie.notes[slides.indexOf(current)]);
+    }, 50);
+  });
+});
+</script>
 </body>
 </html>
