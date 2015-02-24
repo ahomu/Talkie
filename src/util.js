@@ -10,7 +10,6 @@ export default {
   },
 
   /**
-   * TODO test
    * @param {Object} orig
    * @param {Object} defaults
    * @returns {Object}
@@ -27,7 +26,8 @@ export default {
   },
 
   /**
-   * TODO test
+   * shallow clone func
+   *
    * @param {Object} orig
    * @returns {Object}
    */

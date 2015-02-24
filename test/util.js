@@ -31,6 +31,29 @@ describe('util', function() {
     assert(proc.qux === 'hahaha');
   });
 
+  it('clone', function() {
+    let orig = {
+      foo: 1,
+      bar: [1,2,3],
+      baz: {a: 'a'},
+      qux: 'hogehoge'
+    };
+
+    let clone = util.clone(orig);
+
+    orig.foo = 2;
+    assert(clone.foo === 1);
+
+    clone.qux = 'fugafuga';
+    assert(orig.qux === 'hogehoge');
+
+    orig.bar.push(4);
+    assert(clone.bar.pop() === 4); // shallow!
+
+    clone.baz.b = 'b';
+    assert(orig.baz.b === 'b'); // shallow!
+  });
+
   it('compose', function() {
     let fn = util.compose(function(y) {
       return y * 2;
