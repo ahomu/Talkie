@@ -14,7 +14,7 @@ import util    from './util';
 import control from './control';
 import query   from './query';
 
-import Markdown   from './markdown';
+import Slide      from './slide';
 import Paging     from './paging';
 import FullScreen from './fullscreen';
 import Responsive from './responsive';
@@ -60,7 +60,7 @@ export default function(options = {}) {
       util       : util,
       control    : control,
       query      : query,
-      markdown   : Markdown,
+      slide      : Slide,
       paging     : Paging,
       fullScreen : FullScreen,
       responsive : Responsive,
@@ -110,8 +110,10 @@ function main(_options = {}) {
   /**
    * Init slide sections
    */
-  util.toArray(document.querySelectorAll(`[type="${MIME_MARKDOWN}"]`)).forEach(Markdown);
+  let mds = util.toArray(document.querySelectorAll(`[type="${MIME_MARKDOWN}"]`));
+  mds.forEach(Slide.compileMarkdown);
   let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
+  let notes  = slides.map(Slide.extractNote);
 
   /**
    * Responsive scaling
@@ -231,6 +233,7 @@ function main(_options = {}) {
     next    : paging.nextBus,
     prev    : paging.prevBus,
     jump    : paging.moveBus,
-    ratio   : responsive.currentRatio
+    ratio   : responsive.currentRatio,
+    notes   : notes
   };
 }

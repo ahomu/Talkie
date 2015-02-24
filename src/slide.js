@@ -20,7 +20,23 @@ marked.setOptions({
  *
  * @returns void
  */
-export default compileMarkdown;
+export default {
+  compileMarkdown : compileMarkdown,
+  extractNote     : extractNote
+};
+
+/**
+ * @param {Element} el
+ * @returns {String}
+ */
+function extractNote(el) {
+  let [content, note] = el.innerHTML.split(/<hr\s?\/?>/);
+  el.innerHTML = content;
+
+  let container = document.createElement('div');
+  container.innerHTML = note || '';
+  return container.textContent || '';
+}
 
 /**
  * @param {Element} el
