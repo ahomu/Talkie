@@ -18,6 +18,7 @@ import Markdown   from './markdown';
 import Paging     from './paging';
 import FullScreen from './fullscreen';
 import Responsive from './responsive';
+import Pointer    from './pointer';
 
 const IDENT_NEXT     = 'next';
 const IDENT_PREV     = 'prev';
@@ -64,6 +65,7 @@ export default function(options = {}) {
       paging     : Paging,
       fullScreen : FullScreen,
       responsive : Responsive,
+      pointer    : Pointer,
       Bacon      : Bacon
     };
   } else {
@@ -163,23 +165,11 @@ function main(_options = {}) {
       .onValue(util.attributeAssignOf(document.body, ATTR_NO_TRANS));
   }
 
-  // TODO split to module & add tests
   if (options.pointer) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}"></div>`);
-    let x = new Bacon.Bus();
-    let y = new Bacon.Bus();
-    let moveEs = control.mousemove();
-    let pointerEl = util.getById(IDENT_POINTER);
-    x.plug(moveEs);
-    y.plug(moveEs);
-
-    x.map((e) => e.x).onValue(util.styleAssignOf(pointerEl, 'left'));
-    x.map((e) => e.y).onValue(util.styleAssignOf(pointerEl, 'top'));
-
-    control.key('b')
-      .scan(false, (acc) => !acc)
-      .map((bool) => bool ? 'visible' : 'hidden')
-      .onValue(util.styleAssignOf(pointerEl, 'visibility'));
+    let {coordBus, toggleBus} = Pointer(util.getById(IDENT_POINTER));
+    coordBus.plug(control.mousemove());
+    toggleBus.plug(control.key('b'));
   }
 
   // TODO split to module & add test
