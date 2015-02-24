@@ -31,6 +31,7 @@ const IDENT_BACKFACE = 'backface';
 const MIME_MARKDOWN  = 'text/x-markdown';
 const ATTR_LAYOUT    = 'layout';
 const ATTR_BODY_BG   = 'body-bg';
+const ATTR_NO_TRANS  = 'no-transition';
 const ATTR_BACKFACE  = 'backface';
 const ATTR_FILTER    = 'backface-filter';
 
@@ -79,14 +80,17 @@ function main(_options = {}) {
    * apply default options
    * @type {*|Object}
    */
-  let options = util.defaults(_options, {
-    api      : false,
-    wide     : false,
-    control  : true,
-    pointer  : true,
-    progress : true,
-    backface : true
-  });
+  let options = util.extend(util.defaults(_options, {
+    api          : false,
+    wide         : false,
+    control      : true,
+    pointer      : true,
+    progress     : true,
+    backface     : true,
+    notransition : false
+  }), query(location.search));
+
+  console.log(options);
 
   /**
    * Init slide sizes
@@ -143,7 +147,7 @@ function main(_options = {}) {
   // sync location.hash
   paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
   paging.currentEs.onValue((page) => {
-    (page === 1 && !location.hash) || (location.hash = page)
+    (page === 1 && !location.hash) || (location.hash = page);
   });
 
   // sync body background attribute
@@ -154,6 +158,11 @@ function main(_options = {}) {
   /**
    * Insert Ui Elements
    */
+  if (options.notransition) {
+    Bacon.once(1)
+      .onValue(util.attributeAssignOf(document.body, ATTR_NO_TRANS));
+  }
+
   // TODO split to module & add tests
   if (options.pointer) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}"></div>`);

@@ -117,6 +117,7 @@ You can add `backface` attribute into each slides. Image path that you specify i
  * @property {Boolean} [pointer=true]
  * @property {Boolean} [progress=true]
  * @property {Boolean} [backface=true]
+ * @property {Boolean} [notransition=false]
  */
 ```
 

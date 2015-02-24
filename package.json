@@ -32,7 +32,8 @@
   "dependencies": {
     "baconjs": "^0.7.42",
     "keycode": "^1.0.1",
-    "marked": "^0.3.2"
+    "marked": "^0.3.2",
+    "object-assign": "^2.0.0"
   },
   "devDependencies": {
     "babel": "^4.0.1",

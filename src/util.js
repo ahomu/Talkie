@@ -1,5 +1,7 @@
 'use strict';
 
+import assign from 'object-assign';
+
 export default {
   /**
    * @param {array} list
@@ -36,6 +38,12 @@ export default {
     Object.keys(orig).forEach((k)=> ret[k] = orig[k]);
     return ret;
   },
+
+  /**
+   * @param {Object} target
+   * @param {Object} ...sources
+   */
+  extend: assign,
 
   /**
    * @param {function} fn...
