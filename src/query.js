@@ -1,5 +1,7 @@
 'use strict';
 
+import util from './util';
+
 /**
  * query parameters
  */
@@ -15,6 +17,6 @@ function parseQuery(query) {
     .slice(1, -1)
     .split('&')
     .map((keyEqVal) => keyEqVal.split('='))
-    .forEach((kv) => ret[kv[0]] = kv[1]);
+    .forEach((kv) => ret[kv[0]] = util.getPrimitiveFromString(kv[1]));
   return ret;
 }

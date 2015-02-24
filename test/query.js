@@ -8,8 +8,8 @@ describe('query', function() {
     let params = query(test);
 
     assert(params.foo === 'test');
-    assert(params.bar === '1');
-    assert(params.baz === 'true');
+    assert(params.bar === 1);
+    assert(params.baz === true);
     assert(params.qux == null);
   });
 });

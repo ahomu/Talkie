@@ -114,6 +114,28 @@ export default {
   },
 
   /**
+   * @returns {*}
+   */
+  getPrimitiveFromString(str) {
+    let ret = (str == null) ? null : str + '';
+
+    if (str === 'true') {
+      ret = true;
+    }
+    else if (str === 'false') {
+      ret = false;
+    }
+    else if (str == null) {
+      ret = null;
+    }
+    else if (str.match(/^\d+$/)) {
+      ret = parseInt(str, 10);
+    }
+
+    return ret;
+  },
+
+  /**
    * @param {String} property
    * @returns {String}
    */
