@@ -20,11 +20,9 @@ For more information about dependency Please look at the [package.json](package.
 - [x] FullScreen mode
 - [x] Background image & filter
 - [x] Pointer attention
-- [ ] Rehearsal mode
-- [ ] Presenter note
 - [x] Progress indicator
-- [ ] PDF download
 - [ ] Thumbnail previews
+- [ ] Presenter note
 
 ## Real presentation sample
 

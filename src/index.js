@@ -92,8 +92,6 @@ function main(_options = {}) {
     notransition : false
   }), query(location.search));
 
-  console.log(options);
-
   /**
    * Init slide sizes
    */
