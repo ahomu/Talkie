@@ -15,6 +15,10 @@ export default function(target) {
   return bus;
 }
 
+/**
+ * @param {Element} el
+ * @returns {Function}
+ */
 function toggleScreenOf(el) {
   let request, exit;
 

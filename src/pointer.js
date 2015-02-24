@@ -4,10 +4,16 @@ import Bacon from 'baconjs';
 import util  from './util';
 
 /**
- * full screen
+ * @typedef {Object} PointerReturns
+ * @property {Bacon.Bus} coordBus
+ * @property {Bacon.Bus} toggleBus
+ */
+
+/**
+ * pointer mode
  *
  * @param {Element} target
- * @returns void
+ * @returns {PointerReturns}
  */
 export default function(target) {
 

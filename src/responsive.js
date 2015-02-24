@@ -11,10 +11,16 @@ import util  from './util';
  */
 
 /**
+ * @typedef {Object} RatioReturns
+ * @property {Bacon.Bus} scaleBus
+ * @property {Bacon.Property} currentRatio
+ */
+
+/**
  * compute ratio
  *
  * @param {RatioOptions} options
- * @returns {EventStream}
+ * @returns {RatioReturns}
  */
 export default function(options = {}) {
 

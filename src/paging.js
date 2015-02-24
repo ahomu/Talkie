@@ -12,9 +12,22 @@ import util    from './util';
  */
 
 /**
+ * @typedef {Object} PagingReturns
+ * @property {Bacon.EventStream} currentEs
+ * @property {Bacon.EventStream} startEs
+ * @property {Bacon.EventStream} endEs
+ * @property {Bacon.EventStream} changedEs
+ * @property {Bacon.EventStream} percentEs
+ * @property {Bacon.Bus} nextBus
+ * @property {Bacon.Bus} prevBus
+ * @property {Bacon.Bus} moveBus
+ */
+
+/**
  * paging control
  *
  * @param {PagingOptions} options
+ * @returns {PagingReturns}
  */
 export default function(options) {
 

@@ -7,10 +7,16 @@ const ATTR_BACKFACE  = 'backface';
 const ATTR_FILTER    = 'backface-filter';
 
 /**
+ * @typedef {Object} BackfaceReturns
+ * @property {Bacon.Bus} bgImageBus
+ * @property {Bacon.Bus} bgFilterBus
+ */
+
+/**
  * backface
  *
  * @param {Element} target
- * @returns void
+ * @returns {BackfaceReturns}
  */
 export default function(target) {
 
