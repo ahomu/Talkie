@@ -19,6 +19,7 @@ import Paging     from './paging';
 import FullScreen from './fullscreen';
 import Responsive from './responsive';
 import Pointer    from './pointer';
+import Backface   from './backface';
 
 const IDENT_NEXT     = 'next';
 const IDENT_PREV     = 'prev';
@@ -33,8 +34,6 @@ const MIME_MARKDOWN  = 'text/x-markdown';
 const ATTR_LAYOUT    = 'layout';
 const ATTR_BODY_BG   = 'body-bg';
 const ATTR_NO_TRANS  = 'no-transition';
-const ATTR_BACKFACE  = 'backface';
-const ATTR_FILTER    = 'backface-filter';
 
 const NORMAL_WIDTH  = 1024;
 const NORMAL_HEIGHT = 768;
@@ -66,6 +65,7 @@ export default function(options = {}) {
       fullScreen : FullScreen,
       responsive : Responsive,
       pointer    : Pointer,
+      backface   : Backface,
       Bacon      : Bacon
     };
   } else {
@@ -172,33 +172,11 @@ function main(_options = {}) {
     toggleBus.plug(control.key('b'));
   }
 
-  // TODO split to module & add test
   if (options.backface) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_BACKFACE}"></div>`);
-    let backfaceEl = util.getById(IDENT_BACKFACE);
-
-    let bgImageBus = new Bacon.Bus();
-    let bgFilterBus = new Bacon.Bus();
-
+    let {bgImageBus, bgFilterBus} = Backface(util.getById(IDENT_BACKFACE));
     bgImageBus.plug(paging.changedEs);
     bgFilterBus.plug(paging.changedEs);
-
-    // backface image
-    bgImageBus
-      .map('.getAttribute', ATTR_BACKFACE)
-      .map((src) => src ? `url("${src}")` : '')
-      .onValue(util.styleAssignOf(backfaceEl, 'background-image'));
-
-    // backface image css filter
-    bgFilterBus
-      .map('.getAttribute', ATTR_FILTER)
-      .onValue(util.styleAssignOf(backfaceEl, util.stylePrefixDetect('filter')));
-
-    // preload
-    Bacon.fromArray(slides)
-      .map('.getAttribute', ATTR_BACKFACE)
-      .filter((v) => !!v)
-      .onValue(util.preloadImg);
   }
 
   if (options.control) {
