@@ -30,10 +30,12 @@ const IDENT_TOTAL    = 'total';
 const IDENT_PROGRESS = 'progress';
 const IDENT_POINTER  = 'pointer';
 const IDENT_BACKFACE = 'backface';
-const MIME_MARKDOWN  = 'text/x-markdown';
-const ATTR_LAYOUT    = 'layout';
-const ATTR_BODY_BG   = 'body-bg';
-const ATTR_NO_TRANS  = 'no-transition';
+
+const SELECTOR_MD = '[type="text/x-markdown"]';
+
+const ATTR_LAYOUT   = 'layout';
+const ATTR_BODY_BG  = 'body-bg';
+const ATTR_NO_TRANS = 'no-transition';
 
 const NORMAL_WIDTH  = 1024;
 const NORMAL_HEIGHT = 768;
@@ -110,7 +112,7 @@ function main(_options = {}) {
   /**
    * Init slide sections
    */
-  let mds = util.toArray(document.querySelectorAll(`[type="${MIME_MARKDOWN}"]`));
+  let mds = util.toArray(document.querySelectorAll(SELECTOR_MD));
   mds.forEach(Slide.compileMarkdown);
   let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
   let notes  = slides.map(Slide.extractNote);
