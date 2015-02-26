@@ -116,6 +116,26 @@ You can add `backface` attribute into each slides. Image path that you specify i
  * @property {Boolean} [backface=true]
  * @property {Boolean} [notransition=false]
  */
+
+Talkie(options);
+```
+
+### All exports
+
+```javascript
+/**
+ * @typedef {Object} TalkieExport
+ * @param {Object.<Function>} control
+ * @param {Bacon.EventStream} changed
+ * @param {Bacon.Bus} next
+ * @param {Bacon.Bus} prev
+ * @param {Bacon.Bus} jump
+ * @param {Bacon.Property} ratio
+ * @param {Array.<String>} notes
+ */
+
+// @type {TalkieExport}
+var talkie = Talkie();
 ```
 
 ### FullScreen mode

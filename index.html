@@ -35,7 +35,8 @@ Go to [repository](https://github.com/ahomu/Talkie)
 - Markdown書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
 - ハイライトばっちり _:(°ω° 」∠):＿
 - レスポンシブだよ (^з^)-☆
-- フルスクリーンOK (｡•̀ᴗ-)✧
+- フルスクリーン対応 (press `F`) (｡•̀ᴗ-)✧
+- ポインターだせるよ (press `B`) ( ꒪◡꒪)
 - 属性でレイアウトできるよ (*´▽`)
 - 進行度インジゲータあるよ c⌒っ.ω.)っ
 </template>
@@ -76,6 +77,8 @@ Lorem ipsum dolor sit amet, consect...
 - Baz
 </script>
 ```
+
+You can use `template` element instead of `script`.
 </template>
 
 <template layout="code" type="text/x-markdown">
@@ -142,13 +145,13 @@ talkie.prev.plug(talkie.control.key('p'));
 
 ```javascript
 window.next = function() {
-talkie.next.push();
+  talkie.next.push();
 };
 window.prev = function() {
-talkie.prev.push();
+  talkie.prev.push();
 };
 window.jump = function(num) {
-talkie.jump.push(num);
+  talkie.jump.push(num);
 };
 ```
 </template>
@@ -167,10 +170,32 @@ talkie.jump.push(num);
 * @property {Boolean} [backface=true]
 * @property {Boolean} [notransition=false]
 */
+
+Talkie(options);
 ```
 </template>
 
-<template layout="title" type="text/x-markdown">
+<script layout="code" type="text/x-markdown">
+## All Exports
+
+```javascript
+/**
+ * @typedef {Object} TalkieExport
+ * @param {Object.<Function>} control
+ * @param {Bacon.EventStream} changed
+ * @param {Bacon.Bus} next
+ * @param {Bacon.Bus} prev
+ * @param {Bacon.Bus} jump
+ * @param {Bacon.Property} ratio
+ * @param {Array.<String>} notes
+ */
+
+/* @type {TalkieExport} */
+var talkie = Talkie();
+```
+</script>
+
+<template layout="cover" type="text/x-markdown">
 ## Enjoy!
 
 [ahomu/Talkie - GitHub.com](https://github.com/ahomu/Talkie)
@@ -180,6 +205,11 @@ talkie.jump.push(num);
 <script src="./dist/talkie.js"></script>
 <script>
 var talkie = Talkie({wide: false});
+
+talkie.next.plug(talkie.control.keydown('s'));
+talkie.next.plug(talkie.control.keydown('n'));
+talkie.prev.plug(talkie.control.keydown('a'));
+talkie.prev.plug(talkie.control.keydown('p'));
 
 document.addEventListener('DOMContentLoaded', function() {
   var slides = Array.prototype.slice.call(document.querySelectorAll('[layout]'));

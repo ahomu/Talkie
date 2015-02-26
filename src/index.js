@@ -227,6 +227,8 @@ function main(_options = {}) {
    * @param {Bacon.Bus} next
    * @param {Bacon.Bus} prev
    * @param {Bacon.Bus} jump
+   * @param {Bacon.Property} ratio
+   * @param {Array.<String>} notes
    */
   return {
     Bacon   : Bacon,
