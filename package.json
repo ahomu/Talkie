@@ -11,9 +11,9 @@
     "testem": "testem -f testem.json",
     "build": "gulp build",
     "watch": "gulp watch",
-    "patch": "gulp patch-release",
-    "minor": "gulp minor-release",
-    "major": "gulp major-release"
+    "patch": "gulp patch-bump && gulp tag",
+    "minor": "gulp minor-bump && gulp tag",
+    "major": "gulp major-bump && gulp tag"
   },
   "files": [
     "src",

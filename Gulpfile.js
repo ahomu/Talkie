@@ -1,6 +1,7 @@
 var gulp     = require('gulp');
 var plumber  = require('gulp-plumber');
-var rename     = require('gulp-rename');
+var rename   = require('gulp-rename');
+var sequence = require('run-sequence').use(gulp);
 var package  = require('./package.json');
 var banner   = '/*! <%= name %> - v<%= version %> */';
 
@@ -45,24 +46,6 @@ function bufferedBrowserify(standaloneName) {
   });
 }
 
-function releaseCommit(type) {
-  var bump   = require('gulp-bump');
-  var git    = require('gulp-git');
-  var tag    = require('gulp-tag-version');
-  var filter = require('gulp-filter');
-
-  var onlyPackageJson = filter(FILE_PACKAGE_JSON);
-
-  return gulp.src(GLOB_DIST_FILES.concat(FILE_PACKAGE_JSON))
-    .pipe(onlyPackageJson)
-    .pipe(bump({type: type}))
-    .pipe(gulp.dest('./'))
-    .pipe(onlyPackageJson.restore())
-    .pipe(git.commit('bump version'))
-    .pipe(onlyPackageJson)
-    .pipe(tag({prefix: ''}));
-}
-
 function cssPostProcess(inputFileName, outputFileName) {
   var please   = require('gulp-pleeease');
   var path     = require('path');
@@ -83,8 +66,24 @@ function cssPostProcess(inputFileName, outputFileName) {
     .pipe(gulp.dest(DIR_DIST));
 }
 
+function bumpCommit(type) {
+  var bump   = require('gulp-bump');
+  var git    = require('gulp-git');
+  var filter = require('gulp-filter');
+
+  var onlyPackageJson = filter(FILE_PACKAGE_JSON);
+
+  return gulp.src(GLOB_DIST_FILES.concat(FILE_PACKAGE_JSON))
+    .pipe(onlyPackageJson)
+    .pipe(bump({type: type}))
+    .pipe(gulp.dest('./'))
+    .pipe(onlyPackageJson.restore())
+    .pipe(git.commit('bump version'))
+    .pipe(onlyPackageJson);
+}
+
 gulp.task('jshint', function() {
-  var jshint   = require('gulp-jshint');
+  var jshint = require('gulp-jshint');
 
   return gulp.src(GLOB_JS_SRC_FILES)
     .pipe(jshint('./.jshintrc'))
@@ -92,20 +91,26 @@ gulp.task('jshint', function() {
     .pipe(jshint.reporter('fail'));
 });
 
+gulp.task('tag', function() {
+  var tag = require('gulp-tag-version');
+  return gulp.src(FILE_PACKAGE_JSON)
+    .pipe(tag({prefix: ''}));
+});
+
 gulp.task('pretest', function() {
   gulp.start('build', 'build-test');
 });
 
-gulp.task('patch-release', ['build', 'build-style', 'build-theme'], function() {
-  return releaseCommit('patch');
+gulp.task('patch-bump', ['build', 'build-style', 'build-theme'], function() {
+  return bumpCommit('patch');
 });
 
-gulp.task('minor-release', ['build', 'build-style', 'build-theme'], function() {
-  return releaseCommit('minor');
+gulp.task('minor-bump', ['build', 'build-style', 'build-theme'], function() {
+  return bumpCommit('minor');
 });
 
-gulp.task('major-release', ['build', 'build-style', 'build-theme'], function() {
-  return releaseCommit('major');
+gulp.task('major-bump', ['build', 'build-style', 'build-theme'], function() {
+  return bumpCommit('major');
 });
 
 gulp.task('watch', function() {
