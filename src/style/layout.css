@@ -29,13 +29,3 @@
 [layout][scroll] pre {
   overflow-y: scroll;
 }
-
-/**
- * Layout definitions
-*/
-@import url(layout/_default.css);
-@import url(layout/bullets.css);
-@import url(layout/bullets-invert.css);
-@import url(layout/code.css);
-@import url(layout/cover.css);
-@import url(layout/title.css);

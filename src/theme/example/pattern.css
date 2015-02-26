@@ -1,0 +1,16 @@
+/**
+ * Applies only to children of match [layout=pattern]
+ *
+ * <section layout="pattern">
+ *   <h1>Say Hello</h1>
+ *   <p>Hahaha...</p>
+ * </section>
+ */
+
+[layout=pattern] h1 {
+  /* some style */
+}
+
+[layout=pattern] p {
+  /* some style */
+}

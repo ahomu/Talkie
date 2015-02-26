@@ -58,18 +58,13 @@ body[no-transition] * {
 
 #scaler {
   /* width & height automatically set by ratio module */
-  display: none;
   position: absolute;
   z-index: 2;
   top: 0;
   left: 0;
   transform: scale(1);
   transform-origin: left top;
-  -webkit-backface-visibility: hidden;
-}
-
-#scaler[style] {
-  display: block;
+  -webkit-backface-visibility: hidden; /* forced GPU acceleration */
 }
 
 #backface {

@@ -7,14 +7,16 @@ var banner   = '/*! <%= name %> - v<%= version %> */';
 var FILE_BROWSERIFY_INDEX = './src/index.js';
 var FILE_PLEEEASE_INDEX   = './src/style/index.css';
 var FILE_TEST_RUNNER      = './test/runner.js';
+var FILE_PACKAGE_JSON     = 'package.json';
 
-var DIR_DIST = './dist';
-var DIR_TEMP = './temp';
+var DIR_DIST  = './dist';
+var DIR_TEMP  = './temp';
+var DIR_THEME = './src/theme';
 
-var GLOB_TEST_FILES = ['./test/**/*.js', '!./test/runner.js'];
-var GLOB_SRC_FILES  = ['./src/**/*.js'];
-var GLOB_CSS_FILES  = ['./src/**/*.css'];
-var GLOB_DIST_FILES = ['./dist/**/*'];
+var GLOB_TEST_FILES    = ['./test/**/*.js', '!./test/runner.js'];
+var GLOB_JS_SRC_FILES  = ['./src/**/*.js'];
+var GLOB_CSS_SRC_FILES = ['./src/**/*.css'];
+var GLOB_DIST_FILES    = ['./dist/**/*'];
 
 function bufferedBrowserify(standaloneName) {
   var transform  = require('vinyl-transform');
@@ -49,9 +51,9 @@ function releaseCommit(type) {
   var tag    = require('gulp-tag-version');
   var filter = require('gulp-filter');
 
-  var onlyPackageJson = filter('package.json');
+  var onlyPackageJson = filter(FILE_PACKAGE_JSON);
 
-  return gulp.src(GLOB_DIST_FILES.concat('./package.json'))
+  return gulp.src(GLOB_DIST_FILES.concat(FILE_PACKAGE_JSON))
     .pipe(onlyPackageJson)
     .pipe(bump({type: type}))
     .pipe(gulp.dest('./'))
@@ -61,10 +63,30 @@ function releaseCommit(type) {
     .pipe(tag({prefix: ''}));
 }
 
+function cssPostProcess(inputFileName, outputFileName) {
+  var please   = require('gulp-pleeease');
+  var path     = require('path');
+
+  return gulp.src(inputFileName)
+    .pipe(plumber())
+    .pipe(please({
+      import: {
+        path: path.dirname(inputFileName)
+      },
+      autoprefixer: {
+        browsers: ["last 2 versions", "Android 4.0"]
+      }
+    }))
+    .pipe(rename(function(path) {
+      path.basename = outputFileName;
+    }))
+    .pipe(gulp.dest(DIR_DIST));
+}
+
 gulp.task('jshint', function() {
   var jshint   = require('gulp-jshint');
 
-  return gulp.src(GLOB_SRC_FILES)
+  return gulp.src(GLOB_JS_SRC_FILES)
     .pipe(jshint('./.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'));
@@ -74,24 +96,24 @@ gulp.task('pretest', function() {
   gulp.start('build', 'build-test');
 });
 
-gulp.task('patch-release', ['build', 'build-css'], function() {
+gulp.task('patch-release', ['build', 'build-style', 'build-theme'], function() {
   return releaseCommit('patch');
 });
 
-gulp.task('minor-release', ['build', 'build-css'], function() {
+gulp.task('minor-release', ['build', 'build-style', 'build-theme'], function() {
   return releaseCommit('minor');
 });
 
-gulp.task('major-release', ['build', 'build-css'], function() {
+gulp.task('major-release', ['build', 'build-style', 'build-theme'], function() {
   return releaseCommit('major');
 });
 
 gulp.task('watch', function() {
-  gulp.watch(GLOB_SRC_FILES, function() {
+  gulp.watch(GLOB_JS_SRC_FILES, function() {
     gulp.start('jshint', 'build');
   });
-  gulp.watch(GLOB_CSS_FILES, function() {
-    gulp.start('build-css');
+  gulp.watch(GLOB_CSS_SRC_FILES, function() {
+    gulp.start('build-style', 'build-theme');
   });
 });
 
@@ -114,23 +136,20 @@ gulp.task('build', function() {
     .pipe(gulp.dest(DIR_DIST))
 });
 
-gulp.task('build-css', function () {
-  var please   = require('gulp-pleeease');
-  var path     = require('path');
-  var fileName = 'talkie';
+gulp.task('build-style', function () {
+  return cssPostProcess(FILE_PLEEEASE_INDEX, 'talkie.min');
+});
 
-  return gulp.src(FILE_PLEEEASE_INDEX)
-    .pipe(plumber())
-    .pipe(please({
-      import: {
-        path: path.dirname(FILE_PLEEEASE_INDEX)
-      },
-      autoprefixer: {
-        browsers: ["last 2 versions", "Android 4.0"]
-      }
-    }))
-    .pipe(rename(fileName + '.min.css'))
-    .pipe(gulp.dest(DIR_DIST));
+gulp.task('build-theme', function () {
+  var minimist = require('minimist');
+
+  // if you run `gulp build-theme --target example` will create `dist/talkie-example.min.css`
+  var options = minimist(process.argv.slice(2), {
+    default: {target: 'default'}
+  });
+
+  var targetThemeIndex = DIR_THEME + '/' + options.target + '/index.css';
+  return cssPostProcess(targetThemeIndex, 'talkie-' + options.target + '.min');
 });
 
 gulp.task('build-test', function() {
