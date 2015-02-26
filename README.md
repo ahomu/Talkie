@@ -120,24 +120,6 @@ You can add `backface` attribute into each slides. Image path that you specify i
 Talkie(options);
 ```
 
-### All exports
-
-```javascript
-/**
- * @typedef {Object} TalkieExport
- * @param {Object.<Function>} control
- * @param {Bacon.EventStream} changed
- * @param {Bacon.Bus} next
- * @param {Bacon.Bus} prev
- * @param {Bacon.Bus} jump
- * @param {Bacon.Property} ratio
- * @param {Array.<String>} notes
- */
-
-// @type {TalkieExport}
-var talkie = Talkie();
-```
-
 ### FullScreen mode
 
 When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Press and then exit.
@@ -153,11 +135,6 @@ When you press the **"b"** key, the pointer `visibility` is toggled
 ```javascript
 /**
  * @typedef {Object} TalkieExport
- * @param {Object.<Function>} control
- * @param {Bacon.EventStream} changed
- * @param {Bacon.Bus} next
- * @param {Bacon.Bus} prev
- * @param {Bacon.Bus} jump
  */
 var talkie  = Talkie({wide:false});
 ```
@@ -184,6 +161,24 @@ window.prev = function() {
 window.jump = function(num) {
   talkie.jump.push(num);
 };
+```
+
+### All exports
+
+```javascript
+/**
+ * @typedef {Object} TalkieExport
+ * @param {Object.<Function>} control
+ * @param {Bacon.EventStream} changed
+ * @param {Bacon.Bus} next
+ * @param {Bacon.Bus} prev
+ * @param {Bacon.Bus} jump
+ * @param {Bacon.Property} ratio
+ * @param {Array.<String>} notes
+ */
+
+// @type {TalkieExport}
+var talkie = Talkie();
 ```
 
 ## Internal API

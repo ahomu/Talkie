@@ -16,11 +16,14 @@ describe('backface', function() {
     slideElMock3.setAttribute('backface', '/backface3.gif');
 
     bgImageBus.push(slideElMock1);
-    assert(el.style.backgroundImage === `url(${location.origin}/backface1.jpg)`);
+    assert(el.style.backgroundImage === `url(${location.origin}/backface1.jpg)` || // webkit(based)
+           el.style.backgroundImage === `url("/backface1.jpg")`); // gecko
     bgImageBus.push(slideElMock2);
-    assert(el.style.backgroundImage === `url(${location.origin}/backface2.png)`);
+    assert(el.style.backgroundImage === `url(${location.origin}/backface2.png)` ||
+           el.style.backgroundImage === `url("/backface2.png")`);
     bgImageBus.push(slideElMock3);
-    assert(el.style.backgroundImage === `url(${location.origin}/backface3.gif)`);
+    assert(el.style.backgroundImage === `url(${location.origin}/backface3.gif)` ||
+           el.style.backgroundImage === `url("/backface3.gif")`);
   });
 
   it('bgFilterBus', function() {

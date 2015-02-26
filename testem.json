@@ -19,5 +19,5 @@
   ],
   "test_page": "test/runner.mustache",
   "launch_in_dev": ["Chrome"],
-  "launch_in_ci": ["Chrome"]
+  "launch_in_ci": ["Chrome", "Firefox", "Safari"]
 }
