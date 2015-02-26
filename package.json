@@ -8,10 +8,12 @@
   },
   "scripts": {
     "test": "testem -f testem.json ci",
-    "devel": "testem -f testem.json",
+    "testem": "testem -f testem.json",
     "build": "gulp build",
-    "release": "gulp release",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "patch": "gulp patch-release",
+    "minor": "gulp minor-release",
+    "major": "gulp major-release"
   },
   "files": [
     "src",
@@ -43,12 +45,13 @@
     "gulp-bump": "^0.1.11",
     "gulp-debug": "~1.0.1",
     "gulp-espower": "^0.10.0",
+    "gulp-filter": "^2.0.2",
     "gulp-header": "~1.2.2",
-    "gulp-include": "^1.1.0",
     "gulp-jshint": "~1.9.0",
     "gulp-pleeease": "^1.1.0",
     "gulp-plumber": "~0.6.6",
     "gulp-rename": "~1.2.0",
+    "gulp-tag-version": "^1.2.1",
     "gulp-uglify": "~1.0.1",
     "jshint-stylish": "~1.0.0",
     "mocha": "~2.0.1",

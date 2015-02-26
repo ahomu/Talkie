@@ -1,7 +1,6 @@
 var gulp     = require('gulp');
 var plumber  = require('gulp-plumber');
 var rename     = require('gulp-rename');
-var sequence = require('run-sequence').use(gulp);
 var package  = require('./package.json');
 var banner   = '/*! <%= name %> - v<%= version %> */';
 
@@ -15,6 +14,7 @@ var DIR_TEMP = './temp';
 var GLOB_TEST_FILES = ['./test/**/*.js', '!./test/runner.js'];
 var GLOB_SRC_FILES  = ['./src/**/*.js'];
 var GLOB_CSS_FILES  = ['./src/**/*.css'];
+var GLOB_DIST_FILES = ['./dist/**/*'];
 
 function bufferedBrowserify(standaloneName) {
   var transform  = require('vinyl-transform');
@@ -43,6 +43,24 @@ function bufferedBrowserify(standaloneName) {
   });
 }
 
+function releaseCommit(type) {
+  var bump   = require('gulp-bump');
+  var git    = require('gulp-git');
+  var tag    = require('gulp-tag-version');
+  var filter = require('gulp-filter');
+
+  var onlyPackageJson = filter('package.json');
+
+  return gulp.src(GLOB_DIST_FILES.concat('./package.json'))
+    .pipe(onlyPackageJson)
+    .pipe(bump({type: type}))
+    .pipe(gulp.dest('./'))
+    .pipe(onlyPackageJson.restore())
+    .pipe(git.commit('bump version'))
+    .pipe(onlyPackageJson)
+    .pipe(tag({prefix: ''}));
+}
+
 gulp.task('jshint', function() {
   var jshint   = require('gulp-jshint');
 
@@ -56,8 +74,16 @@ gulp.task('pretest', function() {
   gulp.start('build', 'build-test');
 });
 
-gulp.task('release', function() {
-  sequence('jshint', 'build', 'build-test', 'build-css');
+gulp.task('patch-release', ['build', 'build-css'], function() {
+  return releaseCommit('patch');
+});
+
+gulp.task('minor-release', ['build', 'build-css'], function() {
+  return releaseCommit('minor');
+});
+
+gulp.task('major-release', ['build', 'build-css'], function() {
+  return releaseCommit('major');
 });
 
 gulp.task('watch', function() {
