@@ -1,14 +1,12 @@
 var gulp     = require('gulp');
 var plumber  = require('gulp-plumber');
 var rename   = require('gulp-rename');
-var sequence = require('run-sequence').use(gulp);
 var package  = require('./package.json');
 var banner   = '/*! <%= name %> - v<%= version %> */';
 
 var FILE_BROWSERIFY_INDEX = './src/index.js';
 var FILE_PLEEEASE_INDEX   = './src/style/index.css';
 var FILE_TEST_RUNNER      = './test/runner.js';
-var FILE_PACKAGE_JSON     = 'package.json';
 
 var DIR_DIST  = './dist';
 var DIR_TEMP  = './temp';
@@ -17,7 +15,6 @@ var DIR_THEME = './src/theme';
 var GLOB_TEST_FILES    = ['./test/**/*.js', '!./test/runner.js'];
 var GLOB_JS_SRC_FILES  = ['./src/**/*.js'];
 var GLOB_CSS_SRC_FILES = ['./src/**/*.css'];
-var GLOB_DIST_FILES    = ['./dist/**/*'];
 
 function bufferedBrowserify(standaloneName) {
   var transform  = require('vinyl-transform');
@@ -66,22 +63,6 @@ function cssPostProcess(inputFileName, outputFileName) {
     .pipe(gulp.dest(DIR_DIST));
 }
 
-function bumpCommit(type) {
-  var bump   = require('gulp-bump');
-  var git    = require('gulp-git');
-  var filter = require('gulp-filter');
-
-  var onlyPackageJson = filter(FILE_PACKAGE_JSON);
-
-  return gulp.src(GLOB_DIST_FILES.concat(FILE_PACKAGE_JSON))
-    .pipe(onlyPackageJson)
-    .pipe(bump({type: type}))
-    .pipe(gulp.dest('./'))
-    .pipe(onlyPackageJson.restore())
-    .pipe(git.commit('bump version'))
-    .pipe(onlyPackageJson);
-}
-
 gulp.task('jshint', function() {
   var jshint = require('gulp-jshint');
 
@@ -91,38 +72,24 @@ gulp.task('jshint', function() {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('tag', function() {
-  var tag = require('gulp-tag-version');
-  return gulp.src(FILE_PACKAGE_JSON)
-    .pipe(tag({prefix: ''}));
+gulp.task('build', function() {
+  gulp.start('build-js', 'build-style', 'build-theme');
 });
 
 gulp.task('pretest', function() {
-  gulp.start('build', 'build-test');
-});
-
-gulp.task('patch-bump', ['build', 'build-style', 'build-theme'], function() {
-  return bumpCommit('patch');
-});
-
-gulp.task('minor-bump', ['build', 'build-style', 'build-theme'], function() {
-  return bumpCommit('minor');
-});
-
-gulp.task('major-bump', ['build', 'build-style', 'build-theme'], function() {
-  return bumpCommit('major');
+  gulp.start('build-js', 'build-test');
 });
 
 gulp.task('watch', function() {
   gulp.watch(GLOB_JS_SRC_FILES, function() {
-    gulp.start('jshint', 'build');
+    gulp.start('build-js');
   });
   gulp.watch(GLOB_CSS_SRC_FILES, function() {
     gulp.start('build-style', 'build-theme');
   });
 });
 
-gulp.task('build', function() {
+gulp.task('build-js', ['jshint'], function() {
   var uglify     = require('gulp-uglify');
   var header     = require('gulp-header');
   var fileName   = 'talkie';
