@@ -56,23 +56,19 @@ const WIDE_HEIGHT   = 768;
  * @param {TalkieOptions} options
  */
 export default function(options = {}) {
-  if (options.api) {
-    return {
-      main       : main,
-      util       : util,
-      control    : control,
-      query      : query,
-      slide      : $slide,
-      paging     : $paging,
-      fullScreen : $fullScreen,
-      responsive : $responsive,
-      pointer    : $pointer,
-      backface   : $backface,
-      Bacon      : Bacon
-    };
-  } else {
-    return main(options);
-  }
+  return !options.api ? main(options) : {
+    main       : main,
+    util       : util,
+    control    : control,
+    query      : query,
+    slide      : $slide,
+    paging     : $paging,
+    fullScreen : $fullScreen,
+    responsive : $responsive,
+    pointer    : $pointer,
+    backface   : $backface,
+    Bacon      : Bacon
+  };
 }
 
 /**

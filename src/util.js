@@ -129,14 +129,11 @@ export default {
 
     if (str === 'true') {
       ret = true;
-    }
-    else if (str === 'false') {
+    } else if (str === 'false') {
       ret = false;
-    }
-    else if (str == null) {
+    } else if (str == null) {
       ret = null;
-    }
-    else if (str.match(/^\d+$/)) {
+    } else if (str.match(/^\d+$/)) {
       ret = parseInt(str, 10);
     }
 
@@ -152,13 +149,13 @@ export default {
     let styles = this.toArray(window.getComputedStyle(document.documentElement, ''));
     let includes = (needle) => styles.indexOf(needle) !== -1;
 
-    if(includes(`-webkit-${property}`)) {
+    if (includes(`-webkit-${property}`)) {
       validProperty = `-webkit-${property}`;
-    } else if(includes(`-moz-${property}`)) {
+    } else if (includes(`-moz-${property}`)) {
       validProperty = `-moz-${property}`;
-    } else if(includes(`-ms-${property}`)) {
+    } else if (includes(`-ms-${property}`)) {
       validProperty = `-ms-${property}`;
-    } else if(includes(property)) {
+    } else if (includes(property)) {
       validProperty = property;
     }
 

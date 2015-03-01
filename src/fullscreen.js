@@ -21,23 +21,23 @@ export default function(target) {
 function toggleScreenOf(el) {
   let request, exit;
 
-  if(el.requestFullscreen) {
+  if (el.requestFullscreen) {
     request = 'requestFullscreen';
-  } else if(el.webkitRequestFullscreen) {
+  } else if (el.webkitRequestFullscreen) {
     request = 'webkitRequestFullscreen';
-  } else if(el.mozRequestFullScreen) {
+  } else if (el.mozRequestFullScreen) {
     request = 'mozRequestFullScreen';
-  } else if(el.msRequestFullscreen) {
+  } else if (el.msRequestFullscreen) {
     request = 'msRequestFullscreen';
   }
 
-  if(document.exitFullscreen) {
+  if (document.exitFullscreen) {
     exit = 'exitFullscreen';
-  } else if(document.webkitExitFullscreen) {
+  } else if (document.webkitExitFullscreen) {
     exit = 'webkitExitFullscreen';
-  } else if(document.mozCancelFullScreen) {
+  } else if (document.mozCancelFullScreen) {
     exit = 'mozCancelFullScreen';
-  } else if(document.msExitFullscreen) {
+  } else if (document.msExitFullscreen) {
     exit = 'msExitFullscreen';
   }
 

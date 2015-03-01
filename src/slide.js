@@ -5,7 +5,7 @@ import util   from './util';
 
 marked.setOptions({
   langPrefix : 'hljs ',
-  highlight  : function (code) {
+  highlight  : function(code) {
     if (window.hljs == null) {
       console.log('highlight.js (`window.hljs`) is missing');
       return code;
