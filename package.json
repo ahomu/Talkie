@@ -7,13 +7,16 @@
     "test": "test"
   },
   "scripts": {
+    "start": "npm run build && serve .",
     "test": "testem -f testem.json ci",
-    "testem": "testem -f testem.json",
+    "watch": "gulp watch-css & npm run watchify & serve .",
+    "lint": "gulp lint",
     "build": "gulp build",
-    "watch": "gulp watch",
     "patch": "npm version patch -m \"bump v%s !\"",
     "minor": "npm version minor -m \"bump v%s !!\"",
-    "major": "npm version major -m \"bump v%s !!!\""
+    "major": "npm version major -m \"bump v%s !!!\"",
+    "testem": "testem -f testem.json",
+    "watchify": "watchify src/index.js -o dist/talkie.js --debug --verbose --transform=babelify --standalone=Talkie"
   },
   "files": [
     "src",
@@ -57,8 +60,10 @@
     "minimist": "^1.1.0",
     "mocha": "~2.0.1",
     "power-assert": "~0.10.0",
+    "serve": "^1.4.0",
     "sinon": "~1.12.2",
     "testem": "~0.6.18",
-    "vinyl-transform": "0.0.1"
+    "vinyl-transform": "0.0.1",
+    "watchify": "^2.4.0"
   }
 }

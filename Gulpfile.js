@@ -80,10 +80,14 @@ gulp.task('pretest', function() {
   gulp.start('build-js', 'build-test');
 });
 
-gulp.task('watch', function() {
+// @unused
+gulp.task('watch-js', function() {
   gulp.watch(GLOB_JS_SRC_FILES.concat('.eslintrc'), function() {
     gulp.start('build-js');
   });
+});
+
+gulp.task('watch-css', function() {
   gulp.watch(GLOB_CSS_SRC_FILES, function() {
     gulp.start('build-style', 'build-theme');
   });
