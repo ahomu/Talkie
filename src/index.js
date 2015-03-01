@@ -14,12 +14,12 @@ import util    from './util';
 import control from './control';
 import query   from './query';
 
-import Slide      from './slide';
-import Paging     from './paging';
-import FullScreen from './fullscreen';
-import Responsive from './responsive';
-import Pointer    from './pointer';
-import Backface   from './backface';
+import $slide      from './slide';
+import $paging     from './paging';
+import $fullScreen from './fullscreen';
+import $responsive from './responsive';
+import $pointer    from './pointer';
+import $backface   from './backface';
 
 const IDENT_NEXT     = 'next';
 const IDENT_PREV     = 'prev';
@@ -62,12 +62,12 @@ export default function(options = {}) {
       util       : util,
       control    : control,
       query      : query,
-      slide      : Slide,
-      paging     : Paging,
-      fullScreen : FullScreen,
-      responsive : Responsive,
-      pointer    : Pointer,
-      backface   : Backface,
+      slide      : $slide,
+      paging     : $paging,
+      fullScreen : $fullScreen,
+      responsive : $responsive,
+      pointer    : $pointer,
+      backface   : $backface,
       Bacon      : Bacon
     };
   } else {
@@ -97,12 +97,12 @@ function main(_options = {}) {
   /**
    * Init slide sizes
    */
-  let width  = options.wide ? WIDE_WIDTH  : NORMAL_WIDTH;
+  let width  = options.wide ? WIDE_WIDTH : NORMAL_WIDTH;
   let height = options.wide ? WIDE_HEIGHT : NORMAL_HEIGHT;
   document.querySelector('head').insertAdjacentHTML('beforeend', `
     <style>
-      #${IDENT_SCALER},
-      [layout] {
+      [layout],
+      #${IDENT_SCALER} {
         width: ${width}px !important;
         height: ${height}px !important;
       }
@@ -113,9 +113,9 @@ function main(_options = {}) {
    * Init slide sections
    */
   let mds = util.toArray(document.querySelectorAll(SELECTOR_MD));
-  mds.forEach(Slide.compileMarkdown);
+  mds.forEach($slide.compileMarkdown);
   let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
-  let notes  = slides.map(Slide.extractNote);
+  let notes  = slides.map($slide.extractNote);
 
   /**
    * Responsive scaling
@@ -126,7 +126,7 @@ function main(_options = {}) {
   let scalerEl = util.getById(IDENT_SCALER);
   slides.forEach((el) => scalerEl.appendChild(el));
 
-  let responsive = Responsive({
+  let responsive = $responsive({
     width  : width,
     height : height,
     target : scalerEl
@@ -136,7 +136,7 @@ function main(_options = {}) {
   /**
    * Paging control
    */
-  let paging = Paging({
+  let paging = $paging({
     startPage     : util.getPageNumberFromHash() || 1,
     endPage       : slides.length,
     slideElements : slides
@@ -169,14 +169,14 @@ function main(_options = {}) {
 
   if (options.pointer) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}"></div>`);
-    let {coordBus, toggleBus} = Pointer(util.getById(IDENT_POINTER));
+    let {coordBus, toggleBus} = $pointer(util.getById(IDENT_POINTER));
     coordBus.plug(control.mousemove());
     toggleBus.plug(control.key('b'));
   }
 
   if (options.backface) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_BACKFACE}"></div>`);
-    let {bgImageBus, bgFilterBus} = Backface(util.getById(IDENT_BACKFACE));
+    let {bgImageBus, bgFilterBus} = $backface(util.getById(IDENT_BACKFACE));
     bgImageBus.plug(paging.changedEs);
     bgFilterBus.plug(paging.changedEs);
   }
@@ -216,7 +216,7 @@ function main(_options = {}) {
   /**
    * FullScreen
    */
-  FullScreen(document.body).plug(control.key('f'));
+  $fullScreen(document.body).plug(control.key('f'));
 
   /**
    * export some of control

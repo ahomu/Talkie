@@ -1,8 +1,6 @@
 'use strict';
 
 import Bacon   from 'baconjs';
-import control from './control';
-import util    from './util';
 
 /**
  * @typedef {Object} PagingOptions

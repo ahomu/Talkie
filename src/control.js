@@ -15,8 +15,8 @@ export default {
    * @returns {EventStream}
    */
   key(charKey) {
-    let keyCode = typeof(charKey) === 'string' ? keycode(charKey)
-                                               : charKey;
+    let keyCode = typeof charKey === 'string' ? keycode(charKey)
+                                              : charKey;
     return EVENT_KEYUP.filter(keyCodeIs(keyCode));
   },
 
@@ -25,8 +25,8 @@ export default {
    * @returns {EventStream}
    */
   keydown(charKey) {
-    let keyCode = typeof(charKey) === 'string' ? keycode(charKey)
-                                               : charKey;
+    let keyCode = typeof charKey === 'string' ? keycode(charKey)
+                                              : charKey;
     return EVENT_KEYDOWN.filter(keyCodeIs(keyCode));
   },
 
@@ -82,13 +82,13 @@ export default {
 
     stopBus.plug(end);
 
-    return start.flatMap(function(start) {
+    return start.flatMap(function(initial) {
       let initialValue = {
-        init : start.changedTouches[0].clientX,
+        init : initial.changedTouches[0].clientX,
         curt : 0
       };
-      return move.takeUntil(stopBus).scan(initialValue, function(acc, move) {
-        acc.curt = move.changedTouches[0].clientX;
+      return move.takeUntil(stopBus).scan(initialValue, function(acc, current) {
+        acc.curt = current.changedTouches[0].clientX;
         return acc;
       }).skip(1);
     });

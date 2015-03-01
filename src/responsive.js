@@ -82,7 +82,7 @@ function scalingOf(el) {
 function centeringOf(el) {
   return function() {
     let rect = el.getBoundingClientRect();
-    el.style.left = (window.innerWidth  - rect.width) / 2;
+    el.style.left = (window.innerWidth - rect.width) / 2;
     el.style.top  = (window.innerHeight - rect.height) / 2;
   };
 }

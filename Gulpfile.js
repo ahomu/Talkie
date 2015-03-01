@@ -63,13 +63,13 @@ function cssPostProcess(inputFileName, outputFileName) {
     .pipe(gulp.dest(DIR_DIST));
 }
 
-gulp.task('jshint', function() {
-  var jshint = require('gulp-jshint');
+gulp.task('lint', function() {
+  var eslint   = require('gulp-eslint');
 
   return gulp.src(GLOB_JS_SRC_FILES)
-    .pipe(jshint('./.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(jshint.reporter('fail'));
+    .pipe(eslint({useEslintrc: true}))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('build', function() {
@@ -81,7 +81,7 @@ gulp.task('pretest', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(GLOB_JS_SRC_FILES, function() {
+  gulp.watch(GLOB_JS_SRC_FILES.concat('.eslintrc'), function() {
     gulp.start('build-js');
   });
   gulp.watch(GLOB_CSS_SRC_FILES, function() {
@@ -89,7 +89,7 @@ gulp.task('watch', function() {
   });
 });
 
-gulp.task('build-js', ['jshint'], function() {
+gulp.task('build-js', ['lint'], function() {
   var uglify     = require('gulp-uglify');
   var header     = require('gulp-header');
   var fileName   = 'talkie';

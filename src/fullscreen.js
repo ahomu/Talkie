@@ -1,7 +1,6 @@
 'use strict';
 
 import Bacon   from 'baconjs';
-import control from './control';
 
 /**
  * full screen

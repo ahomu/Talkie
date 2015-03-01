@@ -43,7 +43,7 @@ export default {
    * @param {Object} target
    * @param {Object} ...sources
    */
-  extend: assign,
+  extend : assign,
 
   /**
    * @param {function} fn...
