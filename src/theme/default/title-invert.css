@@ -1,0 +1,26 @@
+[body-bg=title-invert] {
+  background: radial-gradient(#262626 0%, #080808 100%);
+}
+
+[layout=title-invert] {
+  color: #fff;
+}
+
+[layout=title-invert] > * {
+  margin: 30px 100px;
+}
+
+[layout=title-invert] h1,
+[layout=title-invert] h2,
+[layout=title-invert] h3,
+[layout=title-invert] h4,
+[layout=title-invert] h5,
+[layout=title-invert] h6 {
+  font-weight: bold;
+}
+
+[layout=title-invert] strong {
+  font-size: 200%;
+  font-weight: bold;
+  line-height: 1;
+}
