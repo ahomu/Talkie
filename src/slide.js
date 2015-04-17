@@ -34,7 +34,7 @@ function extractNote(el) {
 
   let container = document.createElement('div');
   container.innerHTML = note || '';
-  return container.textContent || '';
+  return (container.textContent || '').replace(/^\n*/, '');
 }
 
 /**

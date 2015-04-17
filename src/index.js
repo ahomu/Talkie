@@ -35,6 +35,7 @@ const SELECTOR_MD = '[type="text/x-markdown"]';
 
 const ATTR_LAYOUT   = 'layout';
 const ATTR_BODY_BG  = 'body-bg';
+const ATTR_PAGE     = 'page';
 const ATTR_NO_TRANS = 'no-transition';
 
 const NORMAL_WIDTH  = 1024;
@@ -107,11 +108,16 @@ function main(_options = {}) {
 
   /**
    * Init slide sections
+   *   1. compile markdowns
+   *   2. traverse slides & assign page number
+   *   3. extract presenter notes
    */
   let mds = util.toArray(document.querySelectorAll(SELECTOR_MD));
   mds.forEach($slide.compileMarkdown);
   let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
-  let notes  = slides.map($slide.extractNote);
+  slides.forEach((el, i) => util.attributeAssignOf(el, ATTR_PAGE)(i+1));
+  let notes  = {};
+  slides.map($slide.extractNote).forEach((txt, i) => notes[i+1] = txt);
 
   /**
    * Responsive scaling
@@ -224,7 +230,7 @@ function main(_options = {}) {
    * @param {Bacon.Bus} prev
    * @param {Bacon.Bus} jump
    * @param {Bacon.Property} ratio
-   * @param {Array.<String>} notes
+   * @param {Object.<Number, String>} notes
    */
   return {
     Bacon   : Bacon,

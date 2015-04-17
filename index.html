@@ -216,11 +216,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var slides = Array.prototype.slice.call(document.querySelectorAll('[layout]'));
   talkie.changed.onValue(function(current) {
     console.clear();
-    // safari's `console#clear` is async...
-    setTimeout(function() {
-      // print presenter notes
-      console.info(talkie.notes[slides.indexOf(current)]);
-    }, 50);
+    // print presenter notes
+    console.info(talkie.notes[current.getAttribute('page')]);
   });
 });
 </script>

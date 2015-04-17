@@ -174,7 +174,7 @@ window.jump = function(num) {
  * @param {Bacon.Bus} prev
  * @param {Bacon.Bus} jump
  * @param {Bacon.Property} ratio
- * @param {Array.<String>} notes
+ * @param {Object.<Number, String>} notes
  */
 
 // @type {TalkieExport}
