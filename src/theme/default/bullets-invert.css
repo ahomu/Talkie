@@ -23,6 +23,16 @@
   margin-top: -30px;
 }
 
+[layout=bullets-invert] table {
+
+}
+
+[layout=bullets-invert] th,
+[layout=bullets-invert] td {
+  color: #fff;
+  border-color: #fff;
+}
+
 [layout=bullets-invert] ul {
   list-style-type: disc;
 }
@@ -41,5 +51,5 @@
 [layout=bullets-invert] ol ol {
   list-style-type: none;
   font-size: 0.9em;
-  margin: 0.5em 0 0.5em 2em;
+  margin: 0.5em 0 1.5em 2em;
 }

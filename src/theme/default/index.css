@@ -78,6 +78,18 @@
   font-weight: bold;
 }
 
+[layout] table {
+  border-collapse: collapse;
+}
+
+[layout] th,
+[layout] td {
+  padding: 1em;
+  font-size: 2.0em;
+  font-weight: normal;
+  border: 1px solid #222;
+}
+
 [layout] ul,
 [layout] ol {
   font-size: 1.8em;
@@ -121,3 +133,4 @@
 @import url(./code.css);
 @import url(./cover.css);
 @import url(./title.css);
+@import url(./title-invert.css);
