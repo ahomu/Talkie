@@ -14,7 +14,7 @@ export default parseQuery;
 function parseQuery(query) {
   let ret =  {};
   query
-    .slice(1, -1)
+    .slice(1)
     .split('&')
     .map((keyEqVal) => keyEqVal.split('='))
     .forEach((kv) => ret[kv[0]] = util.getPrimitiveFromString(kv[1]));

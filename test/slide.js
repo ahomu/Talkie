@@ -48,7 +48,7 @@ paragprah
     let noteStr = slide.extractNote(section);
 
     // got note (tags are stripped)
-    assert(noteStr === '\nh3 note\n');
+    assert(noteStr === 'h3 note\n');
 
     // extracted
     assert(!section.querySelector('h3'));

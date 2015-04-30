@@ -10,6 +10,11 @@ describe('query', function() {
     assert(params.foo === 'test');
     assert(params.bar === 1);
     assert(params.baz === true);
-    assert(params.qux == null);
+    assert(params.qux === null);
+
+    let test2 = '?notransition=1';
+    let params2 = query(test2);
+
+    assert(params2.notransition === 1);
   });
 });
