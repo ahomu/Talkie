@@ -27,7 +27,7 @@
 [layout=bullets] ul ol,
 [layout=bullets] ol ul,
 [layout=bullets] ol ol {
-  list-style-type: 'none';
+  list-style-type: none;
   font-size: 0.9em;
   margin: 0.5em 0 1.5em 2em;
 }
