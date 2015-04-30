@@ -26,13 +26,10 @@ function bufferedBrowserify(standaloneName) {
         standalone : standaloneName,
         debug      : true,
         noParse    : [
-          require.resolve('baconjs'),
-          require.resolve('babel/browser-polyfill')
+          require.resolve('baconjs')
         ]
       })
       .transform(babelify.configure({
-        experimental : false,
-        playground   : false
       }))
       .bundle()
       .on('error', function(err){

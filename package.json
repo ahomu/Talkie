@@ -41,14 +41,13 @@
     "object-assign": "^2.0.0"
   },
   "devDependencies": {
-    "babel": "^4.0.1",
-    "babel-eslint": "^1.0.12",
-    "babelify": "^5.0.3",
+    "babel-eslint": "^3.0.1",
+    "babelify": "^6.0.2",
     "browserify": "~6.3.3",
-    "eslint": "^0.15.1",
+    "eslint": "^0.20.0",
     "gulp": "~3.8.10",
     "gulp-debug": "~1.0.1",
-    "gulp-eslint": "^0.5.0",
+    "gulp-eslint": "^0.11.1",
     "gulp-espower": "^0.10.0",
     "gulp-header": "~1.2.2",
     "gulp-jshint": "~1.9.0",
