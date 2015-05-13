@@ -1,7 +1,10 @@
 'use strict';
 
+import assert from 'power-assert';
+import sinon from 'sinon';
+import query from '../src/query';
+
 describe('query', function() {
-  let query = Talkie({api:true}).query;
 
   it('parse query string as location.search', function() {
     let test = '?foo=test&bar=1&baz=true&qux';

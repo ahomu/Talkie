@@ -1,7 +1,12 @@
 'use strict';
 
+import assert from 'power-assert';
+import sinon from 'sinon';
+import KeyEvent from './libs/key-event';
+import backface from '../src/backface';
+import util from '../src/util';
+
 describe('backface', function() {
-  let {backface, util} = Talkie({api:true});
 
   it('bgImageBus', function() {
     let el = document.createElement('div');

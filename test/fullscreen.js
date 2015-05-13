@@ -1,7 +1,10 @@
 'use strict';
 
+import assert from 'power-assert';
+import sinon from 'sinon';
+import fullScreen from '../src/fullscreen';
+
 describe('fullscreen', function() {
-  let fullScreen = Talkie({api:true}).fullScreen;
 
   // TODO implement
   // Failed to execute 'requestFullScreen' on 'Element': API can only be initiated by a user gesture...

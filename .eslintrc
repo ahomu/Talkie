@@ -9,7 +9,7 @@
 
   "rules": {
     "strict": 2,
-    "valid-jsdoc": 2,
+    "valid-jsdoc": 0,
 
     "default-case": 2,
     "no-self-compare": 2,

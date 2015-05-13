@@ -1,8 +1,13 @@
 /* global YourApp */
 'use strict';
 
+import assert from 'power-assert';
+import sinon from 'sinon';
+import ClickEvent from './libs/click-event';
+import KeyEvent from './libs/key-event';
+import control from '../src/control';
+
 describe('control', function() {
-  let control = Talkie({api:true}).control;
 
   it('key(string)', function(done) {
     control.key('q').onValue(function(e) {

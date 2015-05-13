@@ -1,7 +1,10 @@
 'use strict';
 
+import assert from 'power-assert';
+import sinon from 'sinon';
+import pointer from '../src/pointer';
+
 describe('pointer', function() {
-  let pointer = Talkie({api:true}).pointer;
 
   it('coordBus', function() {
     let el = document.createElement('div');

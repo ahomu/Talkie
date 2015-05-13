@@ -1,6 +1,6 @@
 'use strict';
 
-export default window.ClickEvent = {
+export default {
   simulate(el) {
     let event = new MouseEvent('click', {
       view       : window,

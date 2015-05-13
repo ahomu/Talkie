@@ -1,7 +1,13 @@
 'use strict';
 
+import assert from 'power-assert';
+import sinon from 'sinon';
+import KeyEvent from './libs/key-event';
+import Bacon from 'baconjs';
+import Paging from '../src/paging';
+import control from '../src/control';
+
 describe('paging', function() {
-  let {paging: Paging, control: control, Bacon: Bacon} = Talkie({api:true});
 
   function rightKey() {
     KeyEvent.simulate(39, 39); // →

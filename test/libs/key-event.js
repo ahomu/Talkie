@@ -1,6 +1,6 @@
 'use strict';
 
-export default window.KeyEvent = KeyEvent;
+export default KeyEvent;
 
 // original
 // https://github.com/ccampbell/mousetrap/blob/master/tests/libs/key-event.js

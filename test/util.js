@@ -1,7 +1,10 @@
 'use strict';
 
+import assert from 'power-assert';
+import sinon from 'sinon';
+import util from '../src/util';
+
 describe('util', function() {
-  let util = Talkie({api:true}).util;
 
   it('toArray', function() {
     let args  = util.toArray(arguments);
