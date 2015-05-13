@@ -1,0 +1,9 @@
+dependencies:
+  cache_directories:
+    - "node_modules"
+  pre:
+    - npm install
+
+test:
+  override:
+    - npm test
