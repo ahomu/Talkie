@@ -206,5 +206,5 @@ The MIT License (MIT)
 [npm-url]: https://npmjs.org/package/talkiejs
 [circle-image]: https://circleci.com/gh/ahomu/Talkie.svg?style=shield&circle-token=b12ab2a48027a249724e0b1924ccec8152d3068a
 [circle-url]: https://circleci.com/gh/ahomu/Talkie
-[deps-image]: https://david-dm.org/ahomu/talkiejs.svg
-[deps-url]: https://david-dm.org/ahomu/talkiejs
+[deps-image]: https://david-dm.org/ahomu/Talkie.svg
+[deps-url]: https://david-dm.org/ahomu/Talkie
