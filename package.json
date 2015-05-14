@@ -45,7 +45,7 @@
     "babel-eslint": "^3.1.1",
     "babel-plugin-espower": "^0.3.0",
     "babelify": "^6.1.0",
-    "browserify": "^9.0.3",
+    "browserify": "9.0.4",
     "eslint": "^0.20.0",
     "gulp": "~3.8.10",
     "gulp-debug": "~1.0.1",

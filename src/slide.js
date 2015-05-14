@@ -7,8 +7,8 @@ import util   from './util';
  * setup markdown
  */
 let md = markdown({
-  langPrefix: 'hljs ',
-  highlight: function (str, lang) {
+  langPrefix : 'hljs ',
+  highlight  : function(str, lang) {
     if (window.hljs == null) {
       console.log('highlight.js (`window.hljs`) is missing');
       return '';
@@ -17,12 +17,16 @@ let md = markdown({
     if (lang && window.hljs.getLanguage(lang)) {
       try {
         return window.hljs.highlight(lang, str).value;
-      } catch (__) {}
+      } catch (__) {
+        console.log(__);
+      }
     }
 
     try {
       return window.hljs.highlightAuto(str).value;
-    } catch (__) {}
+    } catch (__) {
+      console.log(__);
+    }
 
     return ''; // use external default escaping
   }
