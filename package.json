@@ -1,6 +1,6 @@
 {
   "name": "talkiejs",
-  "version": "0.7.4",
+  "version": "0.8.0",
   "description": "Simple slide presentation library. Responsive scaling & markdown ready.",
   "main": "dist/talkie.js",
   "directories": {
