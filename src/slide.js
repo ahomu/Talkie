@@ -1,16 +1,30 @@
 'use strict';
 
-import marked from 'marked';
+import markdown from 'markdown-it';
 import util   from './util';
 
-marked.setOptions({
-  langPrefix : 'hljs ',
-  highlight  : function(code) {
+/**
+ * setup markdown
+ */
+let md = markdown({
+  langPrefix: 'hljs ',
+  highlight: function (str, lang) {
     if (window.hljs == null) {
       console.log('highlight.js (`window.hljs`) is missing');
-      return code;
+      return '';
     }
-    return window.hljs.highlightAuto(code).value;
+
+    if (lang && window.hljs.getLanguage(lang)) {
+      try {
+        return window.hljs.highlight(lang, str).value;
+      } catch (__) {}
+    }
+
+    try {
+      return window.hljs.highlightAuto(str).value;
+    } catch (__) {}
+
+    return ''; // use external default escaping
   }
 });
 
@@ -43,7 +57,7 @@ function extractNote(el) {
  */
 function compileMarkdown(el) {
   let section = document.createElement('section');
-  section.innerHTML = marked(el.innerHTML);
+  section.innerHTML = md.render(el.innerHTML);
   util.toArray(el.attributes).filter(notTypeAttribute).forEach(copyAttributeTo(section));
   el.parentNode.replaceChild(section, el);
   return section;
