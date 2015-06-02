@@ -69,7 +69,8 @@
     "serve": "^1.4.0",
     "sinon": "~1.12.2",
     "testem": "~0.6.18",
-    "vinyl-transform": "0.0.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
     "watchify": "^2.4.0"
   }
 }

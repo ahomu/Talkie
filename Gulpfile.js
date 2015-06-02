@@ -6,39 +6,12 @@ var banner   = '/*! <%= name %> - v<%= version %> */';
 
 var FILE_BROWSERIFY_INDEX = './src/index.js';
 var FILE_PLEEEASE_INDEX   = './src/style/index.css';
-var FILE_TEST_RUNNER      = './test/runner.js';
 
 var DIR_DIST  = './dist';
-var DIR_TEMP  = './temp';
 var DIR_THEME = './src/theme';
 
-var GLOB_TEST_FILES    = ['./test/**/*.js', '!./test/runner.js'];
 var GLOB_JS_SRC_FILES  = ['./src/**/*.js'];
 var GLOB_CSS_SRC_FILES = ['./src/**/*.css'];
-
-function bufferedBrowserify(standaloneName) {
-  var transform  = require('vinyl-transform');
-  var browserify = require('browserify');
-  var babelify   = require('babelify');
-
-  return transform(function(filename) {
-    return browserify(filename, {
-        standalone : standaloneName,
-        debug      : true,
-        noParse    : [
-          require.resolve('baconjs')
-        ]
-      })
-      .transform(babelify.configure({
-      }))
-      .bundle()
-      .on('error', function(err){
-        console.error(err.message);
-        this.emit('end');
-      })
-      ;
-  });
-}
 
 function cssPostProcess(inputFileName, outputFileName) {
   var please   = require('gulp-pleeease');
@@ -84,22 +57,38 @@ gulp.task('watch-css', function() {
 });
 
 gulp.task('build-js', ['lint'], function() {
+  var source     = require('vinyl-source-stream');
+  var buffer     = require('vinyl-buffer');
+  var browserify = require('browserify');
+  var babelify   = require('babelify');
   var uglify     = require('gulp-uglify');
   var header     = require('gulp-header');
   var fileName   = 'talkie';
   var exportName = fileName.slice(0, 1).toUpperCase() + fileName.slice(1);
 
-  return gulp.src(FILE_BROWSERIFY_INDEX)
-    .pipe(bufferedBrowserify(exportName))
+  var b = browserify(FILE_BROWSERIFY_INDEX, {
+    standalone : exportName,
+    debug      : true,
+    noParse    : [
+      require.resolve('baconjs')
+    ]
+  }).transform(babelify.configure({}));
+
+  return b.bundle()
+    .on('error', function(err){
+      console.error(err.message);
+      this.emit('end');
+    })
+    .pipe(source('app.js'))
+    .pipe(buffer())
     .pipe(header(banner, {name: fileName, version: package.version}))
     .pipe(rename(fileName + '.js'))
     .pipe(gulp.dest(DIR_DIST))
-    .pipe(plumber())
     .pipe(uglify({
       preserveComments: 'some'
     }))
     .pipe(rename(fileName + '.min.js'))
-    .pipe(gulp.dest(DIR_DIST))
+    .pipe(gulp.dest(DIR_DIST));
 });
 
 gulp.task('build-style', function () {
@@ -116,17 +105,4 @@ gulp.task('build-theme', function () {
 
   var targetThemeIndex = DIR_THEME + '/' + options.target + '/index.css';
   return cssPostProcess(targetThemeIndex, 'talkie-' + options.target + '.min');
-});
-
-gulp.task('build-test', function() {
-  var espower = require('gulp-espower');
-
-  gulp.src(FILE_TEST_RUNNER)
-    .pipe(bufferedBrowserify(null))
-    .pipe(gulp.dest(DIR_TEMP));
-
-  return gulp.src(GLOB_TEST_FILES)
-    .pipe(bufferedBrowserify(null))
-    .pipe(espower())
-    .pipe(gulp.dest(DIR_TEMP));
 });
