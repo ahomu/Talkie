@@ -43,7 +43,7 @@
   "devDependencies": {
     "babel-core": "^5.3.1",
     "babel-eslint": "^3.1.1",
-    "babel-plugin-espower": "^0.3.0",
+    "babel-plugin-espower": "^0.4.1",
     "babelify": "^6.1.0",
     "browserify": "9.0.4",
     "eslint": "^0.20.0",
