@@ -23,7 +23,7 @@ module.exports = function(config) {
       extensions : ['.js']
     },
 
-    browsers : ['Chrome'],
+    browsers : ['Chrome', 'Firefox'],
 
     autoWatch : true,
 
