@@ -20,8 +20,8 @@ export default function(target) {
   let coordBus  = new Bacon.Bus();
   let toggleBus = new Bacon.Bus();
 
-  let x = coordBus.map((e) => e.x + 'px');
-  let y = coordBus.map((e) => e.y + 'px');
+  let x = coordBus.map((e) => e.clientX + 'px');
+  let y = coordBus.map((e) => e.clientY + 'px');
 
   x.onValue(util.styleAssignOf(target, 'left'));
   y.onValue(util.styleAssignOf(target, 'top'));

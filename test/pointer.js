@@ -10,11 +10,11 @@ describe('pointer', function() {
     let el = document.createElement('div');
     let {coordBus} = pointer(el);
 
-    coordBus.push({x: 123, y: 456});
+    coordBus.push({clientX: 123, clientY: 456});
     assert(el.style.left === '123px');
     assert(el.style.top === '456px');
 
-    coordBus.push({x: 789, y: 123});
+    coordBus.push({clientX: 789, clientY: 123});
     assert(el.style.left === '789px');
     assert(el.style.top === '123px');
   });
