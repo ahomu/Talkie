@@ -110,9 +110,9 @@ function main(_options = {}) {
   let mds = util.toArray(document.querySelectorAll(SELECTOR_MD));
   mds.forEach($slide.compileMarkdown);
   let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
-  slides.forEach((el, i) => util.attributeAssignOf(el, ATTR_PAGE)(i+1));
+  slides.forEach((el, i) => util.attributeAssignOf(el, ATTR_PAGE)(i + 1));
   let notes  = {};
-  slides.map($slide.extractNote).forEach((txt, i) => notes[i+1] = txt);
+  slides.map($slide.extractNote).forEach((txt, i) => notes[i + 1] = txt);
 
   /**
    * Responsive scaling
