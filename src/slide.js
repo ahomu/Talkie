@@ -7,6 +7,7 @@ import util   from './util';
  * setup markdown
  */
 let md = markdown({
+  html       : true,
   langPrefix : 'hljs ',
   highlight  : function(str, lang) {
     if (window.hljs == null) {

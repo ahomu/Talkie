@@ -44,23 +44,14 @@ Next code is the simplest sample.
 </head>
 <body>
 
-<!-- put your slides -->
-
+<!-- Pure HTML style -->
 <section layout>
   <h1>Slide 1</h1>
 </section>
 
+<!-- Markdown style ( require `type` attribute ) -->
 <script layout type="text/x-markdown">
 # Slide 2
-</script>
-
-<script layout type="text/x-markdown">
-\```javascript
-function hello(str) {
-  alert('Hello ' + str);
-}
-hello('World!')
-\```
 </script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>

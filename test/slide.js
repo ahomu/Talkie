@@ -10,7 +10,8 @@ describe('slide', function() {
 # h1
 ## h2
 
-paragprah
+paragprah<br>
+paraparag
 
 ----
 
@@ -27,6 +28,7 @@ paragprah
     assert(!!section.querySelector('h2'));
     assert(!!section.querySelector('h3'));
     assert(!!section.querySelector('p'));
+    assert(!!section.querySelector('br')); // should not escape pure html
 
     section.parentNode.removeChild(section);
   });
