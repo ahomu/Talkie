@@ -54,6 +54,11 @@ Next code is the simplest sample.
 # Slide 2
 </script>
 
+<!-- You can also use `<template>` element -->
+<template layout type="text/x-markdown">
+# Slide 2
+</template>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 <script src="./dist/talkie.js"></script>
 <script>Talkie();</script>
