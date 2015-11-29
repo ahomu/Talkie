@@ -1,0 +1,7 @@
+{
+  "modules": "common",
+  "sourceMaps": "inline",
+  "loose": true,
+  "blacklist": [
+  ]
+}
