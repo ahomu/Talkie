@@ -35,10 +35,10 @@
   },
   "homepage": "https://github.com/ahomu/Talkie",
   "dependencies": {
-    "baconjs": "^0.7.42",
+    "baconjs": "^0.7.82",
     "keycode": "^2.1.0",
-    "markdown-it": "^4.2.1",
-    "object-assign": "^3.0.0"
+    "markdown-it": "^5.0.2",
+    "object-assign": "^4.0.1"
   },
   "devDependencies": {
     "babel-core": "^5.3.1",
