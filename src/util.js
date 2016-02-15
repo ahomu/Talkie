@@ -18,7 +18,7 @@ export default {
    */
   defaults(orig, defs) {
     let ret = this.clone(orig);
-    Object.keys(defs).forEach((k)=> {
+    Object.keys(defs).forEach((k) => {
       if (k in ret) {
         return;
       }
@@ -35,7 +35,7 @@ export default {
    */
   clone(orig) {
     let ret = {};
-    Object.keys(orig).forEach((k)=> ret[k] = orig[k]);
+    Object.keys(orig).forEach((k) => ret[k] = orig[k]);
     return ret;
   },
 
@@ -108,7 +108,7 @@ export default {
    */
   preloadImg(src) {
     let img = document.createElement('img');
-    img.onload = ()=> img.parentNode.removeChild(img);
+    img.onload = () => img.parentNode.removeChild(img);
     img.src = src;
     img.style.display = 'none';
     document.body.appendChild(img);
@@ -147,7 +147,10 @@ export default {
   stylePrefixDetect(property) {
     let validProperty;
     let styles = this.toArray(window.getComputedStyle(document.documentElement, ''));
-    let includes = (needle) => styles.indexOf(needle) !== -1;
+
+    function includes(needle) {
+      return styles.indexOf(needle) !== -1;
+    }
 
     if (includes(`-webkit-${property}`)) {
       validProperty = `-webkit-${property}`;

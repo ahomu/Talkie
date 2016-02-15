@@ -88,7 +88,7 @@
     "no-self-compare": 2,
     "no-sequences": 2,
     "no-throw-literal": 2,
-    "no-unused-expressions": 2,
+    "no-unused-expressions": 1,
     "no-useless-call": 2,
     "no-void": 2,
     "no-warning-comments": 0, //???
@@ -203,8 +203,6 @@
     // Legacy
     "max-params": [1, 3],
     "max-depth": [1, 3],
-    "max-len": [2, 120, 4],
-    "indent": [1, 2, {"SwitchCase": 1}]
-
+    "max-len": [2, 120, 4]
   }
 }

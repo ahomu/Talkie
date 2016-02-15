@@ -41,7 +41,7 @@ export default function(options) {
 
   let nextEs = currentPage.sampledBy(nextBus).map((v) => v + 1);
   let prevEs = currentPage.sampledBy(prevBus).map((v) => v - 1);
-  let moveEs = moveBus.map((v) => v /*noop*/);
+  let moveEs = moveBus.map((v) => v /* noop */);
 
   let percentString = currentPage.map(percentOf(options.endPage));
   let currentSlide  = currentPage.map((i) => options.slideElements[i - 1]);
