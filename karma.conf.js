@@ -15,11 +15,10 @@ module.exports = function(config) {
     browserify : {
       transform : [
         require('babelify').configure({
-          stage    : 0,
-          plugins  : ['babel-plugin-espower']
+          plugins : ['babel-plugin-espower']
         })
       ],
-      debug : true,
+      debug      : true,
       extensions : ['.js']
     },
 
