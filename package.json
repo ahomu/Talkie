@@ -45,7 +45,7 @@
   "dependencies": {
     "baconjs": "^0.7.82",
     "keycode": "^2.1.0",
-    "markdown-it": "^5.0.2",
+    "markdown-it": "^6.0.0",
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
