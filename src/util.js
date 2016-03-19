@@ -118,7 +118,7 @@ export default {
    * @returns {Number}
    */
   getPageNumberFromHash() {
-    return parseInt(location.hash.replace('#', ''), 10) || 0;
+    return parseInt(location.hash.replace('#/', ''), 10) || 0;
   },
 
   /**
