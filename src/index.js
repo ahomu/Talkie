@@ -213,7 +213,7 @@ function main(_options = {}) {
   /**
    * FullScreen
    */
-  $fullScreen(document.body).plug(control.key('f'));
+  $fullScreen(document.documentElement).plug(control.key('f'));
 
   /**
    * export some of control
