@@ -1,13 +1,15 @@
+/// <reference path="../typings/browser.d.ts" />
+
 'use strict';
 
-import assign from 'object-assign';
+import assign = require('object-assign');
 
 export default {
   /**
    * @param {array} list
    * @returns {Array.<T>}
    */
-  toArray(list) {
+  toArray(list: any[]) {
     return Array.prototype.slice.call(list);
   },
 
@@ -16,13 +18,13 @@ export default {
    * @param {Object} defaults
    * @returns {Object}
    */
-  defaults(orig, defs) {
+  defaults(orig: any, defaults: any) {
     let ret = this.clone(orig);
-    Object.keys(defs).forEach((k) => {
+    Object.keys(defaults).forEach((k) => {
       if (k in ret) {
         return;
       }
-      ret[k] = defs[k];
+      ret[k] = defaults[k];
     });
     return ret;
   },
@@ -33,8 +35,8 @@ export default {
    * @param {Object} orig
    * @returns {Object}
    */
-  clone(orig) {
-    let ret = {};
+  clone(orig: any) {
+    let ret: { [key: string]: any } = {};
     Object.keys(orig).forEach((k) => ret[k] = orig[k]);
     return ret;
   },
@@ -66,15 +68,15 @@ export default {
    * @param {string} ident
    * @returns {HTMLElement}
    */
-  getById(ident) {
+  getById(ident: string) {
     return document.getElementById(ident);
   },
 
   /**
    * @param {Element} el
    */
-  textAssignOf(el) {
-    return function(text) {
+  textAssignOf(el: HTMLElement) {
+    return function(text: string) {
       el.textContent = text;
     };
   },
@@ -83,9 +85,9 @@ export default {
    * @param {Element} el
    * @param {String} property
    */
-  styleAssignOf(el, property) {
-    return function(value) {
-      el.style[property] = value === '' ? null : value;
+  styleAssignOf(el: HTMLElement, property: string) {
+    return function(value: string) {
+      (el.style as any)[property] = value === '' ? null : value;
     };
   },
 
@@ -93,8 +95,8 @@ export default {
    * @param {Element} el
    * @param {String} attribute
    */
-  attributeAssignOf(el, attribute) {
-    return function(value) {
+  attributeAssignOf(el: HTMLElement, attribute: string) {
+    return function(value: string) {
       if (value != null) {
         el.setAttribute(attribute, value);
       } else {
@@ -106,7 +108,7 @@ export default {
   /**
    * @param {String} src
    */
-  preloadImg(src) {
+  preloadImg(src: string) {
     let img = document.createElement('img');
     img.onload = () => img.parentNode.removeChild(img);
     img.src = src;
@@ -124,8 +126,8 @@ export default {
   /**
    * @returns {*}
    */
-  getPrimitiveFromString(str) {
-    let ret = (str == null) ? null : str + '';
+  getPrimitiveFromString(str: string) {
+    let ret: any = (str == null) ? null : str + '';
 
     if (str === 'true') {
       ret = true;
@@ -144,11 +146,11 @@ export default {
    * @param {String} property
    * @returns {String}
    */
-  stylePrefixDetect(property) {
-    let validProperty;
+  stylePrefixDetect(property: string) {
+    let validProperty: string;
     let styles = this.toArray(window.getComputedStyle(document.documentElement, ''));
 
-    function includes(needle) {
+    function includes(needle: string) {
       return styles.indexOf(needle) !== -1;
     }
 

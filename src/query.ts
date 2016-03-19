@@ -11,12 +11,15 @@ export default parseQuery;
  * @param {String} query
  * @returns {Object}
  */
-function parseQuery(query) {
-  let ret =  {};
+function parseQuery(query: string) {
+
+  let ret: { [key: string]: string } = {};
+
   query
     .slice(1)
     .split('&')
     .map((keyEqVal) => keyEqVal.split('='))
     .forEach((kv) => ret[kv[0]] = util.getPrimitiveFromString(kv[1]));
+
   return ret;
 }
