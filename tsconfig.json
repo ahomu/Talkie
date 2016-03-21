@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
     "allowJs": true,
     "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
     "inlineSourceMap": true,
     "target": "es2015"
   },

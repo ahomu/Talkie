@@ -207,13 +207,12 @@ var talkie = Talkie();
 <script>
 var talkie = Talkie({wide: false});
 
-talkie.next.plug(talkie.control.keydown('s'));
-talkie.next.plug(talkie.control.keydown('n'));
-talkie.prev.plug(talkie.control.keydown('a'));
-talkie.prev.plug(talkie.control.keydown('p'));
+talkie.control.keydown('s').subscribe(talkie.next.push());
+talkie.control.keydown('n').subscribe(talkie.next.push());
+talkie.control.keydown('a').subscribe(talkie.prev.push());
+talkie.control.keydown('p').subscribe(talkie.prev.push());
 
 document.addEventListener('DOMContentLoaded', function() {
-  var slides = Array.prototype.slice.call(document.querySelectorAll('[layout]'));
   talkie.changed.onValue(function(current) {
     console.clear();
     // print presenter notes

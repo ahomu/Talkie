@@ -128,7 +128,7 @@ function main(_options = {}) {
     height : height,
     target : scalerEl
   });
-  responsive.scaleBus.plug(control.resize());
+  control.resize().subscribe(() => responsive.scaleBus.push());
 
   /**
    * Paging control
@@ -139,14 +139,14 @@ function main(_options = {}) {
     slideElements : slides
   });
 
-  paging.nextBus.plug(control.keydown('right').throttle(100));
-  paging.prevBus.plug(control.keydown('left').throttle(100));
+  control.keydown('right').throttleTime(100).subscribe(() => paging.nextBus.push());
+  control.keydown('left').throttleTime(100).subscribe(() => paging.prevBus.push());
 
-  paging.nextBus.plug(control.swipeLeft());
-  paging.prevBus.plug(control.swipeRight());
+  control.swipeLeft().subscribe(() => paging.nextBus.push());
+  control.swipeRight().subscribe(() => paging.prevBus.push());
 
   // sync location.hash
-  paging.moveBus.plug(control.hashchange().map(util.getPageNumberFromHash));
+  control.hashchange().map(util.getPageNumberFromHash).subscribe((v) => paging.moveBus.push(v));
   paging.currentEs
     .onValue((page) => location.hash = page === 1 ? '/' : '/' + page);
 
@@ -166,8 +166,8 @@ function main(_options = {}) {
   if (options.pointer) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}"></div>`);
     let {coordBus, toggleBus} = $pointer(util.getById(IDENT_POINTER));
-    coordBus.plug(control.mousemove());
-    toggleBus.plug(control.key('b'));
+    control.mousemove().subscribe((e) => coordBus.push(e));
+    control.keydown('b').subscribe(() => toggleBus.push());
   }
 
   if (options.backface) {
@@ -190,10 +190,10 @@ function main(_options = {}) {
     let prevEl = util.getById(IDENT_PREV);
 
     // next button
-    paging.nextBus.plug(control.click(nextEl));
+    control.click(nextEl).subscribe(() => paging.nextBus.push());
 
     // prev button
-    paging.prevBus.plug(control.click(prevEl));
+    control.click(prevEl).subscribe(() => paging.prevBus.push());
 
     // current page
     paging.currentEs.onValue(util.textAssignOf(util.getById(IDENT_PAGE)));
@@ -212,7 +212,7 @@ function main(_options = {}) {
   /**
    * FullScreen
    */
-  $fullScreen(document.documentElement).plug(control.key('f'));
+  control.keyup('f').subscribe($fullScreen(document.documentElement));
 
   /**
    * export some of control

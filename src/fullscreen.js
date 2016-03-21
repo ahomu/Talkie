@@ -1,17 +1,17 @@
 'use strict';
 
-import Bacon   from 'baconjs';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * full screen
  *
  * @param {Element} target
- * @returns void
+ * @returns {Subject}
  */
 export default function(target) {
-  let bus = new Bacon.Bus();
-  bus.onValue(toggleScreenOf(target));
-  return bus;
+  let subject$ = new Subject();
+  subject$.subscribe(toggleScreenOf(target));
+  return subject$;
 }
 
 /**

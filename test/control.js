@@ -10,7 +10,7 @@ import control from '../src/control';
 describe('control', function() {
 
   it('key(string)', function(done) {
-    control.key('q').onValue(function(e) {
+    control.key('q').subscribe(function(e) {
       assert(e.keyCode === 81);
       done();
     });
@@ -18,7 +18,7 @@ describe('control', function() {
   });
 
   it('key(number)', function(done) {
-    control.key(80).onValue(function(e) {
+    control.key(80).subscribe(function(e) {
       assert(e.keyCode === 80);
       done();
     });
@@ -29,7 +29,7 @@ describe('control', function() {
     let spy = sinon.spy(function(e) {
       // noop
     });
-    control.key(79).onValue(spy);
+    control.key(79).subscribe(spy);
     KeyEvent.simulate(82, 82);
     KeyEvent.simulate(79, 79);
     assert(spy.calledOnce);
@@ -39,7 +39,7 @@ describe('control', function() {
     let spy = sinon.spy(function(e) {
       // noop
     });
-    control.key(79).onValue(spy);
+    control.key(79).subscribe(spy);
     KeyEvent.simulate(79, 79);
     KeyEvent.simulate(79, 79);
     KeyEvent.simulate(79, 79);
@@ -52,7 +52,7 @@ describe('control', function() {
     });
 
     let target = document.createElement('div');
-    control.click(target).onValue(spy);
+    control.click(target).subscribe(spy);
 
     ClickEvent.simulate(target);
     assert(spy.calledOnce);

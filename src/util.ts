@@ -1,3 +1,4 @@
+/// <reference path="../typings/myself.d.ts" />
 /// <reference path="../typings/browser.d.ts" />
 
 'use strict';
