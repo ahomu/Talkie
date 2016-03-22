@@ -3,7 +3,7 @@ Talkie.js - HTML/CSS/JavaScript Slide library
 
 [![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
 
-This library written in es6 JavaScript & [baconjs/bacon.js](https://github.com/baconjs/bacon.js). Also serve as a practice of es6 and functional reactive programming.
+This library written in es6 JavaScript & [ReactiveX/rxjs: A reactive programming library for JavaScript](https://github.com/ReactiveX/RxJS).
 
 For more information about dependency Please look at the [package.json](package.json).
 
@@ -11,7 +11,6 @@ For more information about dependency Please look at the [package.json](package.
 
 - [x] Markdown support
 - [x] Code highlighting
-- [ ] CSS transitions
 - [ ] Layout attributes (WIP)
 - [x] keyboard control
 - [x] touch control
@@ -20,7 +19,6 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Background image & filter
 - [x] Pointer attention
 - [x] Progress indicator
-- [ ] Thumbnail previews
 
 ## Real presentation sample
 
@@ -29,12 +27,13 @@ For more information about dependency Please look at the [package.json](package.
 
 ## Getting started
 
-Talkie.js contains one of the CSS and one of JavaScript.
+Talkie.js contains two of the CSS and one of JavaScript.
 
 - dist/talkie.min.css
 - dist/talkie.min.js
+- dist/talkie-default.min.css
 
-Next code is the simplest sample.
+Next code is the simplest example.
 
 ```html
 <html>
@@ -100,17 +99,15 @@ You can add `backface` attribute into each slides. Image path that you specify i
 
 ### All options
 
-```javascript
-/**
- * @typedef {Object} TalkieOptions
- * @property {Boolean} [api=false]
- * @property {Boolean} [wide=false]
- * @property {Boolean} [control=true]
- * @property {Boolean} [pointer=true]
- * @property {Boolean} [progress=true]
- * @property {Boolean} [backface=true]
- * @property {Boolean} [notransition=false]
- */
+```typescript
+interface TalkieOptions {
+  wide?: boolean;
+  control?: boolean;
+  pointer?: boolean;
+  progress?: boolean;
+  backface?: boolean;
+  notransition?: boolean;
+}
 
 Talkie(options);
 ```
@@ -128,71 +125,48 @@ When you press the **"b"** key, the pointer `visibility` is toggled
 `Talkie()` returns an object with initialization. This object has some of the control bus and functionality.
 
 ```javascript
-/**
- * @typedef {Object} TalkieExport
- */
 var talkie  = Talkie({wide:false});
 ```
 
 You can define any key bindings.
 
 ```javascript
-talkie.next.plug(talkie.control.key('space'));
-talkie.next.plug(talkie.control.key('s'));
-talkie.next.plug(talkie.control.key('n'));
-talkie.prev.plug(talkie.control.key('a'));
-talkie.prev.plug(talkie.control.key('p'));
+talkie.key('space').subscribe(talkie.next$);
+talkie.key('s').subscribe(talkie.next$);
+talkie.key('n').subscribe(talkie.next$);
+talkie.key('a').subscribe(talkie.prev$);
+talkie.key('p').subscribe(talkie.prev$);
 ```
 
 It is also possible to control these functions in the program.
 
 ```javascript
 window.next = function() {
-  talkie.next.push();
+  talkie.next$.next();
 };
 window.prev = function() {
-  talkie.prev.push();
+  talkie.prev$.next();
 };
 window.jump = function(num) {
-  talkie.jump.push(num);
+  talkie.jump$.next(num);
 };
 ```
 
 ### All exports
 
-```javascript
-/**
- * @typedef {Object} TalkieExport
- * @param {Object.<Function>} control
- * @param {Bacon.EventStream} changed
- * @param {Bacon.Bus} next
- * @param {Bacon.Bus} prev
- * @param {Bacon.Bus} jump
- * @param {Bacon.Property} ratio
- * @param {Object.<Number, String>} notes
- */
+```typescript
+interface TalkieExports {
+  key: (charKey: string) => Observable<KeyboardEvent>;
+  notes: { [pageNum: number]: string };
+  changed: Observable<HTMLElement>;
+  ratio: Observable<number>;
+  next$: Subject<void>;
+  prev$: Subject<void>;
+  jump$: Subject<number>;
+}
 
-// @type {TalkieExport}
-var talkie = Talkie();
+var exports = Talkie();
 ```
-
-## Internal API
-
-If you want to using Talkie internal api. Like this and will get Talkie api object.
-
-```html
-<script src="./talkie.js"></script>
-<script>var talkie = Talkie({api: true});</script>
-```
-
-or you can use `require` by [browserify](http://browserify.org/).
-
-```javascript
-// npm install --save talkiejs
-var talkie = require('talkiejs')({api:true});
-```
-
-Look at the [index.js](src/index.js) you will see how to use the internal API. You referring to [index.js](src/index.js), can build a slide in its own UI.
 
 ## License
 

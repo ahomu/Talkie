@@ -8,14 +8,15 @@
  * Talkie.js
  */
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/throttleTime';
 
 import { extend, defaults, toArray, getById, getPageNumberFromHash,
          textAssignOf, styleAssignOf, attributeAssignOf } from './util';
-import { click, mousemove, keydown, swipeLeft, swipeRight,
-         resize, hashchange } from './control';
+
+import { click, mousemove, keydown, swipeLeft, swipeRight, resize, hashchange } from './control';
 import { parse }   from './query';
 import { compileMarkdown, extractNote } from './slide';
 import Paging     from './paging';
@@ -55,7 +56,17 @@ interface TalkieOptions {
   notransition?: boolean;
 }
 
-(window as any).Talkie = function main(givenOptions: TalkieOptions = {}) {
+interface TalkieExports {
+  key: (charKey: string) => Observable<KeyboardEvent>;
+  notes: { [pageNum: number]: string };
+  changed: Observable<HTMLElement>;
+  ratio: Observable<number>;
+  next$: Subject<void>;
+  prev$: Subject<void>;
+  jump$: Subject<number>;
+}
+
+(window as any).Talkie = function main(givenOptions: TalkieOptions = {}): TalkieExports {
 
   const options = extend(defaults(givenOptions, {
     api          : false,
@@ -92,7 +103,7 @@ interface TalkieOptions {
   mds.forEach(compileMarkdown);
   const slides = toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
   slides.forEach((el, i) => attributeAssignOf(el, ATTR_PAGE)(i + 1));
-  const notes  = {};
+  const notes: { [pageNum: number]: string } = {};
   slides.map(extractNote).forEach((txt, i) => notes[i + 1] = txt);
 
   /**
@@ -196,18 +207,6 @@ interface TalkieOptions {
    */
   keydown('f').subscribe(FullScreen(document.documentElement));
 
-  /**
-   * export some of control
-   *
-   * @typedef {Object} TalkieExport
-   * @param {Function} key
-   * @param {Object.<Number, String>} notes
-   * @param {Rx.Observable} changed
-   * @param {Rx.Observable} ratio
-   * @param {Rx.Subject} next$
-   * @param {Rx.Subject} prev$
-   * @param {Rx.Subject} jump$
-   */
   return {
     key     : keydown,
     notes   : notes,
@@ -217,4 +216,4 @@ interface TalkieOptions {
     prev$   : paging.prev,
     jump$   : paging.move,
   };
-}
+};
