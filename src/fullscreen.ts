@@ -8,18 +8,19 @@ import { Subject } from 'rxjs/Subject';
  * @param {Element} target
  * @returns {Subject}
  */
-export default function(target) {
-  let subject$ = new Subject();
-  subject$.subscribe(toggleScreenOf(target));
-  return subject$;
+export default function(target: HTMLElement) {
+  const fullscreen$ = new Subject();
+  fullscreen$.subscribe(toggleScreenOf(target));
+  return fullscreen$;
 }
 
 /**
  * @param {Element} el
  * @returns {Function}
  */
-function toggleScreenOf(el) {
-  let request, exit;
+function toggleScreenOf(el: HTMLElement|any) {
+  let request: string, exit: string;
+  const doc = document as any;
 
   if (el.requestFullscreen) {
     request = 'requestFullscreen';
@@ -31,24 +32,24 @@ function toggleScreenOf(el) {
     request = 'msRequestFullscreen';
   }
 
-  if (document.exitFullscreen) {
+  if (doc.exitFullscreen) {
     exit = 'exitFullscreen';
-  } else if (document.webkitExitFullscreen) {
+  } else if (doc.webkitExitFullscreen) {
     exit = 'webkitExitFullscreen';
-  } else if (document.mozCancelFullScreen) {
+  } else if (doc.mozCancelFullScreen) {
     exit = 'mozCancelFullScreen';
-  } else if (document.msExitFullscreen) {
+  } else if (doc.msExitFullscreen) {
     exit = 'msExitFullscreen';
   }
 
   return function() {
-    if (!document.fullscreenElement &&
-      !document.mozFullScreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement) {
+    if (!doc.fullscreenElement &&
+      !doc.mozFullScreenElement &&
+      !doc.webkitFullscreenElement &&
+      !doc.msFullscreenElement) {
       el[request]();
     } else {
-      document[exit]();
+      doc[exit]();
     }
   };
 }

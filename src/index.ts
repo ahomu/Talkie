@@ -1,9 +1,28 @@
+/// <reference path="../typings/myself.d.ts" />
+/// <reference path="../typings/browser.d.ts" />
+/// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
+
 'use strict';
 
 /**
  * Talkie.js
  */
-import Bacon   from 'baconjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/observable/fromArray';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/withLatestFrom';
 
 import util    from './util';
 import control from './control';
@@ -38,20 +57,17 @@ const NORMAL_HEIGHT = 768;
 const WIDE_WIDTH    = 1366;
 const WIDE_HEIGHT   = 768;
 
-/**
- * @typedef {Object} TalkieOptions
- * @property {Boolean} [api]
- * @property {Boolean} [wide]
- * @property {Boolean} [control]
- * @property {Boolean} [pointer]
- * @property {Boolean} [progress]
- * @property {Boolean} [backface]
- */
+interface TalkieOptions {
+  api?: boolean;
+  wide?: boolean;
+  control?: boolean;
+  pointer?: boolean;
+  progress?: boolean;
+  backface?: boolean;
+  notransition?: boolean;
+}
 
-/**
- * @param {TalkieOptions} options
- */
-export default function(options = {}) {
+(window as any).Talkie = function(options: TalkieOptions = {}) {
   return !options.api ? main(options) : {
     main       : main,
     util       : util,
@@ -62,21 +78,20 @@ export default function(options = {}) {
     fullScreen : $fullScreen,
     responsive : $responsive,
     pointer    : $pointer,
-    backface   : $backface,
-    Bacon      : Bacon
+    backface   : $backface
   };
-}
+};
 
 /**
- * @param {TalkieOptions} _options
+ * @param {TalkieOptions} givenOptions
  */
-function main(_options = {}) {
+function main(givenOptions: TalkieOptions = {}) {
 
   /**
    * apply default options
    * @type {*|Object}
    */
-  let options = util.extend(util.defaults(_options, {
+  let options = util.extend(util.defaults(givenOptions, {
     api          : false,
     wide         : false,
     control      : true,
@@ -91,7 +106,7 @@ function main(_options = {}) {
    */
   let width  = options.wide ? WIDE_WIDTH : NORMAL_WIDTH;
   let height = options.wide ? WIDE_HEIGHT : NORMAL_HEIGHT;
-  document.querySelector('head').insertAdjacentHTML('beforeend', `
+  (document.querySelector('head') as HTMLElement).insertAdjacentHTML('beforeend', `
     <style>
       [layout],
       #${IDENT_SCALER} {
@@ -107,9 +122,9 @@ function main(_options = {}) {
    *   2. traverse slides & assign page number
    *   3. extract presenter notes
    */
-  let mds = util.toArray(document.querySelectorAll(SELECTOR_MD));
+  let mds = util.toArray<Element>(document.querySelectorAll(SELECTOR_MD));
   mds.forEach($slide.compileMarkdown);
-  let slides = util.toArray(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
+  let slides = util.toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
   slides.forEach((el, i) => util.attributeAssignOf(el, ATTR_PAGE)(i + 1));
   let notes  = {};
   slides.map($slide.extractNote).forEach((txt, i) => notes[i + 1] = txt);
@@ -128,7 +143,7 @@ function main(_options = {}) {
     height : height,
     target : scalerEl
   });
-  control.resize().subscribe(() => responsive.scaleBus.push());
+  control.resize().subscribe(responsive.scale);
 
   /**
    * Paging control
@@ -139,42 +154,43 @@ function main(_options = {}) {
     slideElements : slides
   });
 
-  control.keydown('right').throttleTime(100).subscribe(() => paging.nextBus.push());
-  control.keydown('left').throttleTime(100).subscribe(() => paging.prevBus.push());
+  control.keydown('right').throttleTime(100).subscribe(paging.next);
+  control.keydown('left').throttleTime(100).subscribe(paging.prev);
 
-  control.swipeLeft().subscribe(() => paging.nextBus.push());
-  control.swipeRight().subscribe(() => paging.prevBus.push());
+  control.swipeLeft().subscribe(paging.next);
+  control.swipeRight().subscribe(paging.prev);
 
   // sync location.hash
-  control.hashchange().map(util.getPageNumberFromHash).subscribe((v) => paging.moveBus.push(v));
-  paging.currentEs
-    .onValue((page) => location.hash = page === 1 ? '/' : '/' + page);
+  control.hashchange().map(util.getPageNumberFromHash).subscribe(paging.move);
+  paging.current.subscribe((page) => location.hash = page === 1 ? '/' : '/' + page);
 
   // sync body background attribute
-  paging.changedEs
-    .map('.getAttribute', ATTR_LAYOUT)
-    .onValue(util.attributeAssignOf(document.body, ATTR_BODY_BG));
+  paging.changed
+    .map((el) => el.getAttribute(ATTR_LAYOUT))
+    .subscribe(util.attributeAssignOf(document.body, ATTR_BODY_BG));
 
   /**
    * Insert Ui Elements
    */
   if (options.notransition) {
-    Bacon.once(1)
-      .onValue(util.attributeAssignOf(document.body, ATTR_NO_TRANS));
+    Observable.of(1)
+      .subscribe(util.attributeAssignOf(document.body, ATTR_NO_TRANS));
   }
 
   if (options.pointer) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}"></div>`);
-    let {coordBus, toggleBus} = $pointer(util.getById(IDENT_POINTER));
-    control.mousemove().subscribe((e) => coordBus.push(e));
-    control.keydown('b').subscribe(() => toggleBus.push());
+    const {coord, toggle} = $pointer(util.getById(IDENT_POINTER));
+    control.mousemove().subscribe(coord);
+    control.keydown('b').subscribe(toggle);
   }
 
   if (options.backface) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_BACKFACE}"></div>`);
-    let {bgImageBus, bgFilterBus} = $backface(util.getById(IDENT_BACKFACE));
-    bgImageBus.plug(paging.changedEs);
-    bgFilterBus.plug(paging.changedEs);
+    const {bgImage, bgFilter} = $backface(util.getById(IDENT_BACKFACE));
+    paging.changed.subscribe((el) => {
+      bgImage.next(el);
+      bgFilter.next(el);
+    });
   }
 
   if (options.control) {
@@ -190,23 +206,23 @@ function main(_options = {}) {
     let prevEl = util.getById(IDENT_PREV);
 
     // next button
-    control.click(nextEl).subscribe(() => paging.nextBus.push());
+    control.click(nextEl).subscribe(paging.next);
 
     // prev button
-    control.click(prevEl).subscribe(() => paging.prevBus.push());
+    control.click(prevEl).subscribe(paging.prev);
 
     // current page
-    paging.currentEs.onValue(util.textAssignOf(util.getById(IDENT_PAGE)));
+    paging.current.subscribe(util.textAssignOf(util.getById(IDENT_PAGE)));
 
     // total of page
-    Bacon.once(slides.length).onValue(util.textAssignOf(util.getById(IDENT_TOTAL)));
+    Observable.of(slides.length).subscribe(util.textAssignOf(util.getById(IDENT_TOTAL)));
   }
 
   if (options.progress) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_PROGRESS}"></div>`);
 
     // progress bar
-    paging.percentEs.onValue(util.styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
+    paging.percent.subscribe(util.styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
   }
 
   /**
@@ -227,12 +243,11 @@ function main(_options = {}) {
    * @param {Object.<Number, String>} notes
    */
   return {
-    Bacon   : Bacon,
     control : control,
-    changed : paging.changedEs,
-    next    : paging.nextBus,
-    prev    : paging.prevBus,
-    jump    : paging.moveBus,
+    changed : paging.changed,
+    next    : paging.next,
+    prev    : paging.prev,
+    jump    : paging.move,
     ratio   : responsive.currentRatio,
     notes   : notes
   };

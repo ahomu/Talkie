@@ -1,19 +1,7 @@
-/// <reference path="../typings/myself.d.ts" />
-/// <reference path="../typings/browser.d.ts" />
-
 'use strict';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/skip';
 
 import keycode = require('keycode');
 

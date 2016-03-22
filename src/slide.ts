@@ -1,30 +1,32 @@
 'use strict';
 
-import markdown from 'markdown-it';
+import MarkdownIt = require('markdown-it');
 import util   from './util';
+
+const win = window as any;
 
 /**
  * setup markdown
  */
-let md = markdown({
+const md = new MarkdownIt({
   html       : true,
   langPrefix : 'hljs ',
-  highlight  : function(str, lang) {
-    if (window.hljs == null) {
+  highlight  : function(str: string, lang: string) {
+    if (win.hljs == null) {
       console.log('highlight.js (`window.hljs`) is missing');
       return '';
     }
 
-    if (lang && window.hljs.getLanguage(lang)) {
+    if (lang && win.hljs.getLanguage(lang)) {
       try {
-        return window.hljs.highlight(lang, str).value;
+        return win.hljs.highlight(lang, str).value;
       } catch (__) {
         console.log(__);
       }
     }
 
     try {
-      return window.hljs.highlightAuto(str).value;
+      return win.hljs.highlightAuto(str).value;
     } catch (__) {
       console.log(__);
     }
@@ -47,7 +49,7 @@ export default {
  * @param {Element} el
  * @returns {String}
  */
-function extractNote(el) {
+function extractNote(el: HTMLElement) {
   let [content, note] = el.innerHTML.split(/<hr\s?\/?>/);
   el.innerHTML = content;
 
@@ -60,7 +62,7 @@ function extractNote(el) {
  * @param {Element} el
  * @returns {Element}
  */
-function compileMarkdown(el) {
+function compileMarkdown(el: Element) {
   let section = document.createElement('section');
   section.innerHTML = md.render(el.innerHTML);
   util.toArray(el.attributes).filter(notTypeAttribute).forEach(copyAttributeTo(section));
@@ -72,8 +74,8 @@ function compileMarkdown(el) {
  * @param {Element} el
  * @returns {Function}
  */
-function copyAttributeTo(el) {
-  return function(attr) {
+function copyAttributeTo(el: HTMLElement) {
+  return function(attr: Attr) {
     el.setAttribute(attr.name, attr.value);
   };
 }
@@ -81,6 +83,6 @@ function copyAttributeTo(el) {
 /**
  * @param {AttributeNode} attr
  */
-function notTypeAttribute(attr) {
+function notTypeAttribute(attr: Attr) {
   return attr.name !== 'type';
 }

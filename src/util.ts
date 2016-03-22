@@ -1,6 +1,3 @@
-/// <reference path="../typings/myself.d.ts" />
-/// <reference path="../typings/browser.d.ts" />
-
 'use strict';
 
 import assign = require('object-assign');
@@ -10,7 +7,7 @@ export default {
    * @param {array} list
    * @returns {Array.<T>}
    */
-  toArray(list: any[]) {
+  toArray<T>(list: NodeList|HTMLCollection|IArguments|NamedNodeMap): T[] {
     return Array.prototype.slice.call(list);
   },
 
@@ -49,18 +46,17 @@ export default {
   extend : assign,
 
   /**
-   * @param {function} fn...
+   * @param {function} ...fns
    * @returns {Function}
    */
-  compose() {
+  compose(...fns: Function[]) {
     // http://underscorejs.org/#compose
-    let args = arguments;
-    let start = args.length - 1;
+    let start = fns.length - 1;
     return function() {
       let i = start;
-      let result = args[start].apply(this, arguments);
+      let result = fns[start].apply(this, arguments);
       while (i--) {
-        result = args[i].call(this, result);
+        result = fns[i].call(this, result);
       }
       return result;
     };
@@ -77,8 +73,8 @@ export default {
    * @param {Element} el
    */
   textAssignOf(el: HTMLElement) {
-    return function(text: string) {
-      el.textContent = text;
+    return function(text: string|number) {
+      el.textContent = '' + text;
     };
   },
 
@@ -97,9 +93,9 @@ export default {
    * @param {String} attribute
    */
   attributeAssignOf(el: HTMLElement, attribute: string) {
-    return function(value: string) {
+    return function(value: string|number) {
       if (value != null) {
-        el.setAttribute(attribute, value);
+        el.setAttribute(attribute, value + '');
       } else {
         el.removeAttribute(attribute);
       }

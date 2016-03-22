@@ -1,6 +1,7 @@
 'use strict';
 
-import Bacon from 'baconjs';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
 import util  from './util';
 
 /**
@@ -22,24 +23,19 @@ import util  from './util';
  * @param {RatioOptions} options
  * @returns {RatioReturns}
  */
-export default function(options = {}) {
+export default function(options: {width: number, height: number, target: HTMLElement}) {
 
-  let bus = new Bacon.Bus();
+  const scaleSubject = new BehaviorSubject<any>(true);
+  const scaleFn = util.compose(centeringOf(options.target), scalingOf(options.target));
 
-  let hRatioFn = horizontalRatioOf(options.width);
-  let vRatioFn = verticalRatioOf(options.height);
+  let hRatio = scaleSubject.map(horizontalRatioOf(options.width));
+  let vRatio = scaleSubject.map(verticalRatioOf(options.height));
 
-  let hRatio = bus.map(hRatioFn).toProperty(hRatioFn());
-  let vRatio = bus.map(vRatioFn).toProperty(vRatioFn());
-
-  let scale = util.compose(centeringOf(options.target), scalingOf(options.target));
-
-  let currentRatio = Bacon.combineWith(Math.min, hRatio, vRatio).toProperty();
-
-  currentRatio.onValue(scale);
+  let currentRatio = Observable.combineLatest(hRatio, vRatio).map((hv) => Math.min(hv[0], hv[1]));
+  currentRatio.subscribe(scaleFn);
 
   return {
-    scaleBus     : bus,
+    scale        : scaleSubject,
     currentRatio : currentRatio
   };
 }
@@ -48,7 +44,7 @@ export default function(options = {}) {
  * @param {Number} width
  * @returns {Function}
  */
-function horizontalRatioOf(width) {
+function horizontalRatioOf(width: number) {
   return function() {
     return window.innerWidth / width;
   };
@@ -58,7 +54,7 @@ function horizontalRatioOf(width) {
  * @param {Number} height
  * @returns {Function}
  */
-function verticalRatioOf(height) {
+function verticalRatioOf(height: number) {
   return function() {
     return window.innerHeight / height;
   };
@@ -68,9 +64,9 @@ function verticalRatioOf(height) {
  * @param {Element} el
  * @returns {Function}
  */
-function scalingOf(el) {
+function scalingOf(el: HTMLElement) {
   let transform = util.stylePrefixDetect('transform');
-  return function(ratio) {
+  return function(ratio: number) {
     el.style[transform] = `scale(${Math.abs(ratio)})`;
   };
 }
@@ -79,10 +75,10 @@ function scalingOf(el) {
  * @param {Element} el
  * @returns {Function}
  */
-function centeringOf(el) {
+function centeringOf(el: HTMLElement) {
   return function() {
     let rect = el.getBoundingClientRect();
-    el.style.left = (window.innerWidth - rect.width) / 2;
-    el.style.top  = (window.innerHeight - rect.height) / 2;
+    el.style.left = `${(window.innerWidth - rect.width) / 2}px`;
+    el.style.top  = `${(window.innerHeight - rect.height) / 2}px`;
   };
 }
