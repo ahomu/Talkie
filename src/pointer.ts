@@ -25,7 +25,7 @@ import util  from './util';
 export default function(target: HTMLElement) {
 
   let coord  = new Subject<MouseEvent>();
-  let toggle = new Subject<KeyboardEvent>();
+  let toggle = new Subject<any>();
 
   let x = coord.map((e) => e.clientX + 'px');
   let y = coord.map((e) => e.clientY + 'px');

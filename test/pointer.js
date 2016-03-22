@@ -8,25 +8,24 @@ describe('pointer', function() {
 
   it('coordBus', function() {
     let el = document.createElement('div');
-    let {coordBus} = pointer(el);
+    let {coord} = pointer(el);
 
-    coordBus.push({clientX: 123, clientY: 456});
+    coord.next({clientX : 123, clientY : 456});
     assert(el.style.left === '123px');
     assert(el.style.top === '456px');
 
-    coordBus.push({clientX: 789, clientY: 123});
+    coord.next({clientX : 789, clientY : 123});
     assert(el.style.left === '789px');
     assert(el.style.top === '123px');
   });
 
   it('toggleBus', function() {
     let el = document.createElement('div');
-    let {toggleBus} = pointer(el);
+    let {toggle} = pointer(el);
 
-    assert(el.style.visibility === 'hidden');
-    toggleBus.push();
+    toggle.next();
     assert(el.style.visibility === 'visible');
-    toggleBus.push();
+    toggle.next();
     assert(el.style.visibility === 'hidden');
   });
 });
