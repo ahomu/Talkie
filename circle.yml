@@ -1,3 +1,12 @@
+machine:
+  timezone: Asia/Tokyo
+  node:
+    version: 5.1.0
+
+dependencies:
+  pre:
+    - npm install -g npm
+
 test:
   override:
     - npm test
