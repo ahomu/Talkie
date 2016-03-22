@@ -1,0 +1,75 @@
+[body-bg] {
+}
+
+[layout] {
+  line-height: 1.5;
+}
+
+[layout] > * {
+  margin: 30px 100px;
+}
+
+[layout] h1,
+[layout] h2,
+[layout] h3,
+[layout] h4,
+[layout] h5,
+[layout] h6 {
+}
+
+[layout] h1 {
+  font-size: 4.8em;
+}
+
+[layout] h2 {
+  font-size: 3.6em;
+}
+
+[layout] h3 {
+  font-size: 2.4em;
+}
+
+[layout] p {
+  font-size: 2.0em;
+}
+
+[layout] a:link,
+[layout] a:visited,
+[layout] a:hover,
+[layout] a:active {
+}
+
+[layout] em {
+}
+
+[layout] strong {
+}
+
+[layout] table {
+  border-collapse: collapse;
+}
+
+[layout] th,
+[layout] td {
+  padding: 0.5em;
+  font-size: 2.0em;
+}
+
+[layout] ul,
+[layout] ol {
+  font-size: 1.8em;
+}
+
+[layout] li {
+}
+
+[layout] video,
+[layout] img {
+  max-width: 100%;
+}
+
+[layout] blockquote {
+}
+
+[layout] pre {
+}
