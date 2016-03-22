@@ -10,7 +10,7 @@ import 'rxjs/add/observable/fromArray';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
-import util  from './util';
+import { styleAssignOf, stylePrefixDetect, toArray, preloadImg } from './util';
 
 const ATTR_BACKFACE  = 'backface';
 const ATTR_FILTER    = 'backface-filter';
@@ -28,18 +28,18 @@ export default function(target: HTMLElement) {
   bgImage
     .map((el) => el.getAttribute(ATTR_BACKFACE))
     .map((src) => src ? `url(${src})` : '')
-    .subscribe(util.styleAssignOf(target, 'background-image'));
+    .subscribe(styleAssignOf(target, 'background-image'));
 
   // backface image css filter
   // FIXME should receive primitive resouse url string?
   bgFilter
     .map((el) => el.getAttribute(ATTR_FILTER))
-    .subscribe(util.styleAssignOf(target, util.stylePrefixDetect('filter')));
+    .subscribe(styleAssignOf(target, stylePrefixDetect('filter')));
 
-  Observable.fromArray(util.toArray(document.querySelectorAll(`[${ATTR_BACKFACE}]`)))
-    .map((el: HTMLElement) => el.getAttribute(ATTR_BACKFACE))
+  Observable.fromArray(toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_BACKFACE}]`)))
+    .map((el) => el.getAttribute(ATTR_BACKFACE))
     .filter((v) => !!v)
-    .subscribe(util.preloadImg);
+    .subscribe(preloadImg);
 
   return {
     bgImage  : bgImage,

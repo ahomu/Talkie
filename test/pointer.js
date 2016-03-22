@@ -2,13 +2,13 @@
 
 import assert from 'power-assert';
 import sinon from 'sinon';
-import pointer from '../src/pointer';
+import Pointer from '../src/pointer';
 
 describe('pointer', function() {
 
   it('coordBus', function() {
     let el = document.createElement('div');
-    let {coord} = pointer(el);
+    let {coord} = Pointer(el);
 
     coord.next({clientX : 123, clientY : 456});
     assert(el.style.left === '123px');
@@ -21,7 +21,7 @@ describe('pointer', function() {
 
   it('toggleBus', function() {
     let el = document.createElement('div');
-    let {toggle} = pointer(el);
+    let {toggle} = Pointer(el);
 
     toggle.next();
     assert(el.style.visibility === 'visible');

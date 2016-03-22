@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/scan';
 
-import util  from './util';
+import { styleAssignOf }  from './util';
 
 /**
  * pointer mode
@@ -21,13 +21,13 @@ export default function(target: HTMLElement) {
   const x = coord.map((e) => e.clientX + 'px');
   const y = coord.map((e) => e.clientY + 'px');
 
-  x.subscribe(util.styleAssignOf(target, 'left'));
-  y.subscribe(util.styleAssignOf(target, 'top'));
+  x.subscribe(styleAssignOf(target, 'left'));
+  y.subscribe(styleAssignOf(target, 'top'));
 
   toggle
     .scan((acc) => !acc, false)
     .map((bool) => bool ? 'visible' : 'hidden')
-    .subscribe(util.styleAssignOf(target, 'visibility'));
+    .subscribe(styleAssignOf(target, 'visibility'));
 
   return {
     coord  : coord,

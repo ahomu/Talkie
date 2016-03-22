@@ -5,7 +5,7 @@ import assert from 'power-assert';
 import sinon from 'sinon';
 import KeyEvent from './libs/key-event';
 import Paging from '../src/paging';
-import control from '../src/control';
+import { keydown } from '../src/control';
 
 describe('paging', function() {
 
@@ -47,8 +47,8 @@ describe('paging', function() {
       }
     }));
 
-    subscriptions.add(control.keydown(39).subscribe(paging.next));
-    subscriptions.add(control.keydown(37).subscribe(paging.prev));
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
 
                 // 1
     rightKey(); // 1 > 2
@@ -76,9 +76,9 @@ describe('paging', function() {
       }
     }));
 
-    subscriptions.add(control.keydown(39).subscribe(paging.next));
-    subscriptions.add(control.keydown(37).subscribe(paging.prev));
-    subscriptions.add(control.keydown(40).map(() => 3).subscribe(paging.move));
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
+    subscriptions.add(keydown(40).map(() => 3).subscribe(paging.move));
 
                 // 2
     leftKey();  // 2 > 1
@@ -103,8 +103,8 @@ describe('paging', function() {
       }
     }));
 
-    subscriptions.add(control.keydown(39).subscribe(paging.next));
-    subscriptions.add(control.keydown(37).subscribe(paging.prev));
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
 
     // 25%
     leftKey();  // 25% (skip)
@@ -136,8 +136,8 @@ describe('paging', function() {
       }
     }));
 
-    subscriptions.add(control.keydown(39).subscribe(paging.next));
-    subscriptions.add(control.keydown(37).subscribe(paging.prev));
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
 
                 // 1
     rightKey(); // 1 > 2
@@ -151,8 +151,8 @@ describe('paging', function() {
       slideElements : []
     });
 
-    subscriptions.add(control.keydown(39).subscribe(paging.next));
-    subscriptions.add(control.keydown(37).subscribe(paging.prev));
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
 
     const {start, end} = paging;
 
@@ -182,8 +182,8 @@ describe('paging', function() {
       slideElements : [el1, el2, el3]
     });
 
-    subscriptions.add(control.keydown(39).subscribe(paging.next));
-    subscriptions.add(control.keydown(37).subscribe(paging.prev));
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
 
     assert(el1.getAttribute('visible') === '1');
     assert(el2.getAttribute('visible') === null);

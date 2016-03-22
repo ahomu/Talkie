@@ -4,12 +4,12 @@
 
 'use strict';
 
-import util from './util';
+import { getPrimitiveFromString } from './util';
 
 /**
  * query parameters
  */
-export default function parseQuery(query: string) {
+export function parse(query: string) {
 
   const ret: { [key: string]: string } = {};
 
@@ -17,7 +17,7 @@ export default function parseQuery(query: string) {
     .slice(1)
     .split('&')
     .map((keyEqVal) => keyEqVal.split('='))
-    .forEach((kv) => ret[kv[0]] = util.getPrimitiveFromString(kv[1]));
+    .forEach((kv) => ret[kv[0]] = getPrimitiveFromString(kv[1]));
 
   return ret;
 }

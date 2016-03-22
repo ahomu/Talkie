@@ -5,7 +5,7 @@
 'use strict';
 
 import MarkdownIt = require('markdown-it');
-import util   from './util';
+import { toArray } from './util';
 
 const win = window as any;
 
@@ -39,12 +39,7 @@ const md = new MarkdownIt({
   }
 });
 
-export default {
-  compileMarkdown : compileMarkdown,
-  extractNote     : extractNote
-};
-
-function extractNote(el: HTMLElement) {
+export function extractNote(el: HTMLElement) {
   const [content, note] = el.innerHTML.split(/<hr\s?\/?>/);
   el.innerHTML = content;
 
@@ -53,10 +48,10 @@ function extractNote(el: HTMLElement) {
   return (container.textContent || '').replace(/^\n*/, '');
 }
 
-function compileMarkdown(el: Element) {
+export function compileMarkdown(el: Element) {
   const section = document.createElement('section');
   section.innerHTML = md.render(el.innerHTML);
-  util.toArray(el.attributes).filter(notTypeAttribute).forEach(copyAttributeTo(section));
+  toArray<Attr>(el.attributes).filter(notTypeAttribute).forEach(copyAttributeTo(section));
   el.parentNode.replaceChild(section, el);
   return section;
 }

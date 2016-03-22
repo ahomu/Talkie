@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
 
-import util  from './util';
+import { compose, stylePrefixDetect }  from './util';
 
 interface ResponsiveOptions {
   width: number;
@@ -23,7 +23,7 @@ interface ResponsiveOptions {
 export default function(options: ResponsiveOptions) {
 
   const scaleSubject = new BehaviorSubject<any>(true);
-  const scaleFn = util.compose(centeringOf(options.target), scalingOf(options.target));
+  const scaleFn = compose(centeringOf(options.target), scalingOf(options.target));
 
   const hRatio = scaleSubject.map(horizontalRatioOf(options.width));
   const vRatio = scaleSubject.map(verticalRatioOf(options.height));
@@ -50,7 +50,7 @@ function verticalRatioOf(height: number) {
 }
 
 function scalingOf(el: HTMLElement) {
-  const transform = util.stylePrefixDetect('transform');
+  const transform = stylePrefixDetect('transform');
   return function(ratio: number) {
     el.style[transform] = `scale(${Math.abs(ratio)})`;
   };

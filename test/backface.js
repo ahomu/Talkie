@@ -3,14 +3,14 @@
 import assert from 'power-assert';
 import sinon from 'sinon';
 import KeyEvent from './libs/key-event';
-import backface from '../src/backface';
-import util from '../src/util';
+import Backface from '../src/backface';
+import { stylePrefixDetect } from '../src/util';
 
 describe('backface', function() {
 
   it('bgImageBus', function() {
     let el = document.createElement('div');
-    let {bgImage} = backface(el);
+    let {bgImage} = Backface(el);
 
     let slideElMock1 = document.createElement('div');
     let slideElMock2 = document.createElement('div');
@@ -33,13 +33,13 @@ describe('backface', function() {
 
   it('bgFilterBus', function() {
     let el = document.createElement('div');
-    let {bgFilter} = backface(el);
+    let {bgFilter} = Backface(el);
 
     let slideElMock1 = document.createElement('div');
     let slideElMock2 = document.createElement('div');
     let slideElMock3 = document.createElement('div');
 
-    let filterProperty = util.stylePrefixDetect('filter');
+    let filterProperty = stylePrefixDetect('filter');
 
     slideElMock1.setAttribute('backface-filter', 'blur(1px)');
     slideElMock2.setAttribute('backface-filter', 'brightness(.3)');

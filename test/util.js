@@ -2,7 +2,7 @@
 
 import assert from 'power-assert';
 import sinon from 'sinon';
-import util from '../src/util';
+import * as util from '../src/util';
 
 describe('util', function() {
 

@@ -12,16 +12,17 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/throttleTime';
 
-import util    from './util';
-import control from './control';
-import query   from './query';
-
-import $slide      from './slide';
-import $paging     from './paging';
-import $fullScreen from './fullscreen';
-import $responsive from './responsive';
-import $pointer    from './pointer';
-import $backface   from './backface';
+import { extend, defaults, toArray, getById, getPageNumberFromHash,
+         textAssignOf, styleAssignOf, attributeAssignOf } from './util';
+import { click, mousemove, keydown, swipeLeft, swipeRight,
+         resize, hashchange } from './control';
+import { parse }   from './query';
+import { compileMarkdown, extractNote } from './slide';
+import Paging     from './paging';
+import FullScreen from './fullscreen';
+import Responsive from './responsive';
+import Pointer    from './pointer';
+import Backface   from './backface';
 
 const IDENT_NEXT     = 'next';
 const IDENT_PREV     = 'prev';
@@ -46,7 +47,6 @@ const WIDE_WIDTH    = 1366;
 const WIDE_HEIGHT   = 768;
 
 interface TalkieOptions {
-  api?: boolean;
   wide?: boolean;
   control?: boolean;
   pointer?: boolean;
@@ -55,24 +55,9 @@ interface TalkieOptions {
   notransition?: boolean;
 }
 
-(window as any).Talkie = function(options: TalkieOptions = {}) {
-  return !options.api ? main(options) : {
-    main       : main,
-    util       : util,
-    control    : control,
-    query      : query,
-    slide      : $slide,
-    paging     : $paging,
-    fullScreen : $fullScreen,
-    responsive : $responsive,
-    pointer    : $pointer,
-    backface   : $backface
-  };
-};
+(window as any).Talkie = function main(givenOptions: TalkieOptions = {}) {
 
-function main(givenOptions: TalkieOptions = {}) {
-
-  const options = util.extend(util.defaults(givenOptions, {
+  const options = extend(defaults(givenOptions, {
     api          : false,
     wide         : false,
     control      : true,
@@ -80,7 +65,7 @@ function main(givenOptions: TalkieOptions = {}) {
     progress     : true,
     backface     : true,
     notransition : false
-  }), query(location.search));
+  }), parse(location.search)) as TalkieOptions;
 
   /**
    * Init slide sizes
@@ -103,12 +88,12 @@ function main(givenOptions: TalkieOptions = {}) {
    *   2. traverse slides & assign page number
    *   3. extract presenter notes
    */
-  const mds = util.toArray<Element>(document.querySelectorAll(SELECTOR_MD));
-  mds.forEach($slide.compileMarkdown);
-  const slides = util.toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
-  slides.forEach((el, i) => util.attributeAssignOf(el, ATTR_PAGE)(i + 1));
+  const mds = toArray<Element>(document.querySelectorAll(SELECTOR_MD));
+  mds.forEach(compileMarkdown);
+  const slides = toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
+  slides.forEach((el, i) => attributeAssignOf(el, ATTR_PAGE)(i + 1));
   const notes  = {};
-  slides.map($slide.extractNote).forEach((txt, i) => notes[i + 1] = txt);
+  slides.map(extractNote).forEach((txt, i) => notes[i + 1] = txt);
 
   /**
    * Responsive scaling
@@ -116,58 +101,58 @@ function main(givenOptions: TalkieOptions = {}) {
   document.body.insertAdjacentHTML('beforeend', `
     <div id="${IDENT_SCALER}"></div>
   `);
-  const scalerEl = util.getById(IDENT_SCALER);
+  const scalerEl = getById(IDENT_SCALER);
   slides.forEach((el) => scalerEl.appendChild(el));
 
-  const responsive = $responsive({
+  const responsive = Responsive({
     width  : width,
     height : height,
     target : scalerEl
   });
-  control.resize().subscribe(responsive.scale);
+  resize().subscribe(responsive.scale);
 
   /**
    * Paging control
    */
-  const paging = $paging({
-    startPage     : util.getPageNumberFromHash() || 1,
+  const paging = Paging({
+    startPage     : getPageNumberFromHash() || 1,
     endPage       : slides.length,
     slideElements : slides
   });
 
-  control.keydown('right').throttleTime(100).subscribe(paging.next);
-  control.keydown('left').throttleTime(100).subscribe(paging.prev);
+  keydown('right').throttleTime(100).subscribe(paging.next);
+  keydown('left').throttleTime(100).subscribe(paging.prev);
 
-  control.swipeLeft().subscribe(paging.next);
-  control.swipeRight().subscribe(paging.prev);
+  swipeLeft().subscribe(paging.next);
+  swipeRight().subscribe(paging.prev);
 
   // sync location.hash
-  control.hashchange().map(util.getPageNumberFromHash).subscribe(paging.move);
+  hashchange().map(getPageNumberFromHash).subscribe(paging.move);
   paging.current.subscribe((page) => location.hash = page === 1 ? '/' : '/' + page);
 
   // sync body background attribute
   paging.changed
     .map((el) => el.getAttribute(ATTR_LAYOUT))
-    .subscribe(util.attributeAssignOf(document.body, ATTR_BODY_BG));
+    .subscribe(attributeAssignOf(document.body, ATTR_BODY_BG));
 
   /**
    * Insert Ui Elements
    */
   if (options.notransition) {
     Observable.of(1)
-      .subscribe(util.attributeAssignOf(document.body, ATTR_NO_TRANS));
+      .subscribe(attributeAssignOf(document.body, ATTR_NO_TRANS));
   }
 
   if (options.pointer) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}"></div>`);
-    const {coord, toggle} = $pointer(util.getById(IDENT_POINTER));
-    control.mousemove().subscribe(coord);
-    control.keydown('b').subscribe(toggle);
+    const {coord, toggle} = Pointer(getById(IDENT_POINTER));
+    mousemove().subscribe(coord);
+    keydown('b').subscribe(toggle);
   }
 
   if (options.backface) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_BACKFACE}"></div>`);
-    const {bgImage, bgFilter} = $backface(util.getById(IDENT_BACKFACE));
+    const {bgImage, bgFilter} = Backface(getById(IDENT_BACKFACE));
     paging.changed.subscribe((el) => {
       bgImage.next(el);
       bgFilter.next(el);
@@ -183,53 +168,53 @@ function main(givenOptions: TalkieOptions = {}) {
       </div>
     `);
 
-    const nextEl = util.getById(IDENT_NEXT);
-    const prevEl = util.getById(IDENT_PREV);
+    const nextEl = getById(IDENT_NEXT);
+    const prevEl = getById(IDENT_PREV);
 
     // next button
-    control.click(nextEl).subscribe(paging.next);
+    click(nextEl).subscribe(paging.next);
 
     // prev button
-    control.click(prevEl).subscribe(paging.prev);
+    click(prevEl).subscribe(paging.prev);
 
     // current page
-    paging.current.subscribe(util.textAssignOf(util.getById(IDENT_PAGE)));
+    paging.current.subscribe(textAssignOf(getById(IDENT_PAGE)));
 
     // total of page
-    Observable.of(slides.length).subscribe(util.textAssignOf(util.getById(IDENT_TOTAL)));
+    Observable.of(slides.length).subscribe(textAssignOf(getById(IDENT_TOTAL)));
   }
 
   if (options.progress) {
     document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_PROGRESS}"></div>`);
 
     // progress bar
-    paging.percent.subscribe(util.styleAssignOf(util.getById(IDENT_PROGRESS), 'width'));
+    paging.percent.subscribe(styleAssignOf(getById(IDENT_PROGRESS), 'width'));
   }
 
   /**
    * FullScreen
    */
-  control.keyup('f').subscribe($fullScreen(document.documentElement));
+  keydown('f').subscribe(FullScreen(document.documentElement));
 
   /**
    * export some of control
    *
    * @typedef {Object} TalkieExport
-   * @param {Object.<Function>} control
-   * @param {Bacon.EventStream} changed
-   * @param {Bacon.Bus} next
-   * @param {Bacon.Bus} prev
-   * @param {Bacon.Bus} jump
-   * @param {Bacon.Property} ratio
+   * @param {Function} key
    * @param {Object.<Number, String>} notes
+   * @param {Rx.Observable} changed
+   * @param {Rx.Observable} ratio
+   * @param {Rx.Subject} next$
+   * @param {Rx.Subject} prev$
+   * @param {Rx.Subject} jump$
    */
   return {
-    control : control,
+    key     : keydown,
+    notes   : notes,
     changed : paging.changed,
-    next    : paging.next,
-    prev    : paging.prev,
-    jump    : paging.move,
     ratio   : responsive.currentRatio,
-    notes   : notes
+    next$   : paging.next,
+    prev$   : paging.prev,
+    jump$   : paging.move,
   };
 }
