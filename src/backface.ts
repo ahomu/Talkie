@@ -1,7 +1,15 @@
+/// <reference path="../typings/myself.d.ts" />
+/// <reference path="../typings/browser.d.ts" />
+/// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
+
 'use strict';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/observable/fromArray';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+
 import util  from './util';
 
 const ATTR_BACKFACE  = 'backface';

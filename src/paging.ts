@@ -1,8 +1,16 @@
+/// <reference path="../typings/myself.d.ts" />
+/// <reference path="../typings/browser.d.ts" />
+/// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
+
 'use strict';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/withLatestFrom';
 
 /**
  * @typedef {Object} PagingOptions
