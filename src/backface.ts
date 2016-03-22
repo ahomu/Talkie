@@ -16,21 +16,12 @@ const ATTR_BACKFACE  = 'backface';
 const ATTR_FILTER    = 'backface-filter';
 
 /**
- * @typedef {Object} BackfaceReturns
- * @property {Bacon.Bus} bgImageBus
- * @property {Bacon.Bus} bgFilterBus
- */
-
-/**
- * backface
- *
- * @param {Element} target
- * @returns {BackfaceReturns}
+ * control backface
  */
 export default function(target: HTMLElement) {
 
-  let bgImage = new Subject<HTMLElement>();
-  let bgFilter = new Subject<HTMLElement>();
+  const bgImage = new Subject<HTMLElement>();
+  const bgFilter = new Subject<HTMLElement>();
 
   // backface image
   // FIXME should receive primitive resouse url string?

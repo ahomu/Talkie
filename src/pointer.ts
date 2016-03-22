@@ -11,24 +11,15 @@ import 'rxjs/add/operator/scan';
 import util  from './util';
 
 /**
- * @typedef {Object} PointerReturns
- * @property {Bacon.Bus} coordBus
- * @property {Bacon.Bus} toggleBus
- */
-
-/**
  * pointer mode
- *
- * @param {Element} target
- * @returns {PointerReturns}
  */
 export default function(target: HTMLElement) {
 
-  let coord  = new Subject<MouseEvent>();
-  let toggle = new Subject<any>();
+  const coord  = new Subject<MouseEvent>();
+  const toggle = new Subject<any>();
 
-  let x = coord.map((e) => e.clientX + 'px');
-  let y = coord.map((e) => e.clientY + 'px');
+  const x = coord.map((e) => e.clientX + 'px');
+  const y = coord.map((e) => e.clientY + 'px');
 
   x.subscribe(util.styleAssignOf(target, 'left'));
   y.subscribe(util.styleAssignOf(target, 'top'));

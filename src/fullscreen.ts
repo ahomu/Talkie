@@ -7,10 +7,8 @@
 import { Subject } from 'rxjs/Subject';
 
 /**
- * full screen
- *
- * @param {Element} target
- * @returns {Subject}
+ * fullscreen
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
  */
 export default function(target: HTMLElement) {
   const fullscreen$ = new Subject();
@@ -18,10 +16,6 @@ export default function(target: HTMLElement) {
   return fullscreen$;
 }
 
-/**
- * @param {Element} el
- * @returns {Function}
- */
 function toggleScreenOf(el: HTMLElement|any) {
   let request: string, exit: string;
   const doc = document as any;

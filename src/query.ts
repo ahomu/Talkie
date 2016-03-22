@@ -9,15 +9,9 @@ import util from './util';
 /**
  * query parameters
  */
-export default parseQuery;
+export default function parseQuery(query: string) {
 
-/**
- * @param {String} query
- * @returns {Object}
- */
-function parseQuery(query: string) {
-
-  let ret: { [key: string]: string } = {};
+  const ret: { [key: string]: string } = {};
 
   query
     .slice(1)

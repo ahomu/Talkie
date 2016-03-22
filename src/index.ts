@@ -70,16 +70,9 @@ interface TalkieOptions {
   };
 };
 
-/**
- * @param {TalkieOptions} givenOptions
- */
 function main(givenOptions: TalkieOptions = {}) {
 
-  /**
-   * apply default options
-   * @type {*|Object}
-   */
-  let options = util.extend(util.defaults(givenOptions, {
+  const options = util.extend(util.defaults(givenOptions, {
     api          : false,
     wide         : false,
     control      : true,
@@ -92,8 +85,8 @@ function main(givenOptions: TalkieOptions = {}) {
   /**
    * Init slide sizes
    */
-  let width  = options.wide ? WIDE_WIDTH : NORMAL_WIDTH;
-  let height = options.wide ? WIDE_HEIGHT : NORMAL_HEIGHT;
+  const width  = options.wide ? WIDE_WIDTH : NORMAL_WIDTH;
+  const height = options.wide ? WIDE_HEIGHT : NORMAL_HEIGHT;
   (document.querySelector('head') as HTMLElement).insertAdjacentHTML('beforeend', `
     <style>
       [layout],
@@ -110,11 +103,11 @@ function main(givenOptions: TalkieOptions = {}) {
    *   2. traverse slides & assign page number
    *   3. extract presenter notes
    */
-  let mds = util.toArray<Element>(document.querySelectorAll(SELECTOR_MD));
+  const mds = util.toArray<Element>(document.querySelectorAll(SELECTOR_MD));
   mds.forEach($slide.compileMarkdown);
-  let slides = util.toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
+  const slides = util.toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
   slides.forEach((el, i) => util.attributeAssignOf(el, ATTR_PAGE)(i + 1));
-  let notes  = {};
+  const notes  = {};
   slides.map($slide.extractNote).forEach((txt, i) => notes[i + 1] = txt);
 
   /**
@@ -123,10 +116,10 @@ function main(givenOptions: TalkieOptions = {}) {
   document.body.insertAdjacentHTML('beforeend', `
     <div id="${IDENT_SCALER}"></div>
   `);
-  let scalerEl = util.getById(IDENT_SCALER);
+  const scalerEl = util.getById(IDENT_SCALER);
   slides.forEach((el) => scalerEl.appendChild(el));
 
-  let responsive = $responsive({
+  const responsive = $responsive({
     width  : width,
     height : height,
     target : scalerEl
@@ -136,7 +129,7 @@ function main(givenOptions: TalkieOptions = {}) {
   /**
    * Paging control
    */
-  let paging = $paging({
+  const paging = $paging({
     startPage     : util.getPageNumberFromHash() || 1,
     endPage       : slides.length,
     slideElements : slides
@@ -190,8 +183,8 @@ function main(givenOptions: TalkieOptions = {}) {
       </div>
     `);
 
-    let nextEl = util.getById(IDENT_NEXT);
-    let prevEl = util.getById(IDENT_PREV);
+    const nextEl = util.getById(IDENT_NEXT);
+    const prevEl = util.getById(IDENT_PREV);
 
     // next button
     control.click(nextEl).subscribe(paging.next);

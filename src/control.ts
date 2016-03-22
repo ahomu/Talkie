@@ -26,85 +26,51 @@ export interface TouchMoveDelta {
 }
 
 /**
- * create EventStream from user input
+ * create Observable from user input
  */
 export default {
 
-  /**
-   * TODO rename to `keyup`
-   * @param charKey
-   * @returns {*}
-     */
   keyup(charKey: string|number): Observable<KeyboardEvent> {
     const keyCode = typeof charKey === 'string' ? keycode(charKey)
                                                 : charKey;
     return KEY_UP$.filter(keyCodeIs(keyCode));
   },
 
-  /**
-   * @param {String|Number} charKey
-   * @returns {Observable}
-   */
   keydown(charKey: string|number): Observable<KeyboardEvent> {
     const keyCode = typeof charKey === 'string' ? keycode(charKey)
                                                 : charKey;
     return KEY_DOWN$.filter(keyCodeIs(keyCode));
   },
 
-  /**
-   * @param {Element} el
-   * @returns {Observable}
-   */
   click(el: HTMLElement): Observable<MouseEvent> {
     return Observable.fromEvent(el, 'click');
   },
 
-  /**
-   * @param {Element} [el = document.body]
-   * @returns {Observable}
-   */
   mousemove(el = document.body): Observable<MouseEvent> {
     return Observable.fromEvent(el, 'mousemove');
   },
 
-  /**
-   * @param {Element} el
-   * @returns {Observable}
-   */
   touchstart(el: HTMLElement): Observable<TouchEvent> {
     return Observable.fromEvent(el, 'touchstart');
   },
 
-  /**
-   * @param {Element} el
-   * @returns {Observable}
-   */
   touchend(el: HTMLElement): Observable<TouchEvent> {
     return Observable.fromEvent(el, 'touchend');
   },
 
-  /**
-   * @param {Element} el
-   * @returns {Observable}
-   */
   touchmove(el: HTMLElement): Observable<TouchEvent> {
     return Observable.fromEvent(el, 'touchmove');
   },
 
-  /**
-   * @param {Element} el
-   * @param {Bacon.Bus} [stop$ = new Bacon.Bus()]
-   * @returns {Observable}
-   */
   swipe(el: HTMLElement, stop$: Subject<any>): Observable<TouchMoveDelta> {
-    let start$ = this.touchstart(el).do((e: TouchEvent) => e.preventDefault());
-    let move$  = this.touchmove(el).do((e: TouchEvent) => e.preventDefault()).throttleTime(100);
-    let end$   = this.touchend(el).do((e: TouchEvent) => e.preventDefault());
+    const start$ = this.touchstart(el).do((e: TouchEvent) => e.preventDefault());
+    const move$  = this.touchmove(el).do((e: TouchEvent) => e.preventDefault()).throttleTime(100);
+    const end$   = this.touchend(el).do((e: TouchEvent) => e.preventDefault());
 
     end$.subscribe(stop$)
 
     return start$.flatMap(function({changedTouches}) {
-      let initialValue = {
+      const initialValue = {
         init : changedTouches[0].clientX,
         curt : 0
       };
@@ -115,53 +81,35 @@ export default {
     });
   },
 
-  /**
-   * @param {Element} [el = document.body]
-   * @returns {Observable}
-   */
   swipeLeft(el = document.body): Observable<TouchMoveDelta> {
-    let stop$ = new Subject();
+    const stop$ = new Subject();
 
     return this.swipe(el, stop$).filter((moves: TouchMoveDelta) => {
-      let {init, curt} = moves;
-      let delta = curt - init;
+      const {init, curt} = moves;
+      const delta = curt - init;
       return delta < -10;
     }).do(() => stop$.next(true));
   },
 
-  /**
-   * @param {Element} [el = document.body]
-   * @returns {Observable}
-   */
   swipeRight(el = document.body): Observable<TouchMoveDelta> {
-    let stop$ = new Subject();
+    const stop$ = new Subject();
 
     return this.swipe(el, stop$).filter((moves: TouchMoveDelta) => {
-      let {init, curt} = moves;
-      let delta = curt - init;
+      const {init, curt} = moves;
+      const delta = curt - init;
       return delta > 10;
     }).do(() => stop$.next(true));
   },
 
-  /**
-   * @returns {Observable}
-   */
   resize(): Observable<UIEvent> {
     return Observable.fromEvent(window, 'resize');
   },
 
-  /**
-   * @returns {Observable}
-   */
   hashchange(): Observable<HashChangeEvent> {
     return Observable.fromEvent(window, 'hashchange');
   }
 };
 
-/**
- * @param {Number} keyCode
- * @returns {Function}
- */
 function keyCodeIs(keyCode: number) {
   return function(event: KeyboardEvent) {
     return event.keyCode === keyCode;

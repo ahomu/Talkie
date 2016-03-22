@@ -12,13 +12,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/withLatestFrom';
 
-/**
- * @typedef {Object} PagingOptions
- * @property {Number} startPage
- * @property {Number} endPage
- * @property {Array<Element>} slideElements
- */
-
 interface PagingOptions {
   startPage: number;
   endPage: number;
@@ -26,40 +19,25 @@ interface PagingOptions {
 }
 
 /**
- * @typedef {Object} PagingReturns
- * @property {Bacon.EventStream} currentEs
- * @property {Bacon.EventStream} startEs
- * @property {Bacon.EventStream} endEs
- * @property {Bacon.EventStream} changedEs
- * @property {Bacon.EventStream} percentEs
- * @property {Bacon.Bus} nextBus
- * @property {Bacon.Bus} prevBus
- * @property {Bacon.Bus} moveBus
- */
-
-/**
  * paging control
- *
- * @param {PagingOptions} options
- * @returns {PagingReturns}
  */
 export default function(options: PagingOptions) {
 
-  let next     = new Subject<any>();
-  let prev     = new Subject<any>();
-  let move     = new Subject<number>();
-  let current  = new BehaviorSubject<number>(options.startPage || 1);
+  const next     = new Subject<any>();
+  const prev     = new Subject<any>();
+  const move     = new Subject<number>();
+  const current  = new BehaviorSubject<number>(options.startPage || 1);
 
-  let currentPage: Observable<number> = current
+  const currentPage: Observable<number> = current
     .map(inRangeOf(1, options.endPage))
     .distinctUntilChanged();
 
-  let _next = next.withLatestFrom(currentPage, (_, page) => page).map((v) => v + 1);
-  let _prev = prev.withLatestFrom(currentPage, (_, page) => page).map((v) => v - 1);
-  let _move = move.map((v) => v /* noop */);
+  const _next = next.withLatestFrom(currentPage, (_, page) => page).map((v) => v + 1);
+  const _prev = prev.withLatestFrom(currentPage, (_, page) => page).map((v) => v - 1);
+  const _move = move.map((v) => v /* noop */);
 
-  let percentString = currentPage.map(percentOf(options.endPage));
-  let currentSlide  = currentPage.map((i) => options.slideElements[i - 1]);
+  const percentString = currentPage.map(percentOf(options.endPage));
+  const currentSlide  = currentPage.map((i) => options.slideElements[i - 1]);
 
   Observable.merge(_next, _prev, _move).subscribe(current);
 
@@ -80,35 +58,20 @@ export default function(options: PagingOptions) {
   };
 }
 
-/**
- * @param {Element} el
- */
 function toInvisible(el: HTMLElement) {
   el.removeAttribute('visible');
 }
 
-/**
- * @param {Element} el
- */
 function toVisible(el: HTMLElement) {
   el.setAttribute('visible', '1');
 }
 
-/**
- * @param {Number} min
- * @param {Number} max
- * @returns {Function}
- */
 function inRangeOf(min: number, max: number) {
   return function(z: number) {
     return Math.min(max, Math.max(z, min));
   };
 }
 
-/**
- * @param {Number} max
- * @returns {Function}
- */
 function percentOf(max: number) {
   return function(current: number) {
     return ((100 / max) * current) + '%';
