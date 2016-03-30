@@ -11,7 +11,7 @@ For more information about dependency Please look at the [package.json](package.
 
 - [x] Markdown support
 - [x] Code highlighting
-- [ ] Layout attributes (WIP)
+- [x] Layout attributes
 - [x] keyboard control
 - [x] touch control
 - [x] Responsive scaling (4:3, 16:9)
