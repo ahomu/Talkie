@@ -139,7 +139,7 @@ interface TalkieExports {
 
   // sync location.hash
   hashchange().map(getPageNumberFromHash).subscribe(paging.move);
-  paging.current.subscribe((page) => location.hash = page === 1 ? '/' : '/' + page);
+  paging.current.subscribe((page) => location.hash = page === 1 ? '' : '' + page);
 
   // sync body background attribute
   paging.changed
