@@ -82,7 +82,7 @@ export function preloadImg(src: string) {
 }
 
 export function getPageNumberFromHash() {
-  return parseInt(location.hash.replace('#/', ''), 10) || 0;
+  return parseInt(location.hash.replace('#', ''), 10) || 0;
 }
 
 export function getPrimitiveFromString(str: string) {

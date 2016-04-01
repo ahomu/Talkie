@@ -24,10 +24,10 @@ interface PagingOptions {
  */
 export default function(options: PagingOptions) {
 
-  const next     = new Subject<any>();
-  const prev     = new Subject<any>();
-  const move     = new Subject<number>();
-  const current  = new BehaviorSubject<number>(options.startPage || 1);
+  const next    = new Subject<any>();
+  const prev    = new Subject<any>();
+  const move    = new Subject<number>();
+  const current = new BehaviorSubject<number>(options.startPage || 1);
 
   const currentPage: Observable<number> = current
     .map(inRangeOf(1, options.endPage))

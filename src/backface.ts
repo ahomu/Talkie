@@ -6,7 +6,7 @@
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/observable/fromArray';
+import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
@@ -36,7 +36,7 @@ export default function(target: HTMLElement) {
     .map((el) => el.getAttribute(ATTR_FILTER))
     .subscribe(styleAssignOf(target, stylePrefixDetect('filter')));
 
-  Observable.fromArray(toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_BACKFACE}]`)))
+  Observable.from<Element>(toArray<Element>(document.querySelectorAll(`[${ATTR_BACKFACE}]`)))
     .map((el) => el.getAttribute(ATTR_BACKFACE))
     .filter((v) => !!v)
     .subscribe(preloadImg);
