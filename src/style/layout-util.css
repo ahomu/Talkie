@@ -2,6 +2,7 @@
  * Utility
  */
 
+[flex]       { display: flex !important; }
 [vertical]   { flex-direction: column !important; }
 [horizontal] { flex-direction: row !important; }
 

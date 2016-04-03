@@ -64,7 +64,6 @@ body[no-transition] * {
   left: 0;
   transform: scale(1);
   transform-origin: left top;
-  -webkit-backface-visibility: hidden; /* forced GPU acceleration */
 }
 
 #backface {
