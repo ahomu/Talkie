@@ -22,6 +22,7 @@ For more information about dependency Please look at the [package.json](package.
 
 ## Real presentation sample
 
+- [CLIENT SIDE OF █████FRESH.TV](http://s.aho.mu/160405-node_school/)
 - [Reactive Programming in JavaScript](http://ahomu.github.io/s/150221-frontrend_conference/index.html)
 - [Bacon.js & Talkie.js](http://ahomu.github.io/s/150217-lt/index.html)
 
@@ -167,6 +168,20 @@ interface TalkieExports {
 
 var exports = Talkie();
 ```
+
+## Change Log
+
+### v0.9
+
+- Remove the Bacon.js, to use the [ReactiveX/rxjs](https://github.com/ReactiveX/RxJS) instead.
+- Add `TalkieExport.key: (charKey: string) => Observable<KeyboardEvent>`. 
+- Deprecated `TalkieExport.api`
+- Deprecated `TalkieExport.controls`
+- Fixed unexpected transparent background at fullscreen.
+- Default theme some style changes.
+  - `[invert]` has been cut out from the specified value of the layout.
+  - Deprecated layouts `[title-invert]`, `[bullets-invert]`
+  - Now it is specified as `[layout=title][invert]`.
 
 ## License
 
