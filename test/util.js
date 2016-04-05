@@ -107,10 +107,10 @@ describe('util', function() {
   });
 
   it('getPageNumberFromHash', function() {
-    location.hash = '/123';
+    location.hash = '123';
     assert(util.getPageNumberFromHash() === 123);
 
-    location.hash = '/';
+    location.hash = '';
     assert(util.getPageNumberFromHash() === 0);
   });
 
