@@ -3,7 +3,7 @@ Talkie.js - HTML/CSS/JavaScript Slide library
 
 [![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
 
-This library written in es6 JavaScript & [ReactiveX/rxjs: A reactive programming library for JavaScript](https://github.com/ReactiveX/RxJS).
+This library written in [TypeScript](https://github.com/Microsoft/TypeScript) & [ReactiveX/rxjs: A reactive programming library for JavaScript](https://github.com/ReactiveX/RxJS).
 
 For more information about dependency Please look at the [package.json](package.json).
 
