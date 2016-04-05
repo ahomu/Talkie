@@ -38,6 +38,7 @@ const IDENT_BACKFACE = 'backface';
 const SELECTOR_MD = '[type="text/x-markdown"]';
 
 const ATTR_LAYOUT   = 'layout';
+const ATTR_INVERT   = 'invert';
 const ATTR_BODY_BG  = 'body-bg';
 const ATTR_PAGE     = 'page';
 const ATTR_NO_TRANS = 'no-transition';
@@ -145,6 +146,9 @@ interface TalkieExports {
   paging.changed
     .map((el) => el.getAttribute(ATTR_LAYOUT))
     .subscribe(attributeAssignOf(document.body, ATTR_BODY_BG));
+  paging.changed
+    .map((el) => el.getAttribute(ATTR_INVERT))
+    .subscribe(attributeAssignOf(document.body, ATTR_INVERT));
 
   /**
    * Insert Ui Elements

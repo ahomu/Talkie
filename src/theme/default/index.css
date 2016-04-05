@@ -3,8 +3,7 @@
  */
 @import url(./base.css);
 @import url(./bullets.css);
-@import url(./bullets-invert.css);
+@import url(./image.css);
 @import url(./code.css);
 @import url(./cover.css);
 @import url(./title.css);
-@import url(./title-invert.css);
