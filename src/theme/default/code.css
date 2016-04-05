@@ -15,6 +15,10 @@
   color: white;
 }
 
+[layout=code] code {
+  background: #222;
+}
+
 [layout=code] .hljs {
   font-family: Consolas, Monaco,'Andale Mono',monospace;
   background-color: transparent;

@@ -139,6 +139,10 @@
   border: 1px solid #999;
 }
 
+[layout][invert] code {
+  background: #222;
+}
+
 [layout] pre code {
   padding: inherit;
   background: inherit;
