@@ -2,7 +2,7 @@
 
 import assert from 'power-assert';
 import sinon from 'sinon';
-import slide from '../src/slide';
+import { compileMarkdown, extractNote } from '../src/slide';
 
 describe('slide', function() {
   let mdtext = `
@@ -22,7 +22,7 @@ paraparag
   it('comipleMarkdown', function() {
     document.body.insertAdjacentHTML('beforeend', mdtext);
 
-    let section = slide.compileMarkdown(document.getElementById('md'));
+    let section = compileMarkdown(document.getElementById('md'));
 
     assert(!!section.querySelector('h1'));
     assert(!!section.querySelector('h2'));
@@ -36,7 +36,7 @@ paraparag
   it('extend attributes after compile', function() {
     document.body.insertAdjacentHTML('beforeend', mdtext);
 
-    let section = slide.compileMarkdown(document.getElementById('md'));
+    let section = compileMarkdown(document.getElementById('md'));
 
     assert(section.getAttribute('id') === 'md');
     assert(section.getAttribute('layout') === 'test');
@@ -49,8 +49,8 @@ paraparag
   it('extract Note', function() {
     document.body.insertAdjacentHTML('beforeend', mdtext);
 
-    let section = slide.compileMarkdown(document.getElementById('md'));
-    let noteStr = slide.extractNote(section);
+    let section = compileMarkdown(document.getElementById('md'));
+    let noteStr = extractNote(section);
 
     // got note (tags are stripped)
     assert(noteStr === 'h3 note\n');

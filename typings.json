@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "object-assign": "registry:npm/object-assign#4.0.1+20160301180549"
+  }
+}

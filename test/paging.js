@@ -1,13 +1,23 @@
 'use strict';
 
+import { Subscription } from 'rxjs/Subscription';
 import assert from 'power-assert';
 import sinon from 'sinon';
 import KeyEvent from './libs/key-event';
-import Bacon from 'baconjs';
 import Paging from '../src/paging';
-import control from '../src/control';
+import { keydown } from '../src/control';
 
 describe('paging', function() {
+
+  let subscriptions;
+
+  beforeEach(function() {
+    subscriptions = new Subscription();
+  });
+
+  afterEach(function() {
+    subscriptions.unsubscribe();
+  });
 
   function rightKey() {
     KeyEvent.simulate(39, 39); // →
@@ -21,25 +31,24 @@ describe('paging', function() {
     KeyEvent.simulate(40, 40); // ↓
   }
 
-  it('endPage & nextBus & prevBus', function(done) {
+  it('endPage & next & prev', function(done) {
     let paging = Paging({
-      startPage : 1,
-      endPage   : 3,
-      slideElements: []
+      startPage     : 1,
+      endPage       : 3,
+      slideElements : []
     });
 
-    let current = paging.currentEs;
+    let current = paging.current;
     let expects = [1, 2, 3, 2, 1];
-    current.onValue(function(v) {
+    subscriptions.add(current.subscribe(function(v) {
       assert(expects.shift() === v);
       if (!expects.length) {
-        done();
-        return Bacon.noMore;
+        return done();
       }
-    });
+    }));
 
-    paging.nextBus.plug(control.key(39));
-    paging.prevBus.plug(control.key(37));
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
 
                 // 1
     rightKey(); // 1 > 2
@@ -51,26 +60,25 @@ describe('paging', function() {
     leftKey();  // 1 > 1 (skip)
   });
 
-  it('startPage & moveBus', function(done) {
+  it('startPage & move', function(done) {
     let paging = Paging({
-      startPage : 2,
-      endPage   : 3,
-      slideElements: []
+      startPage     : 2,
+      endPage       : 3,
+      slideElements : []
     });
 
-    let current = paging.currentEs;
+    let current = paging.current;
     let expects = [2, 1, 3, 2];
-    current.onValue(function(v) {
+    subscriptions.add(current.subscribe(function(v) {
       assert(expects.shift() === v);
       if (!expects.length) {
-        done();
-        return Bacon.noMore;
+        return done();
       }
-    });
+    }));
 
-    paging.nextBus.plug(control.key(39));
-    paging.prevBus.plug(control.key(37));
-    paging.moveBus.plug(control.key(40).map(3));
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
+    subscriptions.add(keydown(40).map(() => 3).subscribe(paging.move));
 
                 // 2
     leftKey();  // 2 > 1
@@ -79,32 +87,33 @@ describe('paging', function() {
     leftKey();  // 3 > 2
   });
 
-  it('percentEs', function(done) {
+  it('percent', function(done) {
     let paging = Paging({
-      startPage : 1,
-      endPage   : 4,
-      slideElements: []
+      startPage     : 1,
+      endPage       : 4,
+      slideElements : []
     });
-    paging.nextBus.plug(control.key(39));
-    paging.prevBus.plug(control.key(37));
 
-    let percent = paging.percentEs;
+    let percent = paging.percent;
     let expects = ['25%', '50%', '75%', '100%'];
-    percent.onValue(function(v) {
+    subscriptions.add(percent.subscribe(function(v) {
       assert(expects.shift() === v);
       if (!expects.length) {
-        done();
-        return Bacon.noMore;
+        return done();
       }
-    });
-                // 25%
+    }));
+
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
+
+    // 25%
     leftKey();  // 25% (skip)
     rightKey(); // 25% > 50%
     rightKey(); // 50% > 75%
     rightKey(); // 75% > 100%
   });
 
-  it('changedEs', function(done) {
+  it('changed', function(done) {
     let el1 = document.createElement('section');
     let el2 = document.createElement('section');
     let el3 = document.createElement('section');
@@ -112,51 +121,51 @@ describe('paging', function() {
     el1.id = 'i1';
     el2.id = 'i2';
     el3.id = 'i3';
+
     let paging = Paging({
-      startPage : 1,
-      endPage   : 3,
-      slideElements: [el1, el2, el3]
+      startPage     : 1,
+      endPage       : 3,
+      slideElements : [el1, el2, el3]
     });
-    paging.nextBus.plug(control.key(39));
-    paging.prevBus.plug(control.key(37));
 
     let expects = [el1, el2, el3];
-    paging.changedEs.onValue(function(v) {
+    subscriptions.add(paging.changed.subscribe(function(v) {
       assert(expects.shift() === v);
       if (!expects.length) {
-        done();
-        return Bacon.noMore;
+        return done();
       }
-    });
+    }));
+
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
+
                 // 1
     rightKey(); // 1 > 2
     rightKey(); // 2 > 3
   });
 
-  it('startEs & endEs', function() {
+  it('start & end', function() {
     let paging = Paging({
-      startPage : 1,
-      endPage   : 3,
-      slideElements: []
+      startPage     : 1,
+      endPage       : 3,
+      slideElements : []
     });
-    paging.nextBus.plug(control.key(39));
-    paging.prevBus.plug(control.key(37));
 
-    let start = paging.startEs;
-    let end   = paging.endEs;
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
+
+    const {start, end} = paging;
 
     rightKey(); // 1 > 2
 
-    start.onValue(function(v) {
-      assert(1 === v);
-      return Bacon.noMore;
-    });
+    subscriptions.add(start.subscribe(function(v) {
+      assert(v === 1);
+    }));
     leftKey(); // 2 > 1
 
-    end.onValue(function(v) {
-      assert(3 === v);
-      return Bacon.noMore;
-    });
+    subscriptions.add(end.subscribe(function(v) {
+      assert(v === 3);
+    }));
     rightKey(); // 1 > 2
     rightKey(); // 2 > 3
 
@@ -168,12 +177,13 @@ describe('paging', function() {
     let el3 = document.createElement('section');
 
     let paging = Paging({
-      startPage : 1,
-      endPage   : 3,
-      slideElements: [el1, el2, el3]
+      startPage     : 1,
+      endPage       : 3,
+      slideElements : [el1, el2, el3]
     });
-    paging.nextBus.plug(control.key(39));
-    paging.prevBus.plug(control.key(37));
+
+    subscriptions.add(keydown(39).subscribe(paging.next));
+    subscriptions.add(keydown(37).subscribe(paging.prev));
 
     assert(el1.getAttribute('visible') === '1');
     assert(el2.getAttribute('visible') === null);

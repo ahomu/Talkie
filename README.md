@@ -3,7 +3,7 @@ Talkie.js - HTML/CSS/JavaScript Slide library
 
 [![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
 
-This library written in es6 JavaScript & [baconjs/bacon.js](https://github.com/baconjs/bacon.js). Also serve as a practice of es6 and functional reactive programming.
+This library written in es6 JavaScript & [ReactiveX/rxjs: A reactive programming library for JavaScript](https://github.com/ReactiveX/RxJS).
 
 For more information about dependency Please look at the [package.json](package.json).
 
@@ -11,8 +11,7 @@ For more information about dependency Please look at the [package.json](package.
 
 - [x] Markdown support
 - [x] Code highlighting
-- [ ] CSS transitions
-- [ ] Layout attributes (WIP)
+- [x] Layout attributes
 - [x] keyboard control
 - [x] touch control
 - [x] Responsive scaling (4:3, 16:9)
@@ -20,27 +19,28 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Background image & filter
 - [x] Pointer attention
 - [x] Progress indicator
-- [ ] Thumbnail previews
 
 ## Real presentation sample
 
+- [CLIENT SIDE OF █████FRESH.TV](http://s.aho.mu/160405-node_school/)
 - [Reactive Programming in JavaScript](http://ahomu.github.io/s/150221-frontrend_conference/index.html)
 - [Bacon.js & Talkie.js](http://ahomu.github.io/s/150217-lt/index.html)
 
 ## Getting started
 
-Talkie.js contains one of the CSS and one of JavaScript.
+Talkie.js contains two of the CSS and one of JavaScript.
 
 - dist/talkie.min.css
 - dist/talkie.min.js
+- dist/talkie-default.min.css
 
-Next code is the simplest sample.
+Next code is the simplest example.
 
 ```html
 <html>
 <head>
   <link rel="stylesheet" href="./dist/talkie.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/monokai_sublime.min.css">
 </head>
 <body>
 
@@ -59,7 +59,7 @@ Next code is the simplest sample.
 # Slide 2
 </template>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
 <script src="./dist/talkie.js"></script>
 <script>Talkie();</script>
 </body>
@@ -69,8 +69,8 @@ Next code is the simplest sample.
 If you use the code highlighting, you must load these files.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/monokai_sublime.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
 ```
 
 ### Slide ratio
@@ -100,17 +100,15 @@ You can add `backface` attribute into each slides. Image path that you specify i
 
 ### All options
 
-```javascript
-/**
- * @typedef {Object} TalkieOptions
- * @property {Boolean} [api=false]
- * @property {Boolean} [wide=false]
- * @property {Boolean} [control=true]
- * @property {Boolean} [pointer=true]
- * @property {Boolean} [progress=true]
- * @property {Boolean} [backface=true]
- * @property {Boolean} [notransition=false]
- */
+```typescript
+interface TalkieOptions {
+  wide?: boolean;
+  control?: boolean;
+  pointer?: boolean;
+  progress?: boolean;
+  backface?: boolean;
+  notransition?: boolean;
+}
 
 Talkie(options);
 ```
@@ -128,71 +126,62 @@ When you press the **"b"** key, the pointer `visibility` is toggled
 `Talkie()` returns an object with initialization. This object has some of the control bus and functionality.
 
 ```javascript
-/**
- * @typedef {Object} TalkieExport
- */
 var talkie  = Talkie({wide:false});
 ```
 
 You can define any key bindings.
 
 ```javascript
-talkie.next.plug(talkie.control.key('space'));
-talkie.next.plug(talkie.control.key('s'));
-talkie.next.plug(talkie.control.key('n'));
-talkie.prev.plug(talkie.control.key('a'));
-talkie.prev.plug(talkie.control.key('p'));
+talkie.key('space').subscribe(talkie.next$);
+talkie.key('s').subscribe(talkie.next$);
+talkie.key('n').subscribe(talkie.next$);
+talkie.key('a').subscribe(talkie.prev$);
+talkie.key('p').subscribe(talkie.prev$);
 ```
 
 It is also possible to control these functions in the program.
 
 ```javascript
 window.next = function() {
-  talkie.next.push();
+  talkie.next$.next();
 };
 window.prev = function() {
-  talkie.prev.push();
+  talkie.prev$.next();
 };
 window.jump = function(num) {
-  talkie.jump.push(num);
+  talkie.jump$.next(num);
 };
 ```
 
 ### All exports
 
-```javascript
-/**
- * @typedef {Object} TalkieExport
- * @param {Object.<Function>} control
- * @param {Bacon.EventStream} changed
- * @param {Bacon.Bus} next
- * @param {Bacon.Bus} prev
- * @param {Bacon.Bus} jump
- * @param {Bacon.Property} ratio
- * @param {Object.<Number, String>} notes
- */
+```typescript
+interface TalkieExports {
+  key: (charKey: string) => Observable<KeyboardEvent>;
+  notes: { [pageNum: number]: string };
+  changed: Observable<HTMLElement>;
+  ratio: Observable<number>;
+  next$: Subject<void>;
+  prev$: Subject<void>;
+  jump$: Subject<number>;
+}
 
-// @type {TalkieExport}
-var talkie = Talkie();
+var exports = Talkie();
 ```
 
-## Internal API
+## Change Log
 
-If you want to using Talkie internal api. Like this and will get Talkie api object.
+### v0.9
 
-```html
-<script src="./talkie.js"></script>
-<script>var talkie = Talkie({api: true});</script>
-```
-
-or you can use `require` by [browserify](http://browserify.org/).
-
-```javascript
-// npm install --save talkiejs
-var talkie = require('talkiejs')({api:true});
-```
-
-Look at the [index.js](src/index.js) you will see how to use the internal API. You referring to [index.js](src/index.js), can build a slide in its own UI.
+- Remove the Bacon.js, to use the [ReactiveX/rxjs](https://github.com/ReactiveX/RxJS) instead.
+- Add `TalkieExport.key: (charKey: string) => Observable<KeyboardEvent>`. 
+- Deprecated `TalkieExport.api`
+- Deprecated `TalkieExport.controls`
+- Fixed unexpected transparent background at fullscreen.
+- Default theme some style changes.
+  - `[invert]` has been cut out from the specified value of the layout.
+  - Deprecated layouts `[title-invert]`, `[bullets-invert]`
+  - Now it is specified as `[layout=title][invert]`.
 
 ## License
 

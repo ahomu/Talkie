@@ -4,7 +4,7 @@
   <title>Talkie.js - HTML/CSS/JavaScript Presentation Library</title>
   <link rel="stylesheet" href="./dist/talkie.min.css">
   <link rel="stylesheet" href="./dist/talkie-default.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/monokai_sublime.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/monokai_sublime.min.css">
 </head>
 <body>
 
@@ -100,7 +100,7 @@ You can use `template` element instead of `script`.
 <template layout="title" invert type="text/x-markdown"
           backface="https://farm8.staticflickr.com/7469/16209884502_211d01ac0d_z_d.jpg"
           backface-filter="blur(3px) brightness(.9)">
-# Backface DEMO (北極)
+# Backface (北極)
 
 `backface-filter="blur(3px) brightness(.9)"`
 </template>
@@ -133,11 +133,11 @@ Yes! This is your note!
 ```javascript
 var talkie  = Talkie({wide:false});
 
-talkie.next.plug(talkie.control.key('space'));
-talkie.next.plug(talkie.control.key('s'));
-talkie.next.plug(talkie.control.key('n'));
-talkie.prev.plug(talkie.control.key('a'));
-talkie.prev.plug(talkie.control.key('p'));
+talkie.key('space').subscribe(talkie.next$);
+talkie.key('s').subscribe(talkie.next$);
+talkie.key('n').subscribe(talkie.next$);
+talkie.key('a').subscribe(talkie.prev$);
+talkie.key('p').subscribe(talkie.prev$);
 ```
 </template>
 
@@ -146,13 +146,13 @@ talkie.prev.plug(talkie.control.key('p'));
 
 ```javascript
 window.next = function() {
-  talkie.next.push();
+  talkie.next$.next();
 };
 window.prev = function() {
-  talkie.prev.push();
+  talkie.prev$.next();
 };
 window.jump = function(num) {
-  talkie.jump.push(num);
+  talkie.jump$.next(num);
 };
 ```
 </template>
@@ -160,17 +160,15 @@ window.jump = function(num) {
 <template layout="code" type="text/x-markdown">
 ## All Options
 
-```javascript
-/**
- * @typedef {Object} TalkieOptions
- * @property {Boolean} [api=false]
- * @property {Boolean} [wide=false]
- * @property {Boolean} [control=true]
- * @property {Boolean} [pointer=true]
- * @property {Boolean} [progress=true]
- * @property {Boolean} [backface=true]
- * @property {Boolean} [notransition=false]
- */
+```typescript
+interface TalkieOptions {
+  wide?: boolean;
+  control?: boolean;
+  pointer?: boolean;
+  progress?: boolean;
+  backface?: boolean;
+  notransition?: boolean;
+}
 
 Talkie(options);
 ```
@@ -179,20 +177,18 @@ Talkie(options);
 <script layout="code" type="text/x-markdown">
 ## All Exports
 
-```javascript
-/**
- * @typedef {Object} TalkieExport
- * @param {Object.<Function>} control
- * @param {Bacon.EventStream} changed
- * @param {Bacon.Bus} next
- * @param {Bacon.Bus} prev
- * @param {Bacon.Bus} jump
- * @param {Bacon.Property} ratio
- * @param {Array.<String>} notes
- */
+```typescript
+interface TalkieExports {
+  key: (charKey: string) => Observable<KeyboardEvent>;
+  notes: { [pageNum: number]: string };
+  changed: Observable<HTMLElement>;
+  ratio: Observable<number>;
+  next$: Subject<void>;
+  prev$: Subject<void>;
+  jump$: Subject<number>;
+}
 
-/* @type {TalkieExport} */
-var talkie = Talkie();
+var exports = Talkie();
 ```
 </script>
 
@@ -202,20 +198,19 @@ var talkie = Talkie();
 [ahomu/Talkie - GitHub.com](https://github.com/ahomu/Talkie)
 </template>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-<script src="./dist/talkie.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="./dist/talkie.min.js"></script>
 <script>
 var talkie = Talkie({wide: false});
 
-talkie.next.plug(talkie.control.keydown('s'));
-talkie.next.plug(talkie.control.keydown('n'));
-talkie.prev.plug(talkie.control.keydown('a'));
-talkie.prev.plug(talkie.control.keydown('p'));
+talkie.key('s').subscribe(talkie.next$);
+talkie.key('n').subscribe(talkie.next$);
+talkie.key('a').subscribe(talkie.prev$);
+talkie.key('p').subscribe(talkie.prev$);
 
 document.addEventListener('DOMContentLoaded', function() {
-  var slides = Array.prototype.slice.call(document.querySelectorAll('[layout]'));
-  talkie.changed.onValue(function(current) {
-    console.clear();
+  talkie.changed.subscribe(function(current) {
+//    console.clear();
     // print presenter notes
     console.info(talkie.notes[current.getAttribute('page')]);
   });

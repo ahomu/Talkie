@@ -13,14 +13,16 @@ module.exports = function(config) {
     },
 
     browserify : {
+      plugin : [
+        require('tsify')
+      ],
       transform : [
         require('babelify').configure({
-          stage    : 0,
-          plugins  : ['babel-plugin-espower']
+          plugins : ['babel-plugin-espower']
         })
       ],
-      debug : true,
-      extensions : ['.js']
+      debug      : true,
+      extensions : ['.js', '.ts']
     },
 
     browsers : ['Chrome', 'Firefox'],
