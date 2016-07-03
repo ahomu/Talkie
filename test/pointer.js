@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'power-assert';
-import sinon from 'sinon';
+import * as sinon from 'sinon';
 import Pointer from '../src/pointer';
 
 describe('pointer', function() {

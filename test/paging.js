@@ -2,7 +2,7 @@
 
 import { Subscription } from 'rxjs/Subscription';
 import assert from 'power-assert';
-import sinon from 'sinon';
+import * as sinon from 'sinon';
 import KeyEvent from './libs/key-event';
 import Paging from '../src/paging';
 import { keydown } from '../src/control';

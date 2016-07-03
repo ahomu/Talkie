@@ -2,7 +2,7 @@
 'use strict';
 
 import assert from 'power-assert';
-import sinon from 'sinon';
+import * as sinon from 'sinon';
 import ClickEvent from './libs/click-event';
 import KeyEvent from './libs/key-event';
 import { keydown, click } from '../src/control';
