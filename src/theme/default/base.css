@@ -102,6 +102,13 @@
   list-style-type: none;
 }
 
+[layout] ul ul,
+[layout] ul ol,
+[layout] ol ul,
+[layout] ol ol {
+  font-size: 1em;
+}
+
 [layout] li {
   margin-bottom: 0.5em;
 }
