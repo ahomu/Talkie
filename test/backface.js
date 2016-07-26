@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'power-assert';
-import sinon from 'sinon';
+import * as sinon from 'sinon';
 import KeyEvent from './libs/key-event';
 import Backface from '../src/backface';
 import { stylePrefixDetect } from '../src/util';
