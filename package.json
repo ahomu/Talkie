@@ -48,7 +48,7 @@
   "homepage": "https://github.com/ahomu/Talkie",
   "dependencies": {
     "keycode": "^2.1.0",
-    "markdown-it": "^6.0.0",
+    "markdown-it": "^7.0.0",
     "object-assign": "^4.0.1",
     "rxjs": "5.0.0-beta.4"
   },
