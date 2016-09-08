@@ -14,10 +14,11 @@
   overflow: hidden;
 
   opacity: 0;
+  will-change: opacity;
   transition: opacity .5s ease;
 }
 
-[layout][visible] {
+[layout][aria-hidden="false"] {
   opacity: 1;
   z-index: 1;
 }

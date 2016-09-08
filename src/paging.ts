@@ -60,11 +60,11 @@ export default function(options: PagingOptions) {
 }
 
 function toInvisible(el: HTMLElement) {
-  el.removeAttribute('visible');
+  el.setAttribute('aria-hidden', 'true');
 }
 
 function toVisible(el: HTMLElement) {
-  el.setAttribute('visible', '1');
+  el.setAttribute('aria-hidden', 'false');
 }
 
 function inRangeOf(min: number, max: number) {
