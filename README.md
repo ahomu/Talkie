@@ -19,6 +19,7 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Background image & filter
 - [x] Pointer attention
 - [x] Progress indicator
+- [x] Accessibility support
 
 ## Real presentation sample
 
@@ -170,6 +171,14 @@ var exports = Talkie();
 ```
 
 ## Change Log
+
+### v0.10
+
+- Improve accessibility support.
+- `aria-hidden` attribute to use instead of `visible`,
+- Rename attribute, `page` to `data-page`.
+- Rename attribute, `body-bg` to `data-body-bg`.
+- Rename attribute, `no-transition` to `data-no-transition`.
 
 ### v0.9
 
