@@ -34,6 +34,7 @@ const IDENT_TOTAL    = 'total';
 const IDENT_PROGRESS = 'progress';
 const IDENT_POINTER  = 'pointer';
 const IDENT_BACKFACE = 'backface';
+const IDENT_SPEAKER  = 'speaker';
 
 const SELECTOR_MD = '[type="text/x-markdown"]';
 
@@ -149,6 +150,19 @@ interface TalkieExports {
   paging.changed
     .map((el) => el.getAttribute(ATTR_INVERT))
     .subscribe(attributeAssignOf(document.body, ATTR_INVERT));
+
+  /**
+   * Speaker (experimental)
+   */
+  document.body.insertAdjacentHTML('beforeend', `
+    <div id="${IDENT_SPEAKER}"
+         aria-live="assertive"
+         aria-atomic="true"></div>
+  `);
+  const speakerEl = getById(IDENT_SPEAKER);
+  paging.changed
+    .map((el) => el.textContent)
+    .subscribe(textAssignOf(speakerEl));
 
   /**
    * Insert Ui Elements
