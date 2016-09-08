@@ -1,8 +1,8 @@
-[body-bg] {
+[data-body-bg] {
   background: radial-gradient(#f8f8f8 0%, #e6e6e6 100%);
 }
 
-[body-bg][invert] {
+[data-body-bg][invert] {
   background: radial-gradient(#262626 0%, #080808 100%);
 }
 

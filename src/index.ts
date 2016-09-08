@@ -39,9 +39,9 @@ const SELECTOR_MD = '[type="text/x-markdown"]';
 
 const ATTR_LAYOUT   = 'layout';
 const ATTR_INVERT   = 'invert';
-const ATTR_BODY_BG  = 'body-bg';
-const ATTR_PAGE     = 'page';
-const ATTR_NO_TRANS = 'no-transition';
+const ATTR_BODY_BG  = 'data-body-bg';
+const ATTR_PAGE     = 'data-page';
+const ATTR_NO_TRANS = 'data-no-transition';
 
 const NORMAL_WIDTH  = 1024;
 const NORMAL_HEIGHT = 768;

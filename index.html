@@ -210,9 +210,9 @@ talkie.key('p').subscribe(talkie.prev$);
 
 document.addEventListener('DOMContentLoaded', function() {
   talkie.changed.subscribe(function(current) {
-//    console.clear();
+    console.clear();
     // print presenter notes
-    console.info(talkie.notes[current.getAttribute('page')]);
+    console.info(talkie.notes[current.getAttribute('data-page')]);
   });
 });
 </script>
