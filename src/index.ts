@@ -190,11 +190,11 @@ interface TalkieExports {
 
   if (options.control) {
     document.body.insertAdjacentHTML('beforeend', `
-      <div id="${IDENT_CONTROL}">
+      <nav id="${IDENT_CONTROL}">
         <p><button id="${IDENT_PREV}" aria-label="prev slide"></button>
         Page <span id="${IDENT_PAGE}">0</span> of <span id="${IDENT_TOTAL}">0</span>
         <button id="${IDENT_NEXT}" aria-label="next slide"></button></p>
-      </div>
+      </nav>
     `);
 
     const nextEl = getById(IDENT_NEXT);
