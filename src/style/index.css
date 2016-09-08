@@ -18,7 +18,24 @@ body[data-no-transition] * {
 }
 
 #next, #prev {
+  background: none;
+  border: none;
   cursor: pointer;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  padding: 0;
+  vertical-align: middle;
+}
+
+#next {
+  border-left-width: 20px;
+  border-left-color: hotpink;
+}
+
+#prev {
+  border-right-width: 20px;
+  border-right-color: hotpink;
 }
 
 #pointer {

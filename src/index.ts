@@ -191,9 +191,9 @@ interface TalkieExports {
   if (options.control) {
     document.body.insertAdjacentHTML('beforeend', `
       <div id="${IDENT_CONTROL}">
-        <p><span id="${IDENT_PREV}">◀</span>
+        <p><button id="${IDENT_PREV}" aria-label="prev slide"></button>
         Page <span id="${IDENT_PAGE}">0</span> of <span id="${IDENT_TOTAL}">0</span>
-        <span id="${IDENT_NEXT}">▶</span></p>
+        <button id="${IDENT_NEXT}" aria-label="next slide"></button></p>
       </div>
     `);
 
