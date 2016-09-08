@@ -185,26 +185,26 @@ describe('paging', function() {
     subscriptions.add(keydown(39).subscribe(paging.next));
     subscriptions.add(keydown(37).subscribe(paging.prev));
 
-    assert(el1.getAttribute('visible') === '1');
-    assert(el2.getAttribute('visible') === null);
-    assert(el3.getAttribute('visible') === null);
+    assert(el1.getAttribute('aria-hidden') === 'false');
+    assert(el2.getAttribute('aria-hidden') === 'true');
+    assert(el3.getAttribute('aria-hidden') === 'true');
 
     rightKey(); // 1 > 2
 
-    assert(el1.getAttribute('visible') === null);
-    assert(el2.getAttribute('visible') === '1');
-    assert(el3.getAttribute('visible') === null);
+    assert(el1.getAttribute('aria-hidden') === 'true');
+    assert(el2.getAttribute('aria-hidden') === 'false');
+    assert(el3.getAttribute('aria-hidden') === 'true');
 
     rightKey(); // 2 > 3
 
-    assert(el1.getAttribute('visible') === null);
-    assert(el2.getAttribute('visible') === null);
-    assert(el3.getAttribute('visible') === '1');
+    assert(el1.getAttribute('aria-hidden') === 'true');
+    assert(el2.getAttribute('aria-hidden') === 'true');
+    assert(el3.getAttribute('aria-hidden') === 'false');
 
     leftKey(); // 2 > 1
 
-    assert(el1.getAttribute('visible') === null);
-    assert(el2.getAttribute('visible') === '1');
-    assert(el3.getAttribute('visible') === null);
+    assert(el1.getAttribute('aria-hidden') === 'true');
+    assert(el2.getAttribute('aria-hidden') === 'false');
+    assert(el3.getAttribute('aria-hidden') === 'true');
   });
 });
