@@ -23,6 +23,7 @@ For more information about dependency Please look at the [package.json](package.
 
 ## Real presentation sample
 
+- [WAI-ARIA IN FRESH! & AbemaTV](http://s.aho.mu/160809-a11y_informal_study/)
 - [CLIENT SIDE OF █████FRESH.TV](http://s.aho.mu/160405-node_school/)
 - [Reactive Programming in JavaScript](http://ahomu.github.io/s/150221-frontrend_conference/index.html)
 - [Bacon.js & Talkie.js](http://ahomu.github.io/s/150217-lt/index.html)
