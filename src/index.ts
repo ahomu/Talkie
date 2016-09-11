@@ -179,7 +179,7 @@ interface TalkieExports {
   if (options.canvas) {
     document.body.insertAdjacentHTML('beforeend', `<canvas id="${IDENT_CANVAS}" aria-hidden="true" />`);
     const canvasEl = getById(IDENT_CANVAS);
-    const {cvWrite, cvClear, cvToggle, cvScale} = Canvas({ canvasElement: canvasEl });
+    const {cvWrite, cvClear, cvToggle, cvScale} = Canvas({ canvasElement: canvasEl, color: 'hotpink' });
     drag(canvasEl).subscribe(cvWrite);
     Observable.merge(keydown('c'), paging.changed).subscribe(cvClear);
     keydown('v').subscribe(cvToggle);

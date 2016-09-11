@@ -13,9 +13,10 @@ import { DragDeltaLog }  from './control';
 
 interface CanvasOptions {
   canvasElement: HTMLElement;
+  color: string;
 }
 
-function writeCanvasTo(context: CanvasRenderingContext2D) {
+function writeCanvasTo(context: CanvasRenderingContext2D, color: string) {
   return function(log: DragDeltaLog) {
     const {prev, curt} = log;
     const prevX = prev.clientX;
@@ -23,6 +24,7 @@ function writeCanvasTo(context: CanvasRenderingContext2D) {
     const curtX = curt.clientX;
     const curtY = curt.clientY;
 
+    context.strokeStyle = color;
     context.beginPath();
     context.moveTo(prevX, prevY);
     context.lineTo(curtX, curtY);
@@ -47,7 +49,7 @@ export default function(options: CanvasOptions) {
   const canvas  = options.canvasElement as HTMLCanvasElement;
   const context = canvas.getContext("2d");
 
-  write.subscribe(writeCanvasTo(context));
+  write.subscribe(writeCanvasTo(context, options.color));
   clear.subscribe(clearCanvasTo(context));
 
   scale
