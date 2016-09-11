@@ -109,3 +109,23 @@ body[data-no-transition] * {
   opacity: .66;
   cursor: none;
 }
+
+#canvas {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  cursor: crosshair;
+}
+
+#pointer[aria-hidden="true"],
+#canvas[aria-hidden="true"] {
+  display: none;
+}
+
+#pointer[aria-hidden="false"],
+#canvas[aria-hidden="false"] {
+  display: block;
+}
