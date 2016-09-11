@@ -3,8 +3,8 @@
 @import url(./layout-util.css);
 
 html, body {
-  min-width: 100%;
-  min-height: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
   overflow: hidden;
 }
 
@@ -36,20 +36,6 @@ body[data-no-transition] * {
 #prev {
   border-right-width: 20px;
   border-right-color: hotpink;
-}
-
-#pointer {
-  visibility: hidden;
-  position: absolute;
-  z-index: 5;
-  width: 30px;
-  height: 30px;
-  margin-top: -15px;
-  margin-left: -15px;
-  border-radius: 50%;
-  background-color: hotpink;
-  opacity: .66;
-  cursor: none;
 }
 
 #progress {
@@ -96,8 +82,8 @@ body[data-no-transition] * {
   z-index: 1;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 
   background-repeat: no-repeat;
   background-size: cover;
@@ -109,4 +95,17 @@ body[data-no-transition] * {
 
 #backface[style] {
   opacity: 1;
+}
+
+#pointer {
+  position: absolute;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  margin-left: -15px;
+  border-radius: 50%;
+  background-color: hotpink;
+  opacity: .66;
+  cursor: none;
 }
