@@ -47,10 +47,10 @@
   },
   "homepage": "https://github.com/ahomu/Talkie",
   "dependencies": {
-    "keycode": "git://github.com/cmj91uk/keycode.git#cmj91uk",
-    "markdown-it": "^7.0.0",
-    "object-assign": "^4.0.1",
-    "rxjs": "5.0.0-beta.11"
+    "keycode": "^2.1.7",
+    "markdown-it": "^8.1.0",
+    "object-assign": "^4.1.0",
+    "rxjs": "5.0.0-rc.4"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
