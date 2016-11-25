@@ -180,6 +180,12 @@ Many thanks!
 
 ## Change Log
 
+### v0.11
+
+- Add experimental feature "canvas drawing". 
+  - Press `v` to toggle mode & press `c` to clear line.
+- Remove `Aozora Mincho` from default style.
+
 ### v0.10
 
 - Improve accessibility support.

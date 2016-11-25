@@ -176,6 +176,7 @@ interface TalkieExports {
       .subscribe(attributeAssignOf(document.body, ATTR_NO_TRANS));
   }
 
+  // TODO experimental feature
   if (options.canvas) {
     document.body.insertAdjacentHTML('beforeend', `<canvas id="${IDENT_CANVAS}" aria-hidden="true" />`);
     const canvasEl = getById(IDENT_CANVAS);
