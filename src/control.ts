@@ -7,6 +7,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -24,6 +25,11 @@ const KEY_DOWN$ = Observable.fromEvent(document, 'keydown');
 export interface TouchMoveDelta {
   init : number;
   curt : number;
+}
+
+export interface DragDeltaLog {
+  prev : MouseEvent,
+  curt : MouseEvent
 }
 
 /**
@@ -49,6 +55,36 @@ export function mousemove(el = document.body): Observable<MouseEvent> {
   return Observable.fromEvent(el, 'mousemove');
 }
 
+export function mouseup(el = document.body): Observable<MouseEvent> {
+  return Observable.fromEvent(el, 'mouseup');
+}
+
+export function mousedown(el = document.body): Observable<MouseEvent> {
+  return Observable.fromEvent(el, 'mousedown');
+}
+
+export function mouseleave(el = document.body): Observable<MouseEvent> {
+  return Observable.fromEvent(el, 'mouseleave');
+}
+
+export function drag(el: HTMLElement = document.body): Observable<DragDeltaLog> {
+  const start$ = mousedown(el).do((e: MouseEvent) => e.preventDefault());
+  const move$  = mousemove(el).do((e: MouseEvent) => e.preventDefault());
+  const end$   = Observable.merge(mouseup(el), mouseleave(el)).do((e: MouseEvent) => e.preventDefault());
+
+  return start$.flatMap(function(e) {
+    const initialValue = {
+        prev : e,
+        curt : e
+    };
+    return move$.takeUntil(end$).scan(function(acc: DragDeltaLog, e: MouseEvent) {
+      acc.prev = acc.curt;
+      acc.curt = e;
+      return acc;
+    }, initialValue).skip(1);
+  });
+}
+
 export function touchstart(el: HTMLElement): Observable<TouchEvent> {
   return Observable.fromEvent(el, 'touchstart');
 }
@@ -63,7 +99,7 @@ export function touchmove(el: HTMLElement): Observable<TouchEvent> {
 
 export function swipe(el: HTMLElement, stop$: Subject<any>): Observable<TouchMoveDelta> {
   const start$ = touchstart(el).do((e: TouchEvent) => e.preventDefault());
-  const move$  = touchmove(el).do((e: TouchEvent) => e.preventDefault()).throttleTime(100);
+  const move$  = touchmove(el).do((e: TouchEvent) => e.preventDefault());
   const end$   = touchend(el).do((e: TouchEvent) => e.preventDefault());
 
   end$.subscribe(stop$)

@@ -16,7 +16,7 @@ import 'rxjs/add/operator/throttleTime';
 import { extend, defaults, toArray, getById, getPageNumberFromHash,
          textAssignOf, styleAssignOf, attributeAssignOf } from './util';
 
-import { click, mousemove, keydown, swipeLeft, swipeRight, resize, hashchange } from './control';
+import { click, drag, mousemove, keydown, swipeLeft, swipeRight, resize, hashchange } from './control';
 import { parse }   from './query';
 import { compileMarkdown, extractNote } from './slide';
 import Paging     from './paging';
@@ -24,6 +24,7 @@ import FullScreen from './fullscreen';
 import Responsive from './responsive';
 import Pointer    from './pointer';
 import Backface   from './backface';
+import Canvas     from './canvas';
 
 const IDENT_NEXT     = 'next';
 const IDENT_PREV     = 'prev';
@@ -35,6 +36,7 @@ const IDENT_PROGRESS = 'progress';
 const IDENT_POINTER  = 'pointer';
 const IDENT_BACKFACE = 'backface';
 const IDENT_SPEAKER  = 'speaker';
+const IDENT_CANVAS   = 'canvas';
 
 const SELECTOR_MD = '[type="text/x-markdown"]';
 
@@ -55,6 +57,7 @@ interface TalkieOptions {
   pointer?: boolean;
   progress?: boolean;
   backface?: boolean;
+  canvas?: boolean;
   notransition?: boolean;
 }
 
@@ -77,6 +80,7 @@ interface TalkieExports {
     pointer      : true,
     progress     : true,
     backface     : true,
+    canvas       : true,
     notransition : false
   }), parse(location.search)) as TalkieOptions;
 
@@ -172,11 +176,21 @@ interface TalkieExports {
       .subscribe(attributeAssignOf(document.body, ATTR_NO_TRANS));
   }
 
+  if (options.canvas) {
+    document.body.insertAdjacentHTML('beforeend', `<canvas id="${IDENT_CANVAS}" aria-hidden="true" />`);
+    const canvasEl = getById(IDENT_CANVAS);
+    const {cvWrite, cvClear, cvToggle, cvScale} = Canvas({ canvasElement: canvasEl, color: 'hotpink' });
+    drag(canvasEl).subscribe(cvWrite);
+    Observable.merge(keydown('c'), paging.changed).subscribe(cvClear);
+    keydown('v').subscribe(cvToggle);
+    resize().subscribe(cvScale);
+  }
+
   if (options.pointer) {
-    document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}"></div>`);
-    const {coord, toggle} = Pointer(getById(IDENT_POINTER));
-    mousemove().subscribe(coord);
-    keydown('b').subscribe(toggle);
+    document.body.insertAdjacentHTML('beforeend', `<div id="${IDENT_POINTER}" aria-hidden="true"></div>`);
+    const {ptCoord, ptToggle} = Pointer(getById(IDENT_POINTER));
+    mousemove().subscribe(ptCoord);
+    keydown('b').subscribe(ptToggle);
   }
 
   if (options.backface) {

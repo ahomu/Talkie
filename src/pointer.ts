@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/scan';
 
-import { styleAssignOf }  from './util';
+import { styleAssignOf, attributeAssignOf }  from './util';
 
 /**
  * pointer mode
@@ -26,11 +26,11 @@ export default function(target: HTMLElement) {
 
   toggle
     .scan((acc) => !acc, false)
-    .map((bool) => bool ? 'visible' : 'hidden')
-    .subscribe(styleAssignOf(target, 'visibility'));
+    .map((bool) => bool ? 'false' : 'true')
+    .subscribe(attributeAssignOf(target, 'aria-hidden'));
 
   return {
-    coord  : coord,
-    toggle : toggle
+    ptCoord  : coord,
+    ptToggle : toggle
   };
 }
