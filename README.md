@@ -171,6 +171,13 @@ interface TalkieExports {
 var exports = Talkie();
 ```
 
+## Utilities
+
+Many thanks!
+
+- [ysugimoto/resumify: Capture screenshot and make PDF on your HTML presentation.](https://github.com/ysugimoto/resumify)
+- [nakajmg/talkie-generator: Templates generator for Talkie.js](https://github.com/nakajmg/talkie-generator)
+
 ## Change Log
 
 ### v0.10
