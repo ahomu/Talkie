@@ -20,6 +20,7 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Pointer attention
 - [x] Progress indicator
 - [x] Accessibility support
+- [x] Canvas drawing mode (experimental)
 
 ## Real presentation sample
 
@@ -123,6 +124,10 @@ When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Pres
 
 When you press the **"b"** key, the pointer `visibility` is toggled
 
+### Canvas drawing mode
+
+When you press the **"v"** key, the drawing mode is toggled, and clear line when press **"c"** key.
+
 ### Custom key binding & control
 
 `Talkie()` returns an object with initialization. This object has some of the control bus and functionality.
@@ -183,7 +188,6 @@ Many thanks!
 ### v0.11
 
 - Add experimental feature "canvas drawing". 
-  - Press `v` to toggle mode & press `c` to clear line.
 - Remove `Aozora Mincho` from default style.
 
 ### v0.10
