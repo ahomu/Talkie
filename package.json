@@ -53,6 +53,7 @@
     "rxjs": "5.0.0-rc.4"
   },
   "devDependencies": {
+    "@types/markdown-it": "0.0.0",
     "@types/object-assign": "^4.0.30",
     "babel-eslint": "^7.1.1",
     "babel-plugin-espower": "^2.1.2",
