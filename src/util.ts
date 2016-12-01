@@ -35,7 +35,7 @@ export const extend = assign;
  */
 export function compose(...fns: Function[]) {
   const start = fns.length - 1;
-  return function() {
+  return function(this: any) {
     let i = start;
     let result = fns[start].apply(this, arguments);
     while (i--) {
