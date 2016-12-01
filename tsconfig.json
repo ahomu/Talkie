@@ -3,6 +3,7 @@
     "module": "commonjs",
     "allowJs": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
     "noImplicitThis": true,
     "suppressImplicitAnyIndexErrors": true,
     "inlineSourceMap": true,
