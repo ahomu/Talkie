@@ -1,6 +1,4 @@
 /// <reference path="../typings/myself.d.ts" />
-/// <reference path="../typings/browser.d.ts" />
-/// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
 
 'use strict';
 
