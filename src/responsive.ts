@@ -49,6 +49,12 @@ function verticalRatioOf(height: number) {
 
 function scalingOf(el: HTMLElement) {
   const transform = stylePrefixDetect('transform');
+  if (transform === undefined) {
+    return function (_: number) {
+      // noop
+    };
+  }
+
   return function(ratio: number) {
     el.style[transform] = `scale(${Math.abs(ratio)})`;
   };

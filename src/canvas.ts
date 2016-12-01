@@ -46,6 +46,9 @@ export default function(options: CanvasOptions) {
 
   const canvas  = options.canvasElement as HTMLCanvasElement;
   const context = canvas.getContext("2d");
+  if (context === null) {
+    throw new TypeError('unreachable: canvas should be not `null`');
+  }
 
   write.subscribe(writeCanvasTo(context, options.color));
   clear.subscribe(clearCanvasTo(context));

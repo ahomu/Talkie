@@ -5,6 +5,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "inlineSourceMap": true,
     "target": "es5",

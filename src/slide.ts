@@ -50,7 +50,11 @@ export function compileMarkdown(el: Element) {
   const section = document.createElement('section');
   section.innerHTML = md.render(el.innerHTML);
   toArray<Attr>(el.attributes).filter(notTypeAttribute).forEach(copyAttributeTo(section));
-  el.parentNode.replaceChild(section, el);
+  const parent = el.parentNode;
+  if (parent === null) {
+    throw new TypeError('`el` should be a child of the other node.');
+  }
+  parent.replaceChild(section, el);
   return section;
 }
 

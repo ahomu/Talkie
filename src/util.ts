@@ -45,24 +45,38 @@ export function compose(...fns: Function[]) {
   };
 }
 
-export function getById(ident: string) {
-  return document.getElementById(ident);
+export function getById(ident: string): HTMLElement {
+  const result = document.getElementById(ident)
+  if (result === null) {
+    throw new TypeError(`\`#${ident}\` is not in the document.`);
+  }
+  return result;
 }
 
 export function textAssignOf(el: HTMLElement) {
-  return function(text: string|number) {
+  return function(text: string | number | null) {
+    if (text === null) {
+      return;
+    }
+
     el.textContent = '' + text;
   };
 }
 
-export function styleAssignOf(el: HTMLElement, property: string) {
+export function styleAssignOf(el: HTMLElement, property: string | undefined) {
+  if (property === undefined) {
+    return function (_: string) {
+      // noop
+    };
+  }
+
   return function(value: string) {
     (el.style as any)[property] = value === '' ? null : value;
   };
 }
 
 export function attributeAssignOf(el: HTMLElement, attribute: string) {
-  return function(value: string|number) {
+  return function(value: string | number | null | undefined) {
     if (value != null) {
       el.setAttribute(attribute, value + '');
     } else {
@@ -73,7 +87,7 @@ export function attributeAssignOf(el: HTMLElement, attribute: string) {
 
 export function preloadImg(src: string) {
   const img = document.createElement('img');
-  img.onload = () => img.parentNode.removeChild(img);
+  img.onload = () => img.parentNode!.removeChild(img); // `parentNode` would be non-null when on calling this.
   img.src = src;
   img.style.display = 'none';
   document.body.appendChild(img);
@@ -100,7 +114,7 @@ export function getPrimitiveFromString(str: string) {
 }
 
 export function stylePrefixDetect(property: string) {
-  let validProperty: string;
+  let validProperty: string | undefined = undefined;
   const styles = toArray<string>(window.getComputedStyle(document.documentElement, ''));
 
   function includes(needle: string) {
