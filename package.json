@@ -79,7 +79,7 @@
     "power-assert": "^1.2.0",
     "serve": "^2.4.3",
     "sinon": "^2.0.0-pre",
-    "tsify": "^2.0.3",
+    "tsify": "^3.0.0",
     "typescript": "^2.0.10",
     "uglifyjs": "^2.4.10",
     "watchify": "^3.7.0"
