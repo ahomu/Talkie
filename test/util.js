@@ -122,6 +122,6 @@ describe('util', function() {
     assert(filter != null);
 
     let unknown = util.stylePrefixDetect('unknown');
-    assert(unknown == null)
+    assert(unknown == null);
   });
 });
