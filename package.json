@@ -2,7 +2,7 @@
   "name": "talkiejs",
   "version": "0.11.1",
   "engines": {
-    "node": ">=5.1.0 <5.7"
+    "node": ">=6.9.0"
   },
   "description": "Simple slide presentation library. Responsive scaling & markdown ready.",
   "main": "dist/talkie.js",
@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/ahomu/Talkie",
   "dependencies": {
-    "keycode": "^2.1.7",
+    "keycode": "^2.1.8",
     "markdown-it": "^8.1.0",
     "object-assign": "^4.1.0",
     "rxjs": "5.0.3"
