@@ -50,7 +50,7 @@
     "keycode": "^2.1.8",
     "markdown-it": "^8.1.0",
     "object-assign": "^4.1.0",
-    "rxjs": "5.0.3"
+    "rxjs": "5.1.0"
   },
   "devDependencies": {
     "@types/markdown-it": "0.0.2",
