@@ -74,7 +74,7 @@
     "postcss": "^5.0.19",
     "postcss-cli": "^2.5.1",
     "postcss-cssnext": "^2.5.1",
-    "postcss-csso": "^1.0.0",
+    "postcss-csso": "^2.0.0",
     "postcss-import": "^9.0.0",
     "power-assert": "^1.2.0",
     "serve": "^2.4.3",
