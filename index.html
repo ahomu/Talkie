@@ -11,167 +11,168 @@
 <!-- put your slides -->
 
 <template layout="cover" type="text/x-markdown">
-  # Talkie.js
+# Talkie.js
 
-  HTML/CSS/JavaScript Presentation Library
+HTML/CSS/JavaScript Presentation Library
 
-  Go to [repository](https://github.com/ahomu/Talkie)
+Go to [repository](https://github.com/ahomu/Talkie)
 </template>
 
 <template layout="bullets" type="text/x-markdown">
-  ## Feature
+## Feature
 
-  - Markdown support
-  - Code highlighting
-  - Responsive scaling
-  - FullScreen mode (press `F`)
-  - Pointer mode (press `B`)
-  - Layout attributes (WIP)
-  - Progress indicator
+- Markdown support
+- Code highlighting
+- Responsive scaling
+- FullScreen mode (press `F`)
+- Pointer mode (press `B`)
+- Layout attributes (WIP)
+- Progress indicator
 </template>
 
 <template layout="bullets" type="text/x-markdown">
-  ## 機能 (Japanese)
+## 機能 (Japanese)
 
-  - Markdown書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
-  - ハイライトばっちり _:(°ω° 」∠):＿
-  - レスポンシブだよ (^з^)-☆
-  - フルスクリーン対応 (press `F`) (｡•̀ᴗ-)✧
-  - ポインターだせるよ (press `B`) ( ꒪◡꒪)
-  - 属性でレイアウトできるよ (*´▽`)
-  - 進行度インジゲータあるよ c⌒っ.ω.)っ
+- Markdown書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
+- ハイライトばっちり _:(°ω° 」∠):＿
+- レスポンシブだよ (^з^)-☆
+- フルスクリーン対応 (press `F`) (｡•̀ᴗ-)✧
+- ポインターだせるよ (press `B`) ( ꒪◡꒪)
+- 属性でレイアウトできるよ (*´▽`)
+- 進行度インジゲータあるよ c⌒っ.ω.)っ
 </template>
 
 <template layout="code" type="text/x-markdown">
-  ## in HTML
+## in HTML
 
-  ```html
-  <section layout="title">
-    <h1>Section Title</h1>
-    <p>Lorem ipsum dolor sit amet, consect...</p>
-  </section>
+```html
+<section layout="title">
+  <h1>Section Title</h1>
+  <p>Lorem ipsum dolor sit amet, consect...</p>
+</section>
 
-  <section layout="bullets">
-    <h2>The bullets</h2>
-    <ul>
-      <li>Foo</li>
-      <li>Bar</li>
-      <li>Baz</li>
-    </ul>
-  </section>
-  ```
+<section layout="bullets">
+  <h2>The bullets</h2>
+  <ul>
+    <li>Foo</li>
+    <li>Bar</li>
+    <li>Baz</li>
+  </ul>
+</section>
+```
 </template>
 
 <template layout="code" type="text/x-markdown">
-  ## in Markdown
+## in Markdown
 
-  ```html
-  <script layout="title" type="text/x-markdown">
+```html
+<script layout="title" type="text/x-markdown">
 # Section Title
 Lorem ipsum dolor sit amet, consect...
 </script>
 
-  <script layout="bullets" type="text/x-markdown">
+<script layout="bullets" type="text/x-markdown">
 ## The bullets
 - Foo
 - Bar
 - Baz
 </script>
-  ```
+```
 
-  You can use `template` element instead of `script`.
+You can use `template` element instead of `script`.
 </template>
 
 <template layout="code" type="text/x-markdown">
-  ## Backface image & filter
+## Backface image & filter
 
-  ```html
-  <section layout
-           backface="background-image.jpg"
-           backface-filter="blur(1px) brightness(.8)">
+```html
+<section layout
+         backface="background-image.jpg"
+         backface-filter="blur(1px) brightness(.8)">
 
-    <h1>Title</h1>
-    <p>foo, bar, baz, qux...</p>
+<h1>Title</h1>
+<p>foo, bar, baz, qux...</p>
 
-  </section>
-  ```
+</section>
+```
 </template>
 
 <template layout="title" invert type="text/x-markdown"
           backface="https://farm8.staticflickr.com/7469/16209884502_211d01ac0d_z_d.jpg"
           backface-filter="blur(3px) brightness(.9)">
-  # Backface (北極)
+# Backface (北極)
 
-  `backface-filter="blur(3px) brightness(.9)"`
+`backface-filter="blur(3px) brightness(.9)"`
 </template>
 
 <template layout="bullets" type="text/x-markdown">
-  ## FullScreen mode
+## FullScreen mode
 
-  When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Press and then exit.
+When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Press and then exit.
 </template>
 
 <template layout="bullets" type="text/x-markdown">
-  ## Pointer mode
+## Pointer mode
 
-  When you press the **"b"** key, the pointer `visibility` is toggled
+When you press the **"b"** key, the pointer `visibility` is toggled
 </template>
 
 <template layout="bullets" type="text/x-markdown">
-  ## Presenter note
+## Presenter note
 
-  Open developer tools, will show presenter notes
+Open developer tools, will show presenter notes
 
-  -----
+-----
 
-  Yes! This is your note!
+Yes! This is your note!
 </template>
 
 <template layout="code" type="text/x-markdown">
-  ## Custom key binding & control (1/2)
+## Custom key binding & control (1/2)
 
-  ```javascript
-  var talkie  = Talkie({wide:false});
+```javascript
+var talkie  = Talkie({wide:false});
 
-  talkie.key('space').subscribe(talkie.next$);
-  talkie.key('s').subscribe(talkie.next$);
-  talkie.key('n').subscribe(talkie.next$);
-  talkie.key('a').subscribe(talkie.prev$);
-  talkie.key('p').subscribe(talkie.prev$);
-  ```
+talkie.key('space').subscribe(talkie.next$);
+talkie.key('s').subscribe(talkie.next$);
+talkie.key('n').subscribe(talkie.next$);
+talkie.key('a').subscribe(talkie.prev$);
+talkie.key('p').subscribe(talkie.prev$);
+```
 </template>
 
 <template layout="code" type="text/x-markdown">
-  ## Custom key binding & control (2/2)
+## Custom key binding & control (2/2)
 
-  ```javascript
-  window.next = function() {
+```javascript
+window.next = function() {
   talkie.next$.next();
-  };
-  window.prev = function() {
+};
+window.prev = function() {
   talkie.prev$.next();
-  };
-  window.jump = function(num) {
+};
+window.jump = function(num) {
   talkie.jump$.next(num);
-  };
-  ```
+};
+```
 </template>
 
 <template layout="code" type="text/x-markdown">
-  ## All Options
+## All Options
 
-  ```typescript
-  interface TalkieOptions {
+```typescript
+interface TalkieOptions {
   wide?: boolean;
   control?: boolean;
   pointer?: boolean;
   progress?: boolean;
   backface?: boolean;
   notransition?: boolean;
-  }
+  linkShouldBlank?: boolean;
+}
 
-  Talkie(options);
-  ```
+Talkie(options);
+```
 </template>
 
 <script layout="code" type="text/x-markdown">
@@ -193,9 +194,9 @@ var exports = Talkie();
 </script>
 
 <template layout="cover" type="text/x-markdown">
-  ## Enjoy!
+## Enjoy!
 
-  [ahomu/Talkie - GitHub.com](https://github.com/ahomu/Talkie)
+[ahomu/Talkie - GitHub.com](https://github.com/ahomu/Talkie)
 </template>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
