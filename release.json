@@ -8,14 +8,6 @@
     "tagName": "v%s",
     "tagAnnotation": "Release v%s"
   },
-  "dist": {
-    "repo": "git@github.com:ahomu/Talkie.git#gh-pages",
-    "baseDir": "./dist",
-    "files": ["dist/*", "../index.html"],
-    "commitMessage": "Release v%s",
-    "tagName": "v%s",
-    "tagAnnotation": "Release v%s"
-  },
   "github": {
     "release": true,
     "releaseName": "Release v%s",
