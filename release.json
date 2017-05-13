@@ -1,21 +1,17 @@
 {
   "buildCommand": "npm run build",
   "non-interactive": false,
-  "dry-run": true,
+  "dry-run": false,
   "changelogCommand": "git log --pretty=format:'* %s (%h)' [REV_RANGE]",
   "src": {
     "commitMessage": "Release v%s",
     "tagName": "v%s",
-    "tagAnnotation": "Release v%s",
-    "pushRepo": null,
-    "beforeStartCommand": false,
-    "beforeStageCommand": false,
-    "afterReleaseCommand": false
+    "tagAnnotation": "Release v%s"
   },
   "dist": {
     "repo": "git@github.com:ahomu/Talkie.git#gh-pages",
-    "baseDir": "./",
-    "files": ["dist/*", "index.html"],
+    "baseDir": "./dist",
+    "files": ["dist/*", "../index.html"],
     "commitMessage": "Release v%s",
     "tagName": "v%s",
     "tagAnnotation": "Release v%s"
