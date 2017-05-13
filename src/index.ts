@@ -57,6 +57,7 @@ interface TalkieOptions {
   backface?: boolean;
   canvas?: boolean;
   notransition?: boolean;
+  linkShouldBlank?: boolean;
 }
 
 interface TalkieExports {
@@ -72,14 +73,15 @@ interface TalkieExports {
 (window as any).Talkie = function main(givenOptions: TalkieOptions = {}): TalkieExports {
 
   const options = extend(defaults(givenOptions, {
-    api          : false,
-    wide         : false,
-    control      : true,
-    pointer      : true,
-    progress     : true,
-    backface     : true,
-    canvas       : true,
-    notransition : false
+    api            : false,
+    wide           : false,
+    control        : true,
+    pointer        : true,
+    progress       : true,
+    backface       : true,
+    canvas         : true,
+    notransition   : false,
+    linkShouldBlank: false,
   }), parse(location.search)) as TalkieOptions;
 
   /**
@@ -104,7 +106,7 @@ interface TalkieExports {
    *   3. extract presenter notes
    */
   const mds = toArray<Element>(document.querySelectorAll(SELECTOR_MD));
-  mds.forEach(compileMarkdown);
+  mds.forEach(compileMarkdown.bind(null, { linkShouldBlank : options.linkShouldBlank }));
   const slides = toArray<HTMLElement>(document.querySelectorAll(`[${ATTR_LAYOUT}]`));
   slides.forEach((el, i) => attributeAssignOf(el, ATTR_PAGE)(i + 1));
   const notes: { [pageNum: number]: string } = {};
