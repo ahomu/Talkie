@@ -1,6 +1,6 @@
-@import url(./reset.css);
-@import url(./layout.css);
-@import url(./layout-util.css);
+@import "./reset.css";
+@import "./layout.css";
+@import "./layout-util.css";
 
 html, body {
   min-width: 100vw;
@@ -13,7 +13,8 @@ body > * {
   -webkit-font-smoothing: antialiased;
 }
 
-body[data-no-transition] * {
+body[data-no-transition] [layout],
+body[data-no-transition] #backface {
   transition: none !important;
 }
 
@@ -62,7 +63,7 @@ body[data-no-transition] * {
 #speaker {
   position: absolute;
   height: 1px;
-  width: 1px; 
+  width: 1px;
   overflow: hidden;
   clip: rect(1px 1px 1px 1px);
 }

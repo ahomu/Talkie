@@ -1,7 +1,0 @@
-{
-  "use": [
-    "postcss-import",
-    "postcss-cssnext",
-    "postcss-csso"
-  ]
-}

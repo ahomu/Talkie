@@ -13,6 +13,8 @@ describe('slide', function() {
 paragprah<br>
 paraparag
 
+[link](http://example.com)
+
 ----
 
 ### h3 note
@@ -22,13 +24,14 @@ paraparag
   it('comipleMarkdown', function() {
     document.body.insertAdjacentHTML('beforeend', mdtext);
 
-    let section = compileMarkdown(document.getElementById('md'));
+    let section = compileMarkdown({}, document.getElementById('md'));
 
     assert(!!section.querySelector('h1'));
     assert(!!section.querySelector('h2'));
     assert(!!section.querySelector('h3'));
     assert(!!section.querySelector('p'));
     assert(!!section.querySelector('br')); // should not escape pure html
+    assert(!!section.querySelector('a'));
 
     section.parentNode.removeChild(section);
   });
@@ -36,7 +39,7 @@ paraparag
   it('extend attributes after compile', function() {
     document.body.insertAdjacentHTML('beforeend', mdtext);
 
-    let section = compileMarkdown(document.getElementById('md'));
+    let section = compileMarkdown({}, document.getElementById('md'));
 
     assert(section.getAttribute('id') === 'md');
     assert(section.getAttribute('layout') === 'test');
@@ -49,7 +52,7 @@ paraparag
   it('extract Note', function() {
     document.body.insertAdjacentHTML('beforeend', mdtext);
 
-    let section = compileMarkdown(document.getElementById('md'));
+    let section = compileMarkdown({}, document.getElementById('md'));
     let noteStr = extractNote(section);
 
     // got note (tags are stripped)
@@ -61,4 +64,14 @@ paraparag
     section.parentNode.removeChild(section);
   });
 
+  it('enable linkShouldBlank', function() {
+    document.body.insertAdjacentHTML('beforeend', mdtext);
+
+    let section = compileMarkdown({linkShouldBlank : true}, document.getElementById('md'));
+    let link = section.querySelector('a');
+
+    assert(link.getAttribute('target') === '_blank');
+
+    section.parentNode.removeChild(section);
+  });
 });

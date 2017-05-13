@@ -111,6 +111,7 @@ interface TalkieOptions {
   progress?: boolean;
   backface?: boolean;
   notransition?: boolean;
+  linkShouldBlank?: boolean;
 }
 
 Talkie(options);
@@ -184,6 +185,13 @@ Many thanks!
 - [nakajmg/talkie-generator: Templates generator for Talkie.js](https://github.com/nakajmg/talkie-generator)
 
 ## Change Log
+
+### v0.12
+
+- Add option `linkShouldBlank`.
+- Add `[horizontal]` style for default theme.
+- Fixed that transition suppression was not appropriate.
+- Update dependencies.
 
 ### v0.11
 

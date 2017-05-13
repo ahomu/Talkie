@@ -5,6 +5,10 @@
 import MarkdownIt = require('markdown-it');
 import { toArray } from './util';
 
+interface SlideOption {
+  linkShouldBlank?: boolean;
+}
+
 const win = window as any;
 
 /**
@@ -46,8 +50,13 @@ export function extractNote(el: HTMLElement) {
   return (container.textContent || '').replace(/^\n*/, '');
 }
 
-export function compileMarkdown(el: Element) {
+export function compileMarkdown(options: SlideOption = {}, el: Element) {
   const section = document.createElement('section');
+
+  if (options.linkShouldBlank) {
+    md.renderer.rules.link_open = linkOpenAsTargetBlank;
+  }
+
   section.innerHTML = md.render(el.innerHTML);
   toArray<Attr>(el.attributes).filter(notTypeAttribute).forEach(copyAttributeTo(section));
   const parent = el.parentNode;
@@ -56,6 +65,17 @@ export function compileMarkdown(el: Element) {
   }
   parent.replaceChild(section, el);
   return section;
+}
+
+function linkOpenAsTargetBlank(tokens: any[], idx: number, options: any, env: any, self: any) {
+  const linkOpenToken = tokens[idx];
+  const targetAttrIndex = linkOpenToken.attrIndex('target');
+  if (targetAttrIndex < 0) {
+    linkOpenToken.attrPush(['target', '_blank']);
+  } else {
+    linkOpenToken.attrs[targetAttrIndex][1] = '_blank';
+  }
+  return self.renderToken(tokens, idx, options);
 }
 
 function copyAttributeTo(el: HTMLElement) {
