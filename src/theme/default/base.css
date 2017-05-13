@@ -28,12 +28,50 @@
   margin: 30px 100px;
 }
 
+[layout][horizontal] {
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+[layout][horizontal] > * {
+  flex: 1;
+  margin: 30px 30px;
+}
+
+[layout][horizontal] > *:first-child {
+  margin-left: 100px;
+}
+
+[layout][horizontal] > h1:first-child,
+[layout][horizontal] > h2:first-child,
+[layout][horizontal] > h3:first-child,
+[layout][horizontal] > h4:first-child,
+[layout][horizontal] > h5:first-child,
+[layout][horizontal] > h6:first-child {
+  width: 100%;
+  margin-left: 30px;
+}
+
+[layout][horizontal] h1:first-child + *,
+[layout][horizontal] h2:first-child + *,
+[layout][horizontal] h3:first-child + *,
+[layout][horizontal] h4:first-child + *,
+[layout][horizontal] h5:first-child + *,
+[layout][horizontal] h6:first-child + * {
+  margin-left: 100px;
+}
+
+[layout][horizontal] > *:last-child {
+  margin-right: 100px;
+}
+
 [layout] h1,
 [layout] h2,
 [layout] h3,
 [layout] h4,
 [layout] h5,
 [layout] h6 {
+  flex: initial !important;
   text-align: center;
   font-family: "Lato", "Hiragino Mincho ProN", serif;
 }
