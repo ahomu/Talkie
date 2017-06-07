@@ -78,7 +78,7 @@
     "postcss-csso": "^2.0.0",
     "postcss-import": "^9.0.0",
     "power-assert": "^1.2.0",
-    "serve": "^3.0.0",
+    "serve": "^5.2.2",
     "sinon": "^2.0.0-pre",
     "tsify": "^3.0.0",
     "typescript": "^2.0.10",
