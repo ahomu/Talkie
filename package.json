@@ -72,7 +72,7 @@
     "licensify": "^3.1.2",
     "minimist": "^1.1.0",
     "mocha": "^3.1.2",
-    "postcss": "^5.0.19",
+    "postcss": "^6.0.1",
     "postcss-cli": "^3.0.0",
     "postcss-cssnext": "^2.5.1",
     "postcss-csso": "^2.0.0",
