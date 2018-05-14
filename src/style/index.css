@@ -1,132 +1,36 @@
 @import "./reset.css";
-@import "./layout.css";
 @import "./layout-util.css";
 
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  /*contain: layout style;*/
+}
+
+[fixedsize] {
+  contain: strict;
+}
+
 html, body {
+  margin: 0;
+  padding: 0;
   min-width: 100vw;
-  min-height: 100vh;
-  overflow: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+html:fullscreen {
+  overflow-y: hidden;
 }
 
 body > * {
-  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
+  visibility: hidden
 }
 
-body[data-no-transition] [layout],
-body[data-no-transition] #backface {
-  transition: none !important;
-}
-
-#next, #prev {
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  padding: 0;
-  vertical-align: middle;
-}
-
-#next {
-  border-left-width: 20px;
-  border-left-color: hotpink;
-}
-
-#prev {
-  border-right-width: 20px;
-  border-right-color: hotpink;
-}
-
-#progress {
-  position: absolute;
-  z-index: 4;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0.2em;
-  background-color: darkgray;
-  transition: width .3s ease;
-}
-
-#control {
-  position: fixed;
-  z-index: 3;
-  bottom: 0;
-  right: 0;
-  padding: 20px;
-  color: hotpink;
-  font-family: Consolas, Monaco, 'Andale Mono', monospace;
-}
-
-#speaker {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px 1px 1px 1px);
-}
-
-#scaler {
-  /* width & height automatically set by ratio module */
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  transform: scale(1);
-  transform-origin: left top;
-}
-
-#backface {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-
-  opacity: 0;
-  transition: opacity 1.2s ease;
-}
-
-#backface[style] {
-  opacity: 1;
-}
-
-#pointer {
-  position: absolute;
-  z-index: 5;
-  width: 30px;
-  height: 30px;
-  margin-top: -15px;
-  margin-left: -15px;
-  border-radius: 50%;
-  background-color: hotpink;
-  opacity: .66;
-  cursor: none;
-}
-
-#canvas {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  cursor: crosshair;
-}
-
-#pointer[aria-hidden="true"],
-#canvas[aria-hidden="true"] {
-  display: none;
-}
-
-#pointer[aria-hidden="false"],
-#canvas[aria-hidden="false"] {
-  display: block;
+body.webcomponents-ready > * {
+  visibility: visible;
 }

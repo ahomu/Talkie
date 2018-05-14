@@ -1,7 +1,3 @@
-[data-body-bg=code] {
-  background: radial-gradient(#262626 0%, #080808 100%);
-}
-
 [layout=code] {
 }
 
@@ -12,11 +8,9 @@
 [layout=code] h5,
 [layout=code] h6,
 [layout=code] p {
-  color: white;
 }
 
 [layout=code] code {
-  background: #222;
 }
 
 [layout=code] .hljs {

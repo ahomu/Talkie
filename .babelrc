@@ -1,8 +1,0 @@
-{
-  "sourceMaps": "inline",
-  "presets": [
-    "babel-preset-es2015"
-  ],
-  "plugins": [
-  ]
-}

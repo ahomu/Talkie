@@ -1,5 +1,8 @@
 /**
  * Utility
+ *
+ * Properties such as display: flex usually require declaration both in parent element in LightDOM and in parent element in <slot>.
+ * When adding a new utility, also add style in `src/components/TalkieSlide.ts`
  */
 
 [flex]       { display: flex !important; }
@@ -30,5 +33,3 @@
 [s-center] { align-self: center !important; }
 [s-start]  { align-self: flex-start !important; }
 [s-end]    { align-self: flex-end !important; }
-
-[is-hidden] { display: none !important; }
