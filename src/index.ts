@@ -55,6 +55,11 @@ function run() {
       slideElements.forEach((el: TalkieSlide) => el.toInvisible());
       currentSlideElement.toVisible();
 
+      // presenter note
+      console.clear();
+      console.log(currentSlideElement.presenterNote);
+
+      // move by keyboard
       if (isKeyboardMove) {
         currentSlideElement.scrollIntoView();
         isKeyboardMove = false;

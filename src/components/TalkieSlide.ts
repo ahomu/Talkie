@@ -101,6 +101,8 @@ export class TalkieSlide extends HTMLElement {
     return 'tk-slide';
   }
 
+  public presenterNote: string;
+
   constructor() {
     super();
   }
@@ -126,6 +128,7 @@ export class TalkieSlide extends HTMLElement {
       this.innerHTML = compileMarkdown(this.innerHTML.replace('&gt;', '>'));
     }
 
+    this.extractPresenterNote();
     this.attachShadow({ mode: 'open' });
     this.render();
     this.inheritAttributesToLayoutSlot();
@@ -155,6 +158,14 @@ export class TalkieSlide extends HTMLElement {
     if ((<any>window).ShadyDOM != null) {
       this.removeAttribute('layout');
     }
+  }
+
+  private extractPresenterNote() {
+    const [content, presenterNote]: [string, string] = this.innerHTML.split(/<hr\s?\/?>/);
+    this.innerHTML = content;
+    let container = document.createElement('div');
+    container.innerHTML = presenterNote || '';
+    this.presenterNote = (container.textContent || '').replace(/^\n*/, '');
   }
 
   private render() {
