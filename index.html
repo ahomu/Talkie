@@ -36,25 +36,27 @@ Go to [repository](https://github.com/ahomu/Talkie)
 <tk-slide layout="bullets" type="text/x-markdown">
 ## Feature
 
-- Markdown support
+- Markdown supported
 - Code highlighting
 - Responsive scaling
-- FullScreen mode (press `F`)
-- Pointer mode (press `B`)
-- Layout attributes (WIP)
+- FullScreen mode
+- Vertical Scrolling
 - Progress indicator
+- Accessibility supported
+<!-- - Pointer mode (press `B`)-->
 </tk-slide>
 
 <tk-slide layout="bullets" type="text/x-markdown">
 ## 機能 (Japanese)
 
-- Markdown書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
+- Markdown 書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
 - ハイライトばっちり _:(°ω° 」∠):＿
 - レスポンシブだよ (^з^)-☆
-- フルスクリーン対応 (press `F`) (｡•̀ᴗ-)✧
-- ポインターだせるよ (press `B`) ( ꒪◡꒪)
-- 属性でレイアウトできるよ (*´▽`)
+- フルスクリーン対応 (｡•̀ᴗ-)✧
+- 縦方向にスクロールできるよ (*´▽`)
 - 進行度インジゲータあるよ c⌒っ.ω.)っ
+- アクセシビリティ配慮してるよ ✧◝(⁰▿⁰)◜✧
+<!-- - ポインターだせるよ (press `B`) ( ꒪◡꒪)-->
 </tk-slide>
 
 <tk-slide layout="code" invert type="text/x-markdown">
@@ -115,9 +117,14 @@ You can use `tk-slide` element instead of `script`.
 <tk-slide layout="title" invert type="text/x-markdown"
           backface="https://farm8.staticflickr.com/7469/16209884502_211d01ac0d_z_d.jpg"
           backface-filter="blur(3px) brightness(.9)">
-# Backface (北極)
+## Backface (北極)
 
 `backface-filter="blur(3px) brightness(.9)"`
+</tk-slide>
+
+<tk-slide layout="title" type="text/x-markdown">
+## Vertical Scrolling<br />👇👇👇
+Convenient to quickly browse with mobile devices.
 </tk-slide>
 
 <tk-slide layout="bullets" type="text/x-markdown">
@@ -126,87 +133,27 @@ You can use `tk-slide` element instead of `script`.
 When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Press and then exit.
 </tk-slide>
 
-<!--<tk-slide layout="bullets" type="text/x-markdown">-->
-<!--## Pointer mode-->
+<tk-slide layout="bullets" type="text/x-markdown">
+## Presenter note
 
-<!--When you press the **"b"** key, the pointer `visibility` is toggled-->
-<!--</tk-slide>-->
+Open developer tools, will show presenter notes
 
-<!--<tk-slide layout="bullets" type="text/x-markdown">-->
-<!--## Presenter note-->
+-----
 
-<!--Open developer tools, will show presenter notes-->
-
-<!-- -&#45;&#45;&#45;&#45;-->
-
-<!--Yes! This is your note!-->
-<!--</tk-slide>-->
-
-<tk-slide layout="code" invert type="text/x-markdown">
-## Custom key binding & control (1/2)
-
-```javascript
-var talkie  = Talkie({wide:false});
-
-talkie.key('space').subscribe(talkie.next$);
-talkie.key('s').subscribe(talkie.next$);
-talkie.key('n').subscribe(talkie.next$);
-talkie.key('a').subscribe(talkie.prev$);
-talkie.key('p').subscribe(talkie.prev$);
-```
+Yes! This is your note!
 </tk-slide>
 
 <tk-slide layout="code" invert type="text/x-markdown">
-## Custom key binding & control (2/2)
-
-```javascript
-window.next = function() {
-  talkie.next$.next();
-};
-window.prev = function() {
-  talkie.prev$.next();
-};
-window.jump = function(num) {
-  talkie.jump$.next(num);
-};
-```
-</tk-slide>
-
-<tk-slide layout="code" invert type="text/x-markdown">
-## All Options
+## Runtime Options
 
 ```typescript
-interface TalkieOptions {
-  wide?: boolean;
-  control?: boolean;
-  pointer?: boolean;
-  progress?: boolean;
-  backface?: boolean;
-  notransition?: boolean;
-  linkShouldBlank?: boolean;
+interface TalkieRuntimeOptions {
+  wide?: boolean; // default: true
 }
 
-Talkie(options);
+talkie.run(options);
 ```
 </tk-slide>
-
-<script layout="code" invert type="text/x-markdown">
-## All Exports
-
-```typescript
-interface TalkieExports {
-  key: (char: string) => Observable<KeyboardEvent>;
-  notes: { [pageNum: number]: string };
-  changed: Observable<HTMLElement>;
-  ratio: Observable<number>;
-  next$: Subject<void>;
-  prev$: Subject<void>;
-  jump$: Subject<number>;
-}
-
-var exports = Talkie();
-```
-</script>
 
 <tk-slide layout="cover" type="text/x-markdown">
 ## Enjoy!
@@ -221,10 +168,10 @@ var exports = Talkie();
 <script src="./dist/webcomponents-loader.js"></script>
 <script src="./dist/talkie.js"></script>
 <script>
-    window.addEventListener('WebComponentsReady', function(e) {
-        document.body.className += ' webcomponents-ready';
-        talkie.run();
-    });
+window.addEventListener('WebComponentsReady', function(e) {
+    document.body.className += ' webcomponents-ready';
+    talkie.run({wide: false});
+});
 </script>
 </body>
 </html>

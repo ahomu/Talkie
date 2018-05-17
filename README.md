@@ -1,4 +1,4 @@
-Talkie.js - HTML/CSS/JavaScript Slide library
+Talkie.js - Web Components based Slide library
 ====================
 
 [![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
@@ -17,10 +17,10 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Responsive scaling (4:3, 16:9)
 - [x] FullScreen mode
 - [x] Background image & filter
-- [x] Pointer attention
 - [x] Progress indicator
 - [x] Accessibility support
-- [x] Canvas drawing mode (experimental)
+- [ ] ~~Pointer attention~~ (drop v0.13~)
+- [ ] ~~Canvas drawing mode~~ (drop v0.13~)
 
 ## Real presentation sample
 
@@ -35,36 +35,37 @@ Talkie.js contains two of the CSS and one of JavaScript.
 
 - dist/talkie.min.css
 - dist/talkie.min.js
-- dist/talkie-default.min.css
+- dist/talkie.theme-default.css
 
 Next code is the simplest example.
 
 ```html
+<!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="./dist/talkie.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/monokai_sublime.min.css">
+<link rel="stylesheet" href="./dist/talkie.css">
+<link rel="stylesheet" href="./dist/talkie.theme-default.css">
 </head>
 <body>
 
 <!-- Pure HTML style -->
-<section layout>
+<tk-slide layout>
   <h1>Slide 1</h1>
-</section>
+</tk-slide>
 
 <!-- Markdown style ( require `type` attribute ) -->
-<script layout type="text/x-markdown">
+<tk-slide layout type="text/x-markdown">
 # Slide 2
-</script>
+</tk-slide>
 
-<!-- You can also use `<template>` element -->
-<template layout type="text/x-markdown">
-# Slide 2
-</template>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="./dist/webcomponents-loader.js"></script>
 <script src="./dist/talkie.js"></script>
-<script>Talkie();</script>
+<script>
+window.addEventListener('WebComponentsReady', function(e) {
+  document.body.className += ' webcomponents-ready';
+  talkie.run();
+});
+</script>
 </body>
 </html>
 ```
@@ -72,8 +73,8 @@ Next code is the simplest example.
 If you use the code highlighting, you must load these files.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/monokai_sublime.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 ```
 
 ### Slide ratio
@@ -81,7 +82,7 @@ If you use the code highlighting, you must load these files.
 The default slide 4:3 (width 1024px, height 768px). In the following code ratio 16:9 (width: 1366px, height 768px) you will.
 
 ```javascript
-Talkie({wide: true});
+talkie.run({wide: true});
 ```
 
 ### Backface image & filter
@@ -106,12 +107,6 @@ You can add `backface` attribute into each slides. Image path that you specify i
 ```typescript
 interface TalkieOptions {
   wide?: boolean;
-  control?: boolean;
-  pointer?: boolean;
-  progress?: boolean;
-  backface?: boolean;
-  notransition?: boolean;
-  linkShouldBlank?: boolean;
 }
 
 Talkie(options);
@@ -120,62 +115,6 @@ Talkie(options);
 ### FullScreen mode
 
 When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Press and then exit.
-
-### Pointer mode
-
-When you press the **"b"** key, the pointer `visibility` is toggled
-
-### Canvas drawing mode
-
-When you press the **"v"** key, the drawing mode is toggled, and clear line when press **"c"** key.
-
-### Custom key binding & control
-
-`Talkie()` returns an object with initialization. This object has some of the control bus and functionality.
-
-```javascript
-var talkie  = Talkie({wide:false});
-```
-
-You can define any key bindings.
-
-```javascript
-talkie.key('space').subscribe(talkie.next$);
-talkie.key('s').subscribe(talkie.next$);
-talkie.key('n').subscribe(talkie.next$);
-talkie.key('a').subscribe(talkie.prev$);
-talkie.key('p').subscribe(talkie.prev$);
-```
-
-It is also possible to control these functions in the program.
-
-```javascript
-window.next = function() {
-  talkie.next$.next();
-};
-window.prev = function() {
-  talkie.prev$.next();
-};
-window.jump = function(num) {
-  talkie.jump$.next(num);
-};
-```
-
-### All exports
-
-```typescript
-interface TalkieExports {
-  key: (charKey: string) => Observable<KeyboardEvent>;
-  notes: { [pageNum: number]: string };
-  changed: Observable<HTMLElement>;
-  ratio: Observable<number>;
-  next$: Subject<void>;
-  prev$: Subject<void>;
-  jump$: Subject<number>;
-}
-
-var exports = Talkie();
-```
 
 ## Utilities
 
