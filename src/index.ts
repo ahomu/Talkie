@@ -12,7 +12,11 @@ import { initPaging, PagingExports } from './paging';
 import { initFullScreen } from './fullscreen';
 import { getPageNumberFromHash } from './util';
 
-function run() {
+interface TalkieRuntimeOptions {
+  wide: boolean;
+}
+
+function run({ wide = false }: TalkieRuntimeOptions) {
   customElements.define(TalkieBackface.ns, TalkieBackface);
   customElements.define(TalkiePager.ns, TalkiePager);
   customElements.define(TalkieProgress.ns, TalkieProgress);
@@ -36,7 +40,7 @@ function run() {
   initResponsive({
     samplingElement: (<TalkieSlide>slideElements[0]).getLayoutElement(),
     resizeObservable$: resize(),
-    ratio: ResponsiveRatio.NORMAL,
+    ratio: wide ? ResponsiveRatio.WIDE : ResponsiveRatio.NORMAL,
   });
 
   /**
