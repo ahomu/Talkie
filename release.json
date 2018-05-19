@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "make build NODE_ENV=production",
   "non-interactive": false,
   "dry-run": false,
   "changelogCommand": "git log --pretty=format:'* %s (%h)' [REV_RANGE]",

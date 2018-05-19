@@ -92,3 +92,17 @@ prettier: ## Auto formatting
 .PHONY: clean
 clean: ## Clean distribution dir
 	rm -rf $(DIST_DIR)
+
+# Release
+
+.PHONY: release-patch
+release-patch: ## Release as patch version up
+	$(NPM_BIN_DIR)/release-it patch -c release.json --preRelease=beta
+
+.PHONY: release-minor
+release-minor: ## Release as minor version up
+	$(NPM_BIN_DIR)/release-it minor -c release.json --preRelease=beta
+
+.PHONY: release-major
+release-major: ## Release as major version up
+	$(NPM_BIN_DIR)/release-it major -c release.json --preRelease=beta
