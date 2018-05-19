@@ -1,0 +1,44 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint-microsoft-contrib"
+  ],
+  "jsRules": {},
+  "rules": {
+    "missing-jsdoc": false,
+    "no-relative-imports": false,
+    "function-name": false,
+    "variable-name": false,
+    "export-name": false,
+    "interface-name": false,
+    "no-any": false,
+    "no-suspicious-comment": false,
+    "no-unsafe-any": false,
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": false,
+    "no-multiline-string": false,
+    "no-inner-html": false,
+    "match-default-export-name": false,
+    "mocha-no-side-effect-code": false,
+    "completed-docs": false,
+    "align": [
+      true,
+      "parameters",
+      "statements"
+    ],
+    "strict-boolean-expressions": false,
+    "trailing-comma": [
+      true, {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
+    "no-void-expression": [
+      true,
+      "ignore-arrow-function-shorthand"
+    ],
+    "no-http-string": [true, "http://www.w3.org/?.*", "http://localhost:?.*/?.*"],
+    "quotemark": [true, "single"]
+  },
+  "rulesDirectory": []
+}

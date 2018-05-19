@@ -1,68 +1,85 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Talkie.js - HTML/CSS/JavaScript Presentation Library</title>
-  <link rel="stylesheet" href="./dist/talkie.min.css">
-  <link rel="stylesheet" href="./dist/talkie-default.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/monokai_sublime.min.css">
+    <meta charset="utf-8">
+    <title>Talkie.js - HTML/CSS/JavaScript Presentation Library</title>
+    <link rel="stylesheet" href="./dist/talkie.css">
+    <link rel="stylesheet" href="./dist/talkie.theme-default.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css">
+    <meta property="og:url" content="https://ahomu.github.io/Talkie/">
+    <meta property="og:site_name" content="Talkie.js - HTML/CSS/JavaScript Presentation Library">
+    <meta property="og:author" content="ahomu">
+    <meta name="twitter:url" content="https://ahomu.github.io/Talkie/">
+    <meta name="twitter:site" content="@ahomu">
+    <meta property="og:image" content="https://farm8.staticflickr.com/7469/16209884502_211d01ac0d_z_d.jpg">
+    <meta name="twitter:image" content="https://farm8.staticflickr.com/7469/16209884502_211d01ac0d_z_d.jpg">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Talkie.js - HTML/CSS/JavaScript Presentation Library">
+    <meta property="og:description" content="Enjoy your presentation & creativity!">
+    <meta name="twitter:card" content="summary_image">
+    <meta name="twitter:title" content="Talkie.js - HTML/CSS/JavaScript Presentation Library">
+    <meta name="twitter:description" content="Enjoy your presentation & creativity!">
+    <meta name="description" content="Enjoy your presentation & creativity!">
 </head>
 <body>
 
 <!-- put your slides -->
 
-<template layout="cover" type="text/x-markdown">
+<tk-slide layout="cover" type="text/x-markdown">
 # Talkie.js
 
 HTML/CSS/JavaScript Presentation Library
 
 Go to [repository](https://github.com/ahomu/Talkie)
-</template>
+</tk-slide>
 
-<template layout="bullets" type="text/x-markdown">
+<tk-slide layout="bullets" type="text/x-markdown">
 ## Feature
 
-- Markdown support
+- Markdown supported
 - Code highlighting
 - Responsive scaling
-- FullScreen mode (press `F`)
-- Pointer mode (press `B`)
-- Layout attributes (WIP)
+- FullScreen mode
+- Vertical Scrolling
 - Progress indicator
-</template>
+- Accessibility supported
+<!-- - Pointer mode (press `B`)-->
+</tk-slide>
 
-<template layout="bullets" type="text/x-markdown">
+<tk-slide layout="bullets" type="text/x-markdown">
 ## 機能 (Japanese)
 
-- Markdown書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
+- Markdown 書けるよ (੭ु˵＞ヮ＜)੭ु⁾⁾
 - ハイライトばっちり _:(°ω° 」∠):＿
 - レスポンシブだよ (^з^)-☆
-- フルスクリーン対応 (press `F`) (｡•̀ᴗ-)✧
-- ポインターだせるよ (press `B`) ( ꒪◡꒪)
-- 属性でレイアウトできるよ (*´▽`)
+- フルスクリーン対応 (｡•̀ᴗ-)✧
+- 縦方向にスクロールできるよ (*´▽`)
 - 進行度インジゲータあるよ c⌒っ.ω.)っ
-</template>
+- アクセシビリティ配慮してるよ ✧◝(⁰▿⁰)◜✧
+<!-- - ポインターだせるよ (press `B`) ( ꒪◡꒪)-->
+</tk-slide>
 
-<template layout="code" type="text/x-markdown">
+<tk-slide layout="code" invert type="text/x-markdown">
 ## in HTML
 
 ```html
 <section layout="title">
-  <h1>Section Title</h1>
-  <p>Lorem ipsum dolor sit amet, consect...</p>
+    <h1>Section Title</h1>
+    <p>Lorem ipsum dolor sit amet, consect...</p>
 </section>
 
 <section layout="bullets">
-  <h2>The bullets</h2>
-  <ul>
-    <li>Foo</li>
-    <li>Bar</li>
-    <li>Baz</li>
-  </ul>
+    <h2>The bullets</h2>
+    <ul>
+        <li>Foo</li>
+        <li>Bar</li>
+        <li>Baz</li>
+    </ul>
 </section>
 ```
-</template>
+</tk-slide>
 
-<template layout="code" type="text/x-markdown">
+<tk-slide layout="code" invert type="text/x-markdown">
 ## in Markdown
 
 ```html
@@ -79,10 +96,10 @@ Lorem ipsum dolor sit amet, consect...
 </script>
 ```
 
-You can use `template` element instead of `script`.
-</template>
+You can use `tk-slide` element instead of `script`.
+</tk-slide>
 
-<template layout="code" type="text/x-markdown">
+<tk-slide layout="code" invert type="text/x-markdown">
 ## Backface image & filter
 
 ```html
@@ -90,34 +107,33 @@ You can use `template` element instead of `script`.
          backface="background-image.jpg"
          backface-filter="blur(1px) brightness(.8)">
 
-<h1>Title</h1>
-<p>foo, bar, baz, qux...</p>
+    <h1>Title</h1>
+    <p>foo, bar, baz, qux...</p>
 
 </section>
 ```
-</template>
+</tk-slide>
 
-<template layout="title" invert type="text/x-markdown"
+<tk-slide layout="title" invert type="text/x-markdown"
           backface="https://farm8.staticflickr.com/7469/16209884502_211d01ac0d_z_d.jpg"
           backface-filter="blur(3px) brightness(.9)">
-# Backface (北極)
+## Backface (北極)
 
 `backface-filter="blur(3px) brightness(.9)"`
-</template>
+</tk-slide>
 
-<template layout="bullets" type="text/x-markdown">
+<tk-slide layout="title" type="text/x-markdown">
+## Vertical Scrolling<br />👇👇👇
+Convenient to quickly browse with mobile devices.
+</tk-slide>
+
+<tk-slide layout="bullets" type="text/x-markdown">
 ## FullScreen mode
 
 When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Press and then exit.
-</template>
+</tk-slide>
 
-<template layout="bullets" type="text/x-markdown">
-## Pointer mode
-
-When you press the **"b"** key, the pointer `visibility` is toggled
-</template>
-
-<template layout="bullets" type="text/x-markdown">
+<tk-slide layout="bullets" type="text/x-markdown">
 ## Presenter note
 
 Open developer tools, will show presenter notes
@@ -125,97 +141,37 @@ Open developer tools, will show presenter notes
 -----
 
 Yes! This is your note!
-</template>
+</tk-slide>
 
-<template layout="code" type="text/x-markdown">
-## Custom key binding & control (1/2)
-
-```javascript
-var talkie  = Talkie({wide:false});
-
-talkie.key('space').subscribe(talkie.next$);
-talkie.key('s').subscribe(talkie.next$);
-talkie.key('n').subscribe(talkie.next$);
-talkie.key('a').subscribe(talkie.prev$);
-talkie.key('p').subscribe(talkie.prev$);
-```
-</template>
-
-<template layout="code" type="text/x-markdown">
-## Custom key binding & control (2/2)
-
-```javascript
-window.next = function() {
-  talkie.next$.next();
-};
-window.prev = function() {
-  talkie.prev$.next();
-};
-window.jump = function(num) {
-  talkie.jump$.next(num);
-};
-```
-</template>
-
-<template layout="code" type="text/x-markdown">
-## All Options
+<tk-slide layout="code" invert type="text/x-markdown">
+## Runtime Options
 
 ```typescript
-interface TalkieOptions {
-  wide?: boolean;
-  control?: boolean;
-  pointer?: boolean;
-  progress?: boolean;
-  backface?: boolean;
-  notransition?: boolean;
-  linkShouldBlank?: boolean;
+interface TalkieRuntimeOptions {
+  wide?: boolean; // default: true
 }
 
-Talkie(options);
+talkie.run(options);
 ```
-</template>
+</tk-slide>
 
-<script layout="code" type="text/x-markdown">
-## All Exports
-
-```typescript
-interface TalkieExports {
-  key: (charKey: string) => Observable<KeyboardEvent>;
-  notes: { [pageNum: number]: string };
-  changed: Observable<HTMLElement>;
-  ratio: Observable<number>;
-  next$: Subject<void>;
-  prev$: Subject<void>;
-  jump$: Subject<number>;
-}
-
-var exports = Talkie();
-```
-</script>
-
-<template layout="cover" type="text/x-markdown">
+<tk-slide layout="cover" type="text/x-markdown">
 ## Enjoy!
 
 [ahomu/Talkie - GitHub.com](https://github.com/ahomu/Talkie)
-</template>
+</tk-slide>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-<script src="./dist/talkie.min.js"></script>
+<tk-pager></tk-pager>
+<tk-progress></tk-progress>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="./dist/webcomponents-loader.js"></script>
+<script src="./dist/talkie.js"></script>
 <script>
-  var talkie = Talkie({wide: false});
-
-  talkie.key('s').subscribe(talkie.next$);
-  talkie.key('n').subscribe(talkie.next$);
-  talkie.key('a').subscribe(talkie.prev$);
-  talkie.key('p').subscribe(talkie.prev$);
-
-  document.addEventListener('DOMContentLoaded', function() {
-    talkie.changed.subscribe(function(current) {
-      console.clear();
-      // print presenter notes
-      console.info(talkie.notes[current.getAttribute('data-page')]);
-    });
-  });
+window.addEventListener('WebComponentsReady', function(e) {
+    document.body.className += ' webcomponents-ready';
+    talkie.run({wide: false});
+});
 </script>
 </body>
 </html>

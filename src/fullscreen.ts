@@ -1,22 +1,20 @@
-/// <reference path="../typings/myself.d.ts" />
-
-'use strict';
-
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 /**
  * fullscreen
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
  */
-export default function(target: HTMLElement) {
-  const fullscreen$ = new Subject();
-  fullscreen$.subscribe(toggleScreenOf(target));
-  return fullscreen$;
+export function initFullScreen(target: HTMLElement = document.documentElement): Subject<any> {
+  const fullScreen$: Subject<any> = new Subject();
+  fullScreen$.subscribe(toggleScreenOf(target));
+
+  return fullScreen$;
 }
 
-function toggleScreenOf(el: HTMLElement|any) {
-  let request: string, exit: string;
-  const doc = document as any;
+function toggleScreenOf(el: HTMLElement | any): () => void {
+  let request: string;
+  let exit: string;
+  const doc: Document & any = document;
 
   if (el.requestFullscreen) {
     request = 'requestFullscreen';
@@ -38,11 +36,13 @@ function toggleScreenOf(el: HTMLElement|any) {
     exit = 'msExitFullscreen';
   }
 
-  return function() {
-    if (!doc.fullscreenElement &&
+  return (): void => {
+    if (
+      !doc.fullscreenElement &&
       !doc.mozFullScreenElement &&
       !doc.webkitFullscreenElement &&
-      !doc.msFullscreenElement) {
+      !doc.msFullscreenElement
+    ) {
       el[request]();
     } else {
       doc[exit]();

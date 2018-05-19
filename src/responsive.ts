@@ -1,69 +1,67 @@
-/// <reference path="../typings/myself.d.ts" />
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-'use strict';
-
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/map';
-
-import { compose, stylePrefixDetect }  from './util';
-
-interface ResponsiveOptions {
-  width: number;
-  height: number;
-  target: HTMLElement;
+export enum ResponsiveRatio {
+  NORMAL = '4:3',
+  WIDE = '16:9',
 }
 
-/**
- * compute ratio
- */
-export default function(options: ResponsiveOptions) {
-
-  const scaleSubject = new BehaviorSubject<any>(true);
-  const scaleFn = compose(centeringOf(options.target), scalingOf(options.target));
-
-  const hRatio = scaleSubject.map(horizontalRatioOf(options.width));
-  const vRatio = scaleSubject.map(verticalRatioOf(options.height));
-
-  const currentRatio = Observable.combineLatest(hRatio, vRatio).map((hv) => Math.min(hv[0], hv[1]));
-  currentRatio.subscribe(scaleFn);
-
-  return {
-    scale        : scaleSubject,
-    currentRatio : currentRatio
-  };
+export interface ResponsiveOptions {
+  samplingElement: HTMLElement | null;
+  resizeObservable$: Observable<any>;
+  ratio: ResponsiveRatio;
 }
 
-function horizontalRatioOf(width: number) {
-  return function() {
+export function initResponsive({ samplingElement, resizeObservable$, ratio }: ResponsiveOptions): void {
+  if (samplingElement == null) {
+    throw new Error('oops, `samplingElement` must not to be null');
+  }
+  const trigger$: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  resizeObservable$.subscribe(trigger$);
+
+  const width: number = ratio === ResponsiveRatio.NORMAL ? 1024 : 1366;
+  const height: number = 768;
+
+  const hRatio$: Observable<number> = trigger$.pipe(map(horizontalRatioOf(width)));
+  const vRatio$: Observable<number> = trigger$.pipe(map(verticalRatioOf(height)));
+
+  const currentRatio$: Observable<number> = combineLatest(hRatio$, vRatio$).pipe(
+    map((hv: [number, number]) => Math.min(hv[0], hv[1])),
+  );
+
+  const style: HTMLStyleElement = document.createElement('style');
+  style.innerHTML = `
+    tk-slide {
+      --talkie-slide-width: ${width}px;
+      --talkie-slide-height: ${height}px;
+      --talkie-slide-scale: scale(1);
+      --talkie-slide-top: 0;
+      --talkie-slide-left: 0;
+    }
+  `;
+  document.head.appendChild(style);
+
+  currentRatio$.subscribe((scaleRatio: number) => {
+    style.innerHTML = style.innerHTML.replace(
+      /--talkie-slide-scale: scale\(.+\);/,
+      `--talkie-slide-scale: scale(${Math.abs(scaleRatio)});`,
+    );
+
+    const rect: ClientRect = samplingElement.getBoundingClientRect();
+    style.innerHTML = style.innerHTML
+      .replace(/--talkie-slide-top: .+;/, `--talkie-slide-top: ${(window.innerHeight - rect.height) / 2}px;`)
+      .replace(/--talkie-slide-left: .+;/, `--talkie-slide-left: ${(window.innerWidth - rect.width) / 2}px;`);
+  });
+}
+
+function horizontalRatioOf(width: number): () => number {
+  return (): number => {
     return window.innerWidth / width;
   };
 }
 
-function verticalRatioOf(height: number) {
-  return function() {
+function verticalRatioOf(height: number): () => number {
+  return (): number => {
     return window.innerHeight / height;
-  };
-}
-
-function scalingOf(el: HTMLElement) {
-  const transform = stylePrefixDetect('transform');
-  if (transform === undefined) {
-    return function (_: number) {
-      // noop
-    };
-  }
-
-  return function(ratio: number) {
-    el.style[transform] = `scale(${Math.abs(ratio)})`;
-  };
-}
-
-function centeringOf(el: HTMLElement) {
-  return function() {
-    const rect = el.getBoundingClientRect();
-    el.style.left = `${(window.innerWidth - rect.width) / 2}px`;
-    el.style.top  = `${(window.innerHeight - rect.height) / 2}px`;
   };
 }
