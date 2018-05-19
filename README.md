@@ -1,6 +1,8 @@
 Talkie.js - Web Components based Slide library
 ====================
 
+**The `master` branch is unstable because it makes comprehensive changes with v0.13. For v0.12 code, please refer to the [v0.12.x] (https://github.com/ahomu/Talkie/tree/v0.12.x) branch.**
+
 [![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
 
 This library written in [TypeScript](https://github.com/Microsoft/TypeScript) & [ReactiveX/rxjs: A reactive programming library for JavaScript](https://github.com/ReactiveX/RxJS).
