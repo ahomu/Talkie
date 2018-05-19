@@ -1,4 +1,4 @@
-import MarkdownIt from 'markdown-it';
+import MarkdownIt from 'markdown-it'; // tslint:disable-line:import-name
 
 const markdownIt: MarkdownIt = new MarkdownIt({
   html: true,
