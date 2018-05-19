@@ -69,8 +69,24 @@ theme-default-watch:
 
 # Utilities
 
+.PHONY: test
+test:
+	$(NPM_BIN_DIR)/wct
+
 .PHONY: format
 format: ## Auto formatting
+	$(MAKE) -j lint-fix prettier
+
+.PHONY: lint
+lint:
+	$(NPM_BIN_DIR)/tslint --project ./tsconfig.json -t stylish
+
+.PHONY: lint-fix
+lint-fix:
+	$(NPM_BIN_DIR)/tslint --project ./tsconfig.json -t stylish --fix
+
+.PHONY: prettier
+prettier: ## Auto formatting
 	$(NPM_BIN_DIR)/prettier --config ./prettier.config.js --write './**/*.+(ts|js)'
 
 .PHONY: clean

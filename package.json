@@ -53,6 +53,8 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-typescript": "^0.8.1",
     "rollup-plugin-uglify": "^3.0.0",
+    "tslint": "^5.10.0",
+    "tslint-microsoft-contrib": "^5.0.3",
     "typescript": "^2.7.2"
   }
 }
