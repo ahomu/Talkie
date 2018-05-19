@@ -1,4 +1,4 @@
-import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export enum ResponsiveRatio {
@@ -12,7 +12,7 @@ export interface ResponsiveOptions {
   ratio: ResponsiveRatio;
 }
 
-export function initResponsive({ samplingElement, resizeObservable$, ratio }: ResponsiveOptions) {
+export function initResponsive({ samplingElement, resizeObservable$, ratio }: ResponsiveOptions): void {
   if (samplingElement == null) {
     throw new Error('oops, `samplingElement` must not to be null');
   }
@@ -41,10 +41,10 @@ export function initResponsive({ samplingElement, resizeObservable$, ratio }: Re
   `;
   document.head.appendChild(style);
 
-  currentRatio$.subscribe((ratio: number) => {
+  currentRatio$.subscribe((scaleRatio: number) => {
     style.innerHTML = style.innerHTML.replace(
       /--talkie-slide-scale: scale\(.+\);/,
-      `--talkie-slide-scale: scale(${Math.abs(ratio)});`,
+      `--talkie-slide-scale: scale(${Math.abs(scaleRatio)});`,
     );
 
     const rect: ClientRect = samplingElement.getBoundingClientRect();
@@ -55,13 +55,13 @@ export function initResponsive({ samplingElement, resizeObservable$, ratio }: Re
 }
 
 function horizontalRatioOf(width: number): () => number {
-  return function(): number {
+  return (): number => {
     return window.innerWidth / width;
   };
 }
 
 function verticalRatioOf(height: number): () => number {
-  return function(): number {
+  return (): number => {
     return window.innerHeight / height;
   };
 }

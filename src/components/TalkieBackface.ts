@@ -1,6 +1,6 @@
-import { html, render } from 'lit-html/lib/shady-render';
+import { html, render, TemplateResult } from 'lit-html/lib/shady-render';
 
-function template() {
+function template(): TemplateResult {
   return html`
 <style>
 :host {
@@ -11,7 +11,7 @@ function template() {
   left: 0;
   width: 100vw;
   height: 100vh;
-  
+
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center center !important;
@@ -26,10 +26,10 @@ export enum TalkieBackfaceAttributes {
 }
 
 export class TalkieBackface extends HTMLElement {
-  static get ns() {
+  static get ns(): string {
     return 'tk-backface';
   }
-  static get observedAttributes() {
+  static get observedAttributes(): TalkieBackfaceAttributes[] {
     return [TalkieBackfaceAttributes.IMAGE, TalkieBackfaceAttributes.FILTER];
   }
 
@@ -38,7 +38,7 @@ export class TalkieBackface extends HTMLElement {
     this.render();
   }
 
-  public attributeChangedCallback() {
+  public attributeChangedCallback(): void {
     const imageUrl: string | null = this.getAttribute(TalkieBackfaceAttributes.IMAGE) || '';
     const filterDecl: string | null = this.getAttribute(TalkieBackfaceAttributes.FILTER) || '';
 
@@ -52,7 +52,7 @@ export class TalkieBackface extends HTMLElement {
     }
   }
 
-  private render() {
+  private render(): void {
     if (this.shadowRoot == null) {
       throw new Error('shadowRoot not initialized yet');
     }

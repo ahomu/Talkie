@@ -1,23 +1,25 @@
 import keycode from 'keycode';
-import { Observable, fromEvent } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
-const KEY_UP$ = fromEvent(document, 'keyup');
-const KEY_DOWN$ = fromEvent(document, 'keydown');
+const KEY_UP$: Observable<KeyboardEvent> = fromEvent(document, 'keyup');
+const KEY_DOWN$: Observable<KeyboardEvent> = fromEvent(document, 'keydown');
 
-function keyCodeIs(keyCode: number) {
-  return function(event: KeyboardEvent) {
+function keyCodeIs(keyCode: number): (event: KeyboardEvent) => boolean {
+  return (event: KeyboardEvent): boolean => {
     return event.keyCode === keyCode;
   };
 }
 
 export function keyup(charKey: string | number): Observable<KeyboardEvent> {
-  const keyCode = typeof charKey === 'string' ? keycode(charKey) : charKey;
+  const keyCode: number = typeof charKey === 'string' ? keycode(charKey) : charKey;
+
   return KEY_UP$.pipe(filter<KeyboardEvent>(keyCodeIs(keyCode)), tap((e: KeyboardEvent) => e.preventDefault()));
 }
 
 export function keydown(charKey: string | number): Observable<KeyboardEvent> {
-  const keyCode = typeof charKey === 'string' ? keycode(charKey) : charKey;
+  const keyCode: number = typeof charKey === 'string' ? keycode(charKey) : charKey;
+
   return KEY_DOWN$.pipe(filter<KeyboardEvent>(keyCodeIs(keyCode)), tap((e: KeyboardEvent) => e.preventDefault()));
 }
 

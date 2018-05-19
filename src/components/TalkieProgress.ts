@@ -1,6 +1,6 @@
-import { html, render } from 'lit-html/lib/shady-render';
+import { html, render, TemplateResult } from 'lit-html/lib/shady-render';
 
-function template() {
+function template(): TemplateResult {
   return html`
 <style>
 :host {
@@ -22,11 +22,11 @@ export enum TalkieProgressAttributes {
 }
 
 export class TalkieProgress extends HTMLElement {
-  static get ns() {
+  static get ns(): string {
     return 'tk-progress';
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): TalkieProgressAttributes[] {
     return [TalkieProgressAttributes.PROGRESS];
   }
 
@@ -40,7 +40,7 @@ export class TalkieProgress extends HTMLElement {
     this.setAttribute('style', `width: ${progress}%;`);
   }
 
-  private render() {
+  private render(): void {
     if (this.shadowRoot == null) {
       throw new Error('shadowRoot not initialized yet');
     }

@@ -1,8 +1,8 @@
-import { html, render } from 'lit-html/lib/shady-render';
+import { html, render, TemplateResult } from 'lit-html/lib/shady-render';
 
 import { compileMarkdown } from '../markdown';
 
-function template({ image, filter }: { image: string; filter: string }) {
+function template({ image, filter }: { image: string; filter: string }): TemplateResult {
   return html`
 <style>
 
@@ -97,7 +97,7 @@ export enum TalkieSlideAttributes {
 }
 
 export class TalkieSlide extends HTMLElement {
-  static get ns() {
+  static get ns(): string {
     return 'tk-slide';
   }
 
@@ -115,11 +115,11 @@ export class TalkieSlide extends HTMLElement {
     return <HTMLElement>this.shadowRoot.querySelector('.layout-slot');
   }
 
-  public toVisible() {
+  public toVisible(): void {
     this.setAttribute('aria-hidden', 'false');
   }
 
-  public toInvisible() {
+  public toInvisible(): void {
     this.setAttribute('aria-hidden', 'true');
   }
 
@@ -134,7 +134,7 @@ export class TalkieSlide extends HTMLElement {
     this.inheritAttributesToLayoutSlot();
   }
 
-  public inheritAttributesToLayoutSlot() {
+  public inheritAttributesToLayoutSlot(): void {
     const layoutEl: HTMLElement = this.getLayoutElement();
     const ownAttributes: string[] = Object.keys(TalkieSlideAttributes).map((key: string) => TalkieSlideAttributes[key]);
 
@@ -160,15 +160,15 @@ export class TalkieSlide extends HTMLElement {
     }
   }
 
-  private extractPresenterNote() {
-    const [content, presenterNote]: [string, string] = this.innerHTML.split(/<hr\s?\/?>/);
+  private extractPresenterNote(): void {
+    const [content, presenterNote]: string[] = this.innerHTML.split(/<hr\s?\/?>/);
     this.innerHTML = content;
-    let container = document.createElement('div');
+    const container: HTMLDivElement = document.createElement('div');
     container.innerHTML = presenterNote || '';
     this.presenterNote = (container.textContent || '').replace(/^\n*/, '');
   }
 
-  private render() {
+  private render(): void {
     if (this.shadowRoot == null) {
       throw new Error('shadowRoot not initialized yet');
     }

@@ -1,6 +1,6 @@
-import { html, render } from 'lit-html/lib/shady-render';
+import { html, render, TemplateResult } from 'lit-html/lib/shady-render';
 
-function template({ current, total }: { current: string; total: string }) {
+function template({ current, total }: { current: string; total: string }): TemplateResult {
   return html`
 <style>
 :host {
@@ -51,11 +51,11 @@ export enum TalkiePagerAttributes {
 }
 
 export class TalkiePager extends HTMLElement {
-  static get ns() {
+  static get ns(): string {
     return 'tk-pager';
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): TalkiePagerAttributes[] {
     return [TalkiePagerAttributes.TOTAL, TalkiePagerAttributes.CURRENT];
   }
 

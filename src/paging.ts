@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable, Subject, merge } from 'rxjs';
-import { distinctUntilChanged, withLatestFrom, map } from 'rxjs/operators';
+import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
 
 export interface PagingOptions {
   startPage: number;
@@ -24,9 +24,9 @@ export function initPaging({ startPage, totalPage }: PagingOptions): PagingExpor
   const currentPercentage$: Observable<number> = currentPage$.pipe(map(percentOf(totalPage)));
 
   merge(
-    nextTrigger.pipe(withLatestFrom(currentPage$, (_, page: number) => page), map((v) => v + 1)),
-    prevTrigger.pipe(withLatestFrom(currentPage$, (_, page: number) => page), map((v) => v - 1)),
-    moveTrigger.pipe(map((v: number) => v /* noop */)),
+    nextTrigger.pipe(withLatestFrom(currentPage$, (_: any, page: number) => page), map((v: number) => v + 1)),
+    prevTrigger.pipe(withLatestFrom(currentPage$, (_: any, page: number) => page), map((v: number) => v - 1)),
+    moveTrigger.pipe(map((v: number) => v)),
   ).subscribe(currentSubject);
 
   return {
@@ -39,13 +39,13 @@ export function initPaging({ startPage, totalPage }: PagingOptions): PagingExpor
 }
 
 function inRangeOf(min: number, max: number): (z: number) => number {
-  return function(z: number): number {
+  return (z: number): number => {
     return Math.min(max, Math.max(z, min));
   };
 }
 
 function percentOf(max: number): (max: number) => number {
-  return function(current: number): number {
+  return (current: number): number => {
     return 100 / max * current;
   };
 }

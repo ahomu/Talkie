@@ -1,5 +1,5 @@
-import { throttleTime, map } from 'rxjs/operators';
 import { merge } from 'rxjs/index';
+import { map, throttleTime } from 'rxjs/operators';
 
 import { TalkieBackface } from './components/TalkieBackface';
 import { TalkiePager, TalkiePagerAttributes } from './components/TalkiePager';
@@ -7,16 +7,16 @@ import { TalkieProgress, TalkieProgressAttributes } from './components/TalkiePro
 import { TalkieSlide } from './components/TalkieSlide';
 
 import { hashchange, keydown, resize, scroll } from './event';
-import { initResponsive, ResponsiveRatio } from './responsive';
-import { initPaging, PagingExports } from './paging';
 import { initFullScreen } from './fullscreen';
+import { initPaging, PagingExports } from './paging';
+import { initResponsive, ResponsiveRatio } from './responsive';
 import { getPageNumberFromHash } from './util';
 
 interface TalkieRuntimeOptions {
   wide: boolean;
 }
 
-function run({ wide = false }: TalkieRuntimeOptions) {
+function run({ wide = false }: TalkieRuntimeOptions): void {
   customElements.define(TalkieBackface.ns, TalkieBackface);
   customElements.define(TalkiePager.ns, TalkiePager);
   customElements.define(TalkieProgress.ns, TalkieProgress);
@@ -31,14 +31,14 @@ function run({ wide = false }: TalkieRuntimeOptions) {
 
   slideElements.forEach((el: HTMLElement, i: number) => el.setAttribute('id', String(i + 1)));
 
-  const startPage = getPageNumberFromHash() || 1;
-  const totalPage = slideElements.length;
+  const startPage: number = getPageNumberFromHash() || 1;
+  const totalPage: number = slideElements.length;
 
   /**
    * Responsive
    */
   initResponsive({
-    samplingElement: (<TalkieSlide>slideElements[0]).getLayoutElement(),
+    samplingElement: slideElements[0].getLayoutElement(),
     resizeObservable$: resize(),
     ratio: wide ? ResponsiveRatio.WIDE : ResponsiveRatio.NORMAL,
   });
@@ -61,7 +61,7 @@ function run({ wide = false }: TalkieRuntimeOptions) {
 
       // presenter note
       console.clear();
-      console.log(currentSlideElement.presenterNote);
+      console.log(currentSlideElement.presenterNote); // tslint:disable-line:no-console
 
       // move by keyboard
       if (isKeyboardMove) {
@@ -91,7 +91,8 @@ function run({ wide = false }: TalkieRuntimeOptions) {
     .subscribe(() => {
       let el: Element | null = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
 
-      if (el = el.closest(TalkieSlide.ns)) {
+      // tslint:disable-next-line:no-conditional-assignment
+      if ((el = el.closest(TalkieSlide.ns))) {
         move.next(parseInt(<string>el.getAttribute('id'), 10));
       }
     });
@@ -115,4 +116,4 @@ function run({ wide = false }: TalkieRuntimeOptions) {
   keydown('f').subscribe(initFullScreen());
 }
 
-export default { run };
+export default { run }; // tslint:disable-line:no-default-export
