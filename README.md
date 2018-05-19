@@ -1,7 +1,7 @@
 Talkie.js - Web Components based Slide library
 ====================
 
-**The `master` branch is unstable because it makes comprehensive changes with v0.13. For v0.12 code, please refer to the [v0.12.x] (https://github.com/ahomu/Talkie/tree/v0.12.x) branch.**
+**The `master` branch is unstable because it makes comprehensive changes with v0.13. For v0.12 code, please refer to the [v0.12.x](https://github.com/ahomu/Talkie/tree/v0.12.x) branch.**
 
 [![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
 
@@ -21,8 +21,8 @@ For more information about dependency Please look at the [package.json](package.
 - [x] Background image & filter
 - [x] Progress indicator
 - [x] Accessibility support
-- [ ] ~~Pointer attention~~ (drop v0.13~)
-- [ ] ~~Canvas drawing mode~~ (drop v0.13~)
+- [ ] Pointer mode (TODO)
+- [ ] ~~Canvas drawing mode (experimental)~~ (drop v0.13~)
 
 ## Real presentation sample
 
@@ -100,14 +100,14 @@ talkie.run({horizontal: true});
 You can add `backface` attribute into each slides. Image path that you specify in the backface attribute will be the background of when the slide is displayed.
 
 ```html
-<section layout
-         backface="background-image.jpg"
-         backface-filter="blur(1px) brightness(.8)">
+<tk-slide layout
+          backface="background-image.jpg"
+          backface-filter="blur(1px) brightness(.8)">
 
   <h1>Title</h1>
   <p>foo, bar, baz, qux...</p>
 
-</section>
+</tk-slide>
 ```
 
 `backface-filter` attribute is applied to the background image as [CSS Filters](http://css-tricks.com/almanac/properties/f/filter/). But using this, will occur side effect significantly to performance on mobile device.
@@ -125,7 +125,7 @@ talkie.run(options);
 
 ### FullScreen mode
 
-When you press the **"f"** key will be a full-screen mode. "f" or "Esc" key Press and then exit.
+When you press the <kbd>f</kbd> will be a full-screen mode. <kbd>f</kbd> or <kbd>Esc</kbd> Press and then exit.
 
 ## Utilities
 
