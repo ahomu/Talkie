@@ -18,14 +18,6 @@ html, body {
   min-width: 100vw;
 }
 
-html {
-  overflow-x: hidden;
-}
-
-html:fullscreen {
-  overflow-y: hidden;
-}
-
 body > * {
   -webkit-font-smoothing: antialiased;
   visibility: hidden
@@ -33,4 +25,43 @@ body > * {
 
 body.webcomponents-ready > * {
   visibility: visible;
+}
+
+/**
+ * Vertical mode (default)
+ */
+
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+html:fullscreen {
+  overflow-y: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+tk-slide {
+  flex: 1;
+}
+
+/**
+ * Horizontal mode
+ */
+
+html.horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+html.horizontal:fullscreen {
+  overflow-x: hidden;
+}
+
+html.horizontal body {
+  flex-direction: row;
 }

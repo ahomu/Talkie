@@ -14,9 +14,11 @@ import { getPageNumberFromHash } from './util';
 
 interface TalkieRuntimeOptions {
   wide: boolean;
+  horizontal: boolean;
 }
 
-function run({ wide = false }: TalkieRuntimeOptions): void {
+// tslint:disable-next-line:max-func-body-length
+function run({ wide = false, horizontal = false }: TalkieRuntimeOptions): void {
   customElements.define(TalkieBackface.ns, TalkieBackface);
   customElements.define(TalkiePager.ns, TalkiePager);
   customElements.define(TalkieProgress.ns, TalkieProgress);
@@ -114,6 +116,13 @@ function run({ wide = false }: TalkieRuntimeOptions): void {
    * Full screeen mode
    */
   keydown('f').subscribe(initFullScreen());
+
+  /**
+   * Horizontal mode
+   */
+  if (horizontal) {
+    document.documentElement.classList.add('horizontal');
+  }
 }
 
 export default { run }; // tslint:disable-line:no-default-export

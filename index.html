@@ -148,7 +148,8 @@ Yes! This is your note!
 
 ```typescript
 interface TalkieRuntimeOptions {
-  wide?: boolean; // default: true
+  wide?: boolean; // default: false
+  horizontal?: boolean; // default: false
 }
 
 talkie.run(options);
@@ -170,7 +171,7 @@ talkie.run(options);
 <script>
 window.addEventListener('WebComponentsReady', function(e) {
     document.body.className += ' webcomponents-ready';
-    talkie.run({wide: false});
+    talkie.run({wide: false, horizontal: false});
 });
 </script>
 </body>

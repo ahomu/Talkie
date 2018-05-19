@@ -81,10 +81,18 @@ If you use the code highlighting, you must load these files.
 
 ### Slide ratio
 
-The default slide 4:3 (width 1024px, height 768px). In the following code ratio 16:9 (width: 1366px, height 768px) you will.
+The default slide is 4:3 (width 1024px, height 768px). If you execute it with the following code, the slide ratio becomes 16:9 (width: 1366px, height 768px).
 
 ```javascript
 talkie.run({wide: true});
+```
+
+### Scrolling direction
+
+The default scrollable direction is vertical. If you execute it with the following code, the scroll direction becomes horizontal.
+
+```javascript
+talkie.run({horizontal: true});
 ```
 
 ### Backface image & filter
@@ -108,10 +116,11 @@ You can add `backface` attribute into each slides. Image path that you specify i
 
 ```typescript
 interface TalkieOptions {
-  wide?: boolean;
+  wide?: boolean; // default: false
+  horizontal?: boolean; // default: false
 }
 
-Talkie(options);
+talkie.run(options);
 ```
 
 ### FullScreen mode
