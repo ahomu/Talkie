@@ -1,4 +1,4 @@
-import markdownIt from 'markdown-it';
+import MarkdownIt from 'markdown-it';
 
 const markdownIt: MarkdownIt = new MarkdownIt({
   html: true,

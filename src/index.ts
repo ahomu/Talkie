@@ -1,5 +1,5 @@
 import { merge } from 'rxjs/index';
-import { map, throttleTime } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 import { TalkieBackface } from './components/TalkieBackface';
 import { TalkiePager, TalkiePagerAttributes } from './components/TalkiePager';
@@ -87,7 +87,7 @@ function run({ wide = false }: TalkieRuntimeOptions): void {
 
   // scroll change -> page change
   scroll()
-    .pipe(throttleTime(200))
+    .pipe(debounceTime(50))
     .subscribe(() => {
       let el: Element | null = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
 
