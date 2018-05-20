@@ -64,19 +64,19 @@ Go to [repository](https://github.com/ahomu/Talkie)
 ## in HTML
 
 ```html
-<section layout="title">
+<tk-slide layout="title">
     <h1>Section Title</h1>
     <p>Lorem ipsum dolor sit amet, consect...</p>
-</section>
+</tk-slide>
 
-<section layout="bullets">
+<tk-slide layout="bullets">
     <h2>The bullets</h2>
     <ul>
         <li>Foo</li>
         <li>Bar</li>
         <li>Baz</li>
     </ul>
-</section>
+</tk-slide>
 ```
 </tk-slide>
 
@@ -84,17 +84,17 @@ Go to [repository](https://github.com/ahomu/Talkie)
 ## in Markdown
 
 ```html
-<script layout="title" type="text/x-markdown">
+<tk-slide layout="title" type="text/x-markdown">
 # Section Title
 Lorem ipsum dolor sit amet, consect...
-</script>
+</tk-slide>
 
-<script layout="bullets" type="text/x-markdown">
+<tk-slide layout="bullets" type="text/x-markdown">
 ## The bullets
 - Foo
 - Bar
 - Baz
-</script>
+</tk-slide>
 ```
 
 You can use `tk-slide` element instead of `script`.
@@ -104,14 +104,14 @@ You can use `tk-slide` element instead of `script`.
 ## Backface image & filter
 
 ```html
-<section layout
-         backface="background-image.jpg"
-         backface-filter="blur(1px) brightness(.8)">
+<tk-slide layout
+          backface="background-image.jpg"
+          backface-filter="blur(1px) brightness(.8)">
 
     <h1>Title</h1>
     <p>foo, bar, baz, qux...</p>
 
-</section>
+</tk-slide>
 ```
 </tk-slide>
 
