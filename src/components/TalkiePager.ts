@@ -33,13 +33,19 @@ function template({ current, total }: { current: string; total: string }): Templ
   border-right-width: 20px;
   border-right-color: hotpink;
 }
+
+.current {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted hotpink;
+}
 </style>
 
 <nav>
   <p>
-    <button class="prev" aria-label="Prev Slide"></button>
-    Page ${current} of ${total}
-    <button class="next" aria-label="Next Slide"></button>
+    <button class="prev" title="Prev Slide"></button>
+    <a class="current" href="#${current}" title="Permalink"> Page ${current} of ${total}</a>
+    <button class="next" title="Next Slide"></button>
   </p>
 </nav>
 `;
@@ -59,6 +65,9 @@ export class TalkiePager extends HTMLElement {
     return [TalkiePagerAttributes.TOTAL, TalkiePagerAttributes.CURRENT];
   }
 
+  private pagingNextCallback: () => void;
+  private pagingPrevCallback: () => void;
+
   constructor() {
     super();
   }
@@ -66,10 +75,46 @@ export class TalkiePager extends HTMLElement {
   public connectedCallback(): void {
     this.attachShadow({ mode: 'open' });
     this.render();
+    this.initPagingButton();
   }
 
   public attributeChangedCallback(): void {
     this.render();
+  }
+
+  public setPagingNextCallback(callbackFn: () => void): void {
+    this.pagingNextCallback = callbackFn;
+  }
+
+  public setPagingPrevCallback(callbackFn: () => void): void {
+    this.pagingPrevCallback = callbackFn;
+  }
+
+  private initPagingButton(): void {
+    if (this.shadowRoot == null) {
+      throw new Error('shadowRoot not initialized yet');
+    }
+
+    (<HTMLElement>this.shadowRoot.querySelector('.prev')).addEventListener(
+      'click',
+      this.handlePagingAction.bind(this),
+      false,
+    );
+    (<HTMLElement>this.shadowRoot.querySelector('.next')).addEventListener(
+      'click',
+      this.handlePagingAction.bind(this),
+      false,
+    );
+  }
+
+  private handlePagingAction(e: MouseEvent): void {
+    const button: HTMLButtonElement = <HTMLButtonElement>e.target;
+
+    if (button.className === 'next' && this.pagingNextCallback) {
+      this.pagingNextCallback();
+    } else if (button.className === 'prev' && this.pagingPrevCallback) {
+      this.pagingPrevCallback();
+    }
   }
 
   private render(): void {

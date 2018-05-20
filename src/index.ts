@@ -53,7 +53,16 @@ function run({ wide = false, horizontal = false }: TalkieRuntimeOptions): void {
     totalPage,
   });
 
-  let isKeyboardMove: boolean = false;
+  let isExplicitMove: boolean = false;
+  function nextSlide(): void {
+    isExplicitMove = true;
+    next.next(); // oops
+  }
+
+  function prevSlide(): void {
+    isExplicitMove = true;
+    prev.next(); // lol
+  }
 
   current$
     .pipe(map((current: number) => slideElements[current - 1]))
@@ -65,22 +74,16 @@ function run({ wide = false, horizontal = false }: TalkieRuntimeOptions): void {
       console.clear();
       console.log(currentSlideElement.presenterNote); // tslint:disable-line:no-console
 
-      // move by keyboard
-      if (isKeyboardMove) {
+      // explicit move (keyboard, paging button, etc)
+      if (isExplicitMove) {
         currentSlideElement.scrollIntoView();
-        isKeyboardMove = false;
+        isExplicitMove = false;
       }
     });
 
   // keyboard control
-  merge(keydown('left'), keydown('up'), keydown('a')).subscribe(() => {
-    isKeyboardMove = true;
-    prev.next(); // lol
-  });
-  merge(keydown('right'), keydown('down'), keydown('s')).subscribe(() => {
-    isKeyboardMove = true;
-    next.next(); // oops
-  });
+  merge(keydown('left'), keydown('up'), keydown('a')).subscribe(prevSlide);
+  merge(keydown('right'), keydown('down'), keydown('s')).subscribe(nextSlide);
 
   /// hashchange -> page change
   hashchange()
@@ -103,6 +106,8 @@ function run({ wide = false, horizontal = false }: TalkieRuntimeOptions): void {
   if (pagerElement != null) {
     pagerElement.setAttribute(TalkiePagerAttributes.CURRENT, String(startPage));
     pagerElement.setAttribute(TalkiePagerAttributes.TOTAL, String(totalPage));
+    pagerElement.setPagingPrevCallback(prevSlide);
+    pagerElement.setPagingNextCallback(nextSlide);
     current$.subscribe((current: number) => pagerElement.setAttribute(TalkiePagerAttributes.CURRENT, String(current)));
   }
 
