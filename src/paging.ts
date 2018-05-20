@@ -11,13 +11,13 @@ export interface PagingExports {
   percentage$: Observable<number>;
   next: Subject<any>;
   prev: Subject<any>;
-  move: Subject<any>;
+  jump: Subject<any>;
 }
 
 export function initPaging({ startPage, totalPage }: PagingOptions): PagingExports {
   const nextTrigger: Subject<any> = new Subject<any>();
   const prevTrigger: Subject<any> = new Subject<any>();
-  const moveTrigger: Subject<number> = new Subject<number>();
+  const jumpTrigger: Subject<number> = new Subject<number>();
   const currentSubject: BehaviorSubject<number> = new BehaviorSubject<number>(startPage);
 
   const currentPage$: Observable<number> = currentSubject.pipe(map(inRangeOf(1, totalPage)), distinctUntilChanged());
@@ -26,7 +26,7 @@ export function initPaging({ startPage, totalPage }: PagingOptions): PagingExpor
   merge(
     nextTrigger.pipe(withLatestFrom(currentPage$, (_: any, page: number) => page), map((v: number) => v + 1)),
     prevTrigger.pipe(withLatestFrom(currentPage$, (_: any, page: number) => page), map((v: number) => v - 1)),
-    moveTrigger.pipe(map((v: number) => v)),
+    jumpTrigger.pipe(map((v: number) => v)),
   ).subscribe(currentSubject);
 
   return {
@@ -34,7 +34,7 @@ export function initPaging({ startPage, totalPage }: PagingOptions): PagingExpor
     percentage$: currentPercentage$,
     next: nextTrigger,
     prev: prevTrigger,
-    move: moveTrigger,
+    jump: jumpTrigger,
   };
 }
 

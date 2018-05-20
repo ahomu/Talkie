@@ -48,7 +48,7 @@ function run({ wide = false, horizontal = false }: TalkieRuntimeOptions): void {
   /**
    * Paging controls
    */
-  const { prev, next, move, current$, percentage$ }: PagingExports = initPaging({
+  const { prev, next, jump, current$, percentage$ }: PagingExports = initPaging({
     startPage,
     totalPage,
   });
@@ -88,7 +88,7 @@ function run({ wide = false, horizontal = false }: TalkieRuntimeOptions): void {
   /// hashchange -> page change
   hashchange()
     .pipe(map(getPageNumberFromHash))
-    .subscribe(move);
+    .subscribe(jump);
 
   // scroll change -> page change
   scroll()
@@ -98,7 +98,7 @@ function run({ wide = false, horizontal = false }: TalkieRuntimeOptions): void {
 
       // tslint:disable-next-line:no-conditional-assignment
       if ((el = el.closest(TalkieSlide.ns))) {
-        move.next(parseInt(<string>el.getAttribute('id'), 10));
+        jump.next(parseInt(<string>el.getAttribute('id'), 10));
       }
     });
 
