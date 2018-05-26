@@ -94,11 +94,11 @@ function run({ wide = false, horizontal = false }: TalkieRuntimeOptions): void {
   scroll()
     .pipe(debounceTime(50))
     .subscribe(() => {
-      let el: Element | null = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+      const pointElement: Element = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+      const slideElement: TalkieSlide | null = <TalkieSlide | null>pointElement.closest(TalkieSlide.ns);
 
-      // tslint:disable-next-line:no-conditional-assignment
-      if ((el = el.closest(TalkieSlide.ns))) {
-        jump.next(parseInt(<string>el.getAttribute('id'), 10));
+      if (slideElement) {
+        jump.next(parseInt(<string>slideElement.getAttribute('id'), 10));
       }
     });
 

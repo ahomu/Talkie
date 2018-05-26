@@ -136,6 +136,10 @@ Many thanks!
 
 ## Change Log
 
+### v0.13
+
+- TODO
+
 ### v0.12
 
 - Add option `linkShouldBlank`.
